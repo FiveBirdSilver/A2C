@@ -11,13 +11,9 @@ export default function Page() {
   const handleOnSubmit = async (data: Idata) => {
     console.log(data);
   };
-  console.log("password", password);
-  console.log("passwordConfirm", passwordConfirm);
+
   return (
     <div>
-      <div>
-        <span>조직문화의 개선과 소통을 위해 지금 시작해보세요</span>
-      </div>
       <form onSubmit={handleOnSubmit}>
         <label htmlFor="email">이메일</label>
         <input
@@ -45,7 +41,7 @@ export default function Page() {
           onChange={(e) => setPasswordConfirm(e.target.value)}
         />
         <div data-testid="error-message">비밀번호와 비밀번호 확인이 일치하지 않습니다.</div>
-        <button type="submit">가입하기</button>
+        <button type="submit">회원가입</button>
       </form>
     </div>
   );
