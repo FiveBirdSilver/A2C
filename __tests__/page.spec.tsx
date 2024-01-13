@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { fireEvent, render, screen } from "@testing-library/react";
-import Page from "./page";
+import Page from "../app/page";
 
 describe("회원가입 테스트", () => {
   //- 각 테스트 전에 작동되는 함수
