@@ -1,3 +1,5 @@
+import TanstackProvider from "./provider";
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html>
@@ -5,8 +7,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <title>[TDD] NextJS</title>
       </head>
       <body>
-        <div>헤더입니다</div>
-        {children}
+        <TanstackProvider>
+          <div>헤더입니다</div>
+          {children}
+        </TanstackProvider>
       </body>
     </html>
   );

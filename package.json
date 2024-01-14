@@ -8,6 +8,8 @@
     "test:ci": "jest --ci"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.17.10",
+    "@tanstack/react-query-devtools": "^5.17.10",
     "next": "latest",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
