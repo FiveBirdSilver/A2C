@@ -3,7 +3,7 @@
  */
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
-import Page from "../app/register/page";
+import Page from "../app/(route)/register/page";
 
 describe("회원가입 테스트", () => {
   //- 각 테스트 전에 작동되는 함수
