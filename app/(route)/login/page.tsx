@@ -1,15 +1,14 @@
-"use client";
+"use client"; //모듈이 클라이언트 번들의 일부로 간주
 import { useState } from "react";
+import { useLogin } from "app/hooks/useLogin";
 
-export default function Page() {
+export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const { mutate, isError, isSuccess } = useLogin();
 
-  // 회원가입 정보 제출
   const handleOnSubmit = async () => {
-    const body = { email: email, password: password };
-    const response = await fetch("/api/login", { body: JSON.stringify(body), method: "POST" });
-    console.log(response);
+    await mutate({ email, password });
   };
 
   return (
@@ -31,7 +30,7 @@ export default function Page() {
         onChange={(e) => setPassword(e.target.value)}
         placeholder="비밀번호를 입력해주세요"
       />
-      <div data-testid="error-message">로그인 정보가 일치하지 않습니다.</div>
+      {isError && <div data-testid="error-message">로그인 정보가 일치하지 않습니다.</div>}
       <button onClick={handleOnSubmit}>로그인</button>
     </div>
   );
