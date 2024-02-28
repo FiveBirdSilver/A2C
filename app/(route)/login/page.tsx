@@ -17,7 +17,7 @@ export default function Login() {
       <input
         id="email"
         type="email"
-        value={"tpdms0401@naver.com"}
+        value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="이메일을 입력해주세요"
         autoComplete="off"
