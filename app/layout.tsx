@@ -1,4 +1,5 @@
 import TanstackProvider from "./provider";
+import "../styles/global.css";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -8,7 +9,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <TanstackProvider>
-          <div>헤더입니다</div>
+          <div className="flex content-center px-2 py-2 mb-4 bg-black">
+            <span className="text-white ">FIVEBIRDSILVER</span>
+          </div>
           {children}
         </TanstackProvider>
       </body>

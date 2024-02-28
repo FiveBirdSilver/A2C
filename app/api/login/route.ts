@@ -5,7 +5,7 @@ export async function POST() {
       message: "ERROR TEST",
     },
     {
-      status: 400,
+      status: 200,
     }
   );
 }
