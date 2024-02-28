@@ -13,9 +13,9 @@ export default function Login() {
     await mutate({ email, password });
   };
 
-  // useEffect(() => {
-  //   if (isSuccess) router.push("/");
-  // }, [isSuccess]);
+  useEffect(() => {
+    if (isSuccess) router.push("/");
+  }, [isSuccess]);
 
   return (
     <div className="flex flex-col items-center justify-center w-full">

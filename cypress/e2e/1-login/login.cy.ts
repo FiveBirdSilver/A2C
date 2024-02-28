@@ -10,8 +10,15 @@ describe("로그인 화면", () => {
     cy.get("@emailInput").type("tpdms0401@gmail.com");
     cy.get("@passwordInput").type("1234");
 
+    cy.intercept({
+      method: "POST",
+      url: "http://localhost:3000/api/login",
+    }).as("login");
+
     // then : 로그인에 성공하고, 메인화면으로 이동한다.
     cy.get("[data-cy=loginBtn]").should("exist").click();
-    cy.url().should("include", "http://localhost:3000");
+
+    //페이지로 이동하는 것이 아닌 페이지가 존재하는 지 확인
+    cy.url().should("include", "http://localhost:3000/");
   });
 });

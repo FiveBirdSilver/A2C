@@ -9,6 +9,9 @@ export default function Login() {
     <div className="flex flex-col gap-5">
       <button onClick={() => router.push("/login")}>로그인</button>
       <button onClick={() => router.push("/register")}>회원가입</button>
+      <button onClick={() => router.push("/order")} data-cy="orderBtn">
+        주문
+      </button>
     </div>
   );
 }
