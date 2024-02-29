@@ -2,14 +2,20 @@
 
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-
-import Button from "app/components/button";
+import Button from "app/components/elements/button";
 import { IButtonType } from "app/lib/interface/order";
 
 export default function Page() {
   const { isSuccess, error, data } = useQuery<IButtonType[]>({
     queryKey: ["list"],
-    queryFn: () => axios.get("/api/order"),
+    queryFn: async () => {
+      const res = await axios.get("/api/order");
+      return res.data.data;
+    },
   });
-  return data?.map((v) => <Button id={v.id} name={v.name} image={v.image} />);
+  return (
+    <div className="flex content-center justify-center gap-10">
+      {isSuccess && data?.map((v) => <Button id={v.id} name={v.name} image={v.image} />)}
+    </div>
+  );
 }
