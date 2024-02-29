@@ -7,7 +7,7 @@ import { IButtonType } from "app/lib/interface/order";
 
 export default function Page() {
   const { isSuccess, error, data } = useQuery<IButtonType[]>({
-    queryKey: ["list"],
+    queryKey: ["order"],
     queryFn: async () => {
       const res = await axios.get("/api/order");
       return res.data.data;

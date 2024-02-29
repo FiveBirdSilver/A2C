@@ -17,4 +17,14 @@ describe("주문 테스트", () => {
 
     cy.url().should("include", "http://localhost:3000/order/3");
   });
+
+  it("사용자는 선택한 음식의 상세를 선택할 수 있다.", () => {
+    cy.visit("http://localhost:3000/order/3");
+    cy.intercept("GET", "http://localhost:3000/api/order?id=3", {
+      fixture: "list.jon",
+    }).as("getDetail");
+
+    cy.get("[data-cy=list_3]").should("be.visible").as("listDiv");
+    cy.get("@listDiv").click();
+  });
 });

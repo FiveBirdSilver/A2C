@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "name": "아메리카노",
+    "image": "/png-clipart/20200225/original/pngtree-espresso-coffee-illustration-vector-on-white-background-png-image_5287370.jpg",
+    "rate": 5.0,
+    "price": 4100
+  },
+  {
+    "id": 2,
+    "name": "카페라떼",
+    "image": "/png-clipart/20200225/original/pngtree-espresso-coffee-illustration-vector-on-white-background-png-image_5287370.jpg",
+    "rate": 2.0,
+    "price": 4600
+  },
+  {
+    "id": 3,
+    "name": "카페모카",
+    "image": "/png-clipart/20200225/original/pngtree-espresso-coffee-illustration-vector-on-white-background-png-image_5287370.jpg",
+    "rate": 3.8,
+    "price": 5100
+  },
+  {
+    "id": 4,
+    "name": "아인슈페너",
+    "image": "/png-clipart/20200225/original/pngtree-espresso-coffee-illustration-vector-on-white-background-png-image_5287370.jpg",
+    "rate": 4.0,
+    "price": 5400
+  }
+]
