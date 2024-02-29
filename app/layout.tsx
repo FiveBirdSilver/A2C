@@ -1,5 +1,6 @@
-import TanstackProvider from "./provider";
 import "../styles/global.css";
+import TanstackProvider from "./provider";
+import Header from "./components/layout/header";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -9,9 +10,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <TanstackProvider>
-          <div className="flex content-center px-2 py-2 mb-4 bg-black">
-            <span className="text-white ">FIVEBIRDSILVER</span>
-          </div>
+          <Header />
           {children}
         </TanstackProvider>
       </body>
