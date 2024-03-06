@@ -1,6 +1,7 @@
-import { IButtonType } from "app/lib/interface/order";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { IButtonType } from "app/lib/interface/element";
+
 export default function Button(data: IButtonType) {
   const router = useRouter();
   const handleOnClick = (id: number) => {

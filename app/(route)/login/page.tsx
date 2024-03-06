@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useLogin } from "app/hooks/useLogin";
 import { useRouter } from "next/navigation";
+import Input from "app/components/elements/input";
 
 export default function Login() {
   const router = useRouter();
@@ -20,26 +21,22 @@ export default function Login() {
   return (
     <div className="flex flex-col items-center justify-center w-full">
       <div className="flex gap-2">
-        <label htmlFor="email">이메일</label>
-        <input
+        <Input
+          label="이메일"
           id="emailInput"
-          //cypress는 data-cy 태그로 가져와서 테스트함
-          data-cy="emailInput"
           type="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          setState={setEmail}
           placeholder="이메일을 입력해주세요"
-          autoComplete="off"
         />
       </div>
       <div className="flex gap-2">
-        <label htmlFor="password">비밀번호</label>
-        <input
+        <Input
+          label="비밀번호"
           id="passwordInput"
-          data-cy="passwordInput"
           type="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          setState={setPassword}
           placeholder="비밀번호를 입력해주세요"
         />
       </div>
