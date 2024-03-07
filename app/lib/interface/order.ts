@@ -1,3 +1,9 @@
+export interface IOrderType {
+  id: number;
+  name: string;
+  image: string;
+}
+
 export interface IDetailType {
   id: number;
   image: string;

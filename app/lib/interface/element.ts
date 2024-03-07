@@ -1,9 +1,8 @@
-import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 
-export interface IButtonType {
-  id: number;
-  name: string;
-  image: string;
+export interface IListType {
+  children: React.ReactNode;
+  onClick: () => void;
 }
 
 export interface IinputType {

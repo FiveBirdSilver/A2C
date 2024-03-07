@@ -2,7 +2,9 @@
 import { useEffect, useState } from "react";
 import { useLogin } from "app/hooks/useLogin";
 import { useRouter } from "next/navigation";
+
 import Input from "app/components/elements/input";
+import Button from "app/components/elements/list";
 
 export default function Login() {
   const router = useRouter();
@@ -19,8 +21,8 @@ export default function Login() {
   }, [isSuccess]);
 
   return (
-    <div className="flex flex-col items-center justify-center w-full">
-      <div className="flex gap-2">
+    <div className="flex justify-center w-full h-full">
+      <div className="flex flex-col items-center justify-center gap-5">
         <Input
           label="이메일"
           id="emailInput"
@@ -29,8 +31,6 @@ export default function Login() {
           setState={setEmail}
           placeholder="이메일을 입력해주세요"
         />
-      </div>
-      <div className="flex gap-2">
         <Input
           label="비밀번호"
           id="passwordInput"
@@ -39,10 +39,10 @@ export default function Login() {
           setState={setPassword}
           placeholder="비밀번호를 입력해주세요"
         />
+        <button onClick={handleOnSubmit} data-cy="loginBtn" className="w-full h-10 mt-5 text-white bg-black rounded">
+          로그인
+        </button>
       </div>
-      <button onClick={handleOnSubmit} data-cy="loginBtn">
-        로그인
-      </button>
     </div>
   );
 }

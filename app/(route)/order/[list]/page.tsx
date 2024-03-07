@@ -21,7 +21,7 @@ export default function Page({ params }: { params: { list: number } }) {
   };
 
   return (
-    <>
+    <div className="h-full">
       {isSuccess &&
         data?.map((v) => (
           <div
@@ -40,6 +40,6 @@ export default function Page({ params }: { params: { list: number } }) {
             </div>
           </div>
         ))}
-    </>
+    </div>
   );
 }
