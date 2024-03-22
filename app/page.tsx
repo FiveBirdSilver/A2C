@@ -31,7 +31,6 @@ export default function Login() {
       <button onClick={() => router.push("/order")} data-cy="orderBtn">
         주문
       </button>
-      {/* <div ref={mapRef} style={{ width: 500, height: 500 }}></div> */}
     </div>
   );
 }

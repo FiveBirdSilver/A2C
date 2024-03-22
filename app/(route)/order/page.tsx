@@ -5,7 +5,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { IOrderType } from "app/lib/interface/order";
-import List from "app/components/elements/list";
+import List from "app/components/elements/List";
 
 export default function Page() {
   const router = useRouter();

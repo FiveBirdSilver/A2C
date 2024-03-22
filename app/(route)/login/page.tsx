@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useLogin } from "app/hooks/useLogin";
 import { useRouter } from "next/navigation";
 
-import Input from "app/components/elements/input";
+import Input from "app/components/elements/Input";
 interface IErrMsg {
   email?: string;
   password?: string;
