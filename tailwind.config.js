@@ -10,6 +10,11 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    fontFamily: {
+      PretendardR: ["PretendardR"],
+      PretendardM: ["PretendardM"],
+      PretendardB: ["PretendardB"],
+    },
   },
   plugins: [],
 };

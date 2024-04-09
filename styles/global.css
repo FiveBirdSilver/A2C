@@ -9,4 +9,23 @@ html {
 body {
   height: 100%;
   margin: 0;
+  background-color: #f6f5f5;
+}
+
+@font-face {
+  font-family: "PretendardR";
+  font-style: normal;
+  src: url("../assets/fonts/Pretendard-Regular.subset.woff");
+}
+
+@font-face {
+  font-family: "PretendardM";
+  font-style: normal;
+  src: url("../assets/fonts/Pretendard-Medium.subset.woff");
+}
+
+@font-face {
+  font-family: "PretendardB";
+  font-style: normal;
+  src: url("../assets/fonts/Pretendard-Bold.subset.woff");
 }

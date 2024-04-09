@@ -7,7 +7,7 @@ export default function Header() {
     router.push("/");
   };
   return (
-    <div className="fixed top-0 flex content-center w-full px-2 py-2 mb-4 bg-black">
+    <div className="fixed top-0 flex content-center w-full px-2 py-3 mb-4 bg-black font-PretendardM">
       <span className="text-white cursor-pointer" onClick={handleOnClick}>
         FIVEBIRDSILVER
       </span>

@@ -3,8 +3,8 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 
 import "../styles/global.css";
 import TanstackProvider from "./provider";
-import Header from "./components/layout/Header";
-import Wrapper from "./components/layout/Wrapper";
+import Header from "./components/layout/header";
+import Wrapper from "./components/layout/wrapper";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

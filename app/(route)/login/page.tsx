@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 import { useLogin } from "app/hooks/useLogin";
 import { useRouter } from "next/navigation";
 
-import Input from "app/components/elements/Input";
+import Input from "app/components/elements/input";
 interface IErrMsg {
   email?: string;
   password?: string;
 }
 
-export default function Login() {
+export default function Page() {
   const router = useRouter();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
