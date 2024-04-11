@@ -10,7 +10,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html>
       <head>
-        <title>[TDD] NextJS</title>
+        <title>MAP VISUALLIZATION</title>
       </head>
       <body>
         <TanstackProvider>
