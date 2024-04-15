@@ -1,0 +1,72 @@
+[
+  {
+    "city": "서울",
+    "tourist_attraction": "경복궁",
+    "latitude": 37.5796,
+    "longitude": 126.977,
+    "image": "Gyeongbokgung.jpeg"
+  },
+  {
+    "city": "부산",
+    "tourist_attraction": "해운대 해수욕장",
+    "latitude": 35.1587,
+    "longitude": 129.1605,
+    "image": "Haeundae_beach.jpeg"
+  },
+  {
+    "city": "제주도",
+    "tourist_attraction": "성산일출봉",
+    "latitude": 33.4584,
+    "longitude": 126.9424,
+    "image": "Seongsan_Ilchulbong.jpeg"
+  },
+  {
+    "city": "강원도",
+    "tourist_attraction": "남이섬",
+    "latitude": 37.7799,
+    "longitude": 127.5283,
+    "image": "Nami_Island.jpeg"
+  },
+  {
+    "city": "경기도",
+    "tourist_attraction": "에버랜드",
+    "latitude": 37.2931,
+    "longitude": 127.202,
+    "image": "Everland.png"
+  },
+  {
+    "city": "인천",
+    "tourist_attraction": "송도 센트럴파크",
+    "latitude": 37.3942,
+    "longitude": 126.6387,
+    "image": "Songdo_Central_Park.jpeg"
+  },
+  {
+    "city": "대구",
+    "tourist_attraction": "이월드",
+    "latitude": 35.8722,
+    "longitude": 128.6025,
+    "image": "Expo_Land.jpeg"
+  },
+  {
+    "city": "경주",
+    "tourist_attraction": "대릉원",
+    "latitude": 35.7844,
+    "longitude": 129.3314,
+    "image": "dareunwon.jpeg"
+  },
+  {
+    "city": "전주",
+    "tourist_attraction": "한옥마을",
+    "latitude": 35.8147,
+    "longitude": 127.153,
+    "image": "Jeonju_Hanok_Village.jpeg"
+  },
+  {
+    "city": "여수",
+    "tourist_attraction": "여수 해상케이블카",
+    "latitude": 34.7498,
+    "longitude": 127.747,
+    "image": "Cable_car_Yeosu_01.webp"
+  }
+]
