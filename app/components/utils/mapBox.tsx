@@ -1,14 +1,24 @@
 "use client";
 
-import { useCallback, useRef } from "react";
-import { CircleLayer, FillLayer, GeoJSONSource, Layer, LayerProps, Map, MapRef, Source } from "react-map-gl";
+import { useCallback, useRef, useState } from "react";
+import { GeoJSONSource, Map, MapRef } from "react-map-gl";
 import MapboxLanguage from "@mapbox/mapbox-gl-language";
 import type { FeatureCollection } from "geojson";
 import "mapbox-gl/dist/mapbox-gl.css";
 
-import geo from "../../../example/geo.json";
-export default function MapBox() {
-  const geojson = geo as FeatureCollection;
+import geojson from "../../../example/geo.json";
+import geoCity from "../../../example/geo_city.json";
+import dynamic from "next/dynamic";
+
+interface IProps {
+  type: string;
+}
+
+const MarkerMap = dynamic(() => import("../../components/utils/marker"), { ssr: false });
+const ClusterMap = dynamic(() => import("../../components/utils/cluster"), { ssr: false });
+
+export default function MapBox(props: IProps) {
+  const type = props.type;
   const mapRef = useRef<MapRef>(null);
 
   // 대한민국 바운더리
@@ -17,59 +27,26 @@ export default function MapBox() {
     [131.88, 38.6], // 대한민국 경계의 동쪽 경도와 북쪽 위도
   ];
 
-  const clusterLayer: LayerProps = {
-    id: "clusters",
-    type: "circle",
-    source: "fivebirdsilver_test",
-    filter: ["has", "point_count"],
-    paint: {
-      "circle-color": ["step", ["get", "point_count"], "#eb7878", 10, "#a55454", 20, "#f28cb1"],
-      "circle-radius": ["step", ["get", "point_count"], 20, 10, 30, 20, 40], //클러스터의 포인트 수가 10 미만이면 20, 10 이상 20 미만이면 30, 20 이상이면 40의 반지름이 적용됩니다.
-    },
-  };
-
-  const clusterCountLayer: LayerProps = {
-    id: "cluster-count",
-    type: "symbol",
-    source: "fivebirdsilver_test",
-    filter: ["has", "point_count"],
-    layout: {
-      "text-field": "{point_count_abbreviated}",
-      "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
-      "text-size": 12,
-    },
-  };
-
-  const unclusteredPointLayer: LayerProps = {
-    id: "unclustered-point",
-    type: "circle",
-    source: "fivebirdsilver_test",
-    filter: ["!", ["has", "point_count"]],
-    paint: {
-      "circle-color": "#f5bcbc",
-      "circle-radius": 4,
-      "circle-stroke-width": 1,
-      "circle-stroke-color": "#fff",
-    },
-  };
-
+  // cluster 클릭
   const handleOnClusterClick = (event: any) => {
-    const feature = event.features[0];
-    const clusterId = feature.properties.cluster_id;
+    if (event.features.length !== 0) {
+      const feature = event.features[0];
 
-    const mapboxSource = mapRef.current?.getSource("fivebirdsilver_test") as GeoJSONSource;
+      const clusterId = feature.properties?.cluster_id;
 
-    mapboxSource.getClusterExpansionZoom(clusterId, (err, zoom) => {
-      if (err) {
-        return;
-      }
+      const mapboxSource = mapRef.current?.getSource("fivebirdsilver_test") as GeoJSONSource;
 
-      mapRef.current?.easeTo({
-        center: feature.geometry.coordinates,
-        zoom,
-        duration: 500,
+      mapboxSource.getClusterExpansionZoom(clusterId, (err, zoom) => {
+        if (err) {
+          return;
+        }
+        mapRef.current?.easeTo({
+          center: feature.geometry.coordinates,
+          zoom,
+          duration: 500,
+        });
       });
-    });
+    }
   };
 
   // 한글 패치
@@ -89,25 +66,32 @@ export default function MapBox() {
         style={{ width: "100%", height: "100%" }}
         // mapStyle="mapbox://styles/mapbox/streets-v11"
         mapStyle="mapbox://styles/mapbox/light-v11"
-        interactiveLayerIds={[clusterLayer.id as string]}
+        interactiveLayerIds={["clusters"]}
         onRender={onRender}
         onClick={handleOnClusterClick}
         ref={mapRef}
         minZoom={5}
       >
-        <Source
-          id="fivebirdsilver_test"
-          type="geojson"
-          // data="https://docs.mapbox.com/mapbox-gl-js/assets/fivebirdsilver_test.geojson"
-          data={geojson}
-          cluster={true}
-          clusterMaxZoom={14}
-          clusterRadius={50}
-        >
-          <Layer {...clusterLayer} />
-          <Layer {...clusterCountLayer} />
-          <Layer {...unclusteredPointLayer} />
-        </Source>
+        {type === "cluster" ? <ClusterMap data={geojson as FeatureCollection} /> : <MarkerMap data={geoCity} />}
+        {/* {popupInfo && (
+            <Popup
+              anchor="top"
+              longitude={Number(popupInfo.longitude)}
+              latitude={Number(popupInfo.latitude)}
+              onClose={() => setPopupInfo(null)}
+            >
+              <div>
+                {popupInfo.city}, {popupInfo.state} |{" "}
+                <a
+                  target="_new"
+                  href={`http://en.wikipedia.org/w/index.php?title=Special:Search&search=${popupInfo.city}, ${popupInfo.state}`}
+                >
+                  Wikipedia
+                </a>
+              </div>
+              <img width="100%" src={popupInfo.image} />
+            </Popup>
+          )} */}
       </Map>
     </>
   );
