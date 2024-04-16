@@ -1,7 +1,7 @@
 import Script from "next/script";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 
-import "../styles/global.css";
+import "../assets/styles/global.css";
 import TanstackProvider from "./provider";
 import Header from "./components/layout/header";
 import Wrapper from "./components/layout/wrapper";

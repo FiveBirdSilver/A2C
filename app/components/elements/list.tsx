@@ -1,4 +1,7 @@
-import { IListType } from "app/lib/interface/element";
+interface IListType {
+  children: React.ReactNode;
+  onClick: () => void;
+}
 
 export default function List({ onClick, children }: IListType) {
   return (

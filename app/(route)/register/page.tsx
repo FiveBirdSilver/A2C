@@ -1,16 +1,13 @@
 "use client";
 import { useState } from "react";
 
-interface Idata {}
 export default function Page() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordConfirm, setPasswordConfirm] = useState<string>("");
 
   // 회원가입 정보 제출
-  const handleOnSubmit = async (data: Idata) => {
-    console.log(data);
-  };
+  const handleOnSubmit = async () => {};
 
   return (
     <div>

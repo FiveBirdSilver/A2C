@@ -2,10 +2,17 @@
 
 import { Rating } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { IDetailType } from "app/lib/interface/order";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Image from "next/image";
+
+export interface IDetailType {
+  id: number;
+  image: string;
+  name: string;
+  price: number;
+  rate: number;
+}
 
 export default function Page({ params }: { params: { list: number } }) {
   const router = useRouter();

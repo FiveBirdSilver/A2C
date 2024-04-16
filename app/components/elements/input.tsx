@@ -1,4 +1,14 @@
-import { IinputType } from "app/lib/interface/element";
+import { Dispatch, SetStateAction } from "react";
+
+interface IinputType {
+  label: string;
+  id: string;
+  testId?: string;
+  type: string;
+  value: string;
+  setState: Dispatch<SetStateAction<string>>;
+  placeholder: string;
+}
 
 export default function Input(data: IinputType) {
   const { label, id, type, value, setState, placeholder } = data;

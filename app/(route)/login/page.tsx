@@ -4,7 +4,7 @@ import { useLogin } from "app/hooks/useLogin";
 import { useRouter } from "next/navigation";
 
 import Input from "app/components/elements/input";
-interface IErrMsg {
+interface ILogin {
   email?: string;
   password?: string;
 }
@@ -14,7 +14,7 @@ export default function Page() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const [errMsg, setErrMsg] = useState<IErrMsg>({ email: "", password: "" });
+  const [errMsg, setErrMsg] = useState<ILogin>({ email: "", password: "" });
   const [disabled, setDisabled] = useState<boolean>(true);
   const { mutate, isError, isSuccess } = useLogin();
 

@@ -4,8 +4,12 @@ import Image from "next/image";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { IOrderType } from "app/lib/interface/order";
-import List from "app/components/elements/List";
+import List from "app/components/elements/list";
+interface IOrderType {
+  id: number;
+  name: string;
+  image: string;
+}
 
 export default function Page() {
   const router = useRouter();
