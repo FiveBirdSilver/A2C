@@ -1,68 +1,103 @@
 "use client"; //모듈이 클라이언트 번들의 일부로 간주
-import { useEffect, useState } from "react";
-import { useLogin } from "app/hooks/useLogin";
+import { useEffect, useReducer, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import Input from "app/components/elements/input";
+import { useLogin } from "app/hooks/useLogin";
+// import Input from "app/components/elements/input";
+import { Input } from "app/components/ui/input";
+import { Label } from "app/components/ui/label";
+import { Button } from "app/components/ui/button";
+
 interface ILogin {
-  email?: string;
-  password?: string;
+  email: string;
+  password: string;
 }
+
+type Action = { type: "SET_EMAIL"; payload: string } | { type: "SET_PASSWORD"; payload: string };
+
+// 리듀서 함수 정의
+const reducer = (state: ILogin, action: Action): ILogin => {
+  switch (action.type) {
+    case "SET_EMAIL":
+      return { ...state, email: action.payload };
+    case "SET_PASSWORD":
+      return { ...state, password: action.payload };
+    default:
+      return state;
+  }
+};
 
 export default function Page() {
   const router = useRouter();
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-
-  const [errMsg, setErrMsg] = useState<ILogin>({ email: "", password: "" });
-  const [disabled, setDisabled] = useState<boolean>(true);
+  const [state, dispatch] = useReducer(reducer, { email: "", password: "" });
+  const [errMsg, setErrMsg] = useState<string>("");
   const { mutate, isError, isSuccess } = useLogin();
 
   useEffect(() => {
     if (isSuccess) router.push("/");
   }, [isSuccess]);
 
-  // 아이디 , 비밀번호 빈 값 검사
-  useEffect(() => {
-    if (email !== "" && password !== "") setDisabled(false);
-    else setDisabled(true);
-  }, [email, password]);
-
   const handleOnSubmit = async () => {
-    if (!email.includes("@")) setErrMsg({ email: "올바른 이메일 형식이 아닙니다." });
-    else await mutate({ email, password });
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(state.email)) setErrMsg("올바른 이메일 형식이 아닙니다.");
+    else await mutate({ email: state.email, password: state.password });
   };
 
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
   return (
     <div className="flex justify-center w-full h-full">
-      <div className="flex flex-col items-center justify-center gap-5">
-        <div>
+      <div className="flex flex-col items-center justify-center gap-5 min-w-96 ">
+        {/* <div>
           <Input
-            label="이메일"
+            // label="이메일"
             id="emailInput"
             type="email"
-            value={email}
-            setState={setEmail}
+            value={state.email}
+            onChange={(e) => dispatch({ type: "SET_EMAIL", payload: e.target.value })}
             placeholder="이메일을 입력해주세요"
           />
-          <p className="mt-2 ml-24 text-xs text-red-500">{errMsg.email}</p>
+          <p className="mt-2 ml-24 text-xs text-red-500">{errMsg}</p>
         </div>
         <Input
-          label="비밀번호"
+          // label="비밀번호"
           id="passwordInput"
           type="password"
-          value={password}
-          setState={setPassword}
+          value={state.password}
+          onChange={(e) => dispatch({ type: "SET_PASSWORD", payload: e.target.value })}
           placeholder="비밀번호를 입력해주세요"
-        />
-        <button
+        /> */}
+        <div className="flex w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="email">이메일</Label>
+          <Input
+            type="email"
+            id="email"
+            placeholder="이메일을 입력해주세요"
+            value={state.email}
+            onChange={(e) => dispatch({ type: "SET_EMAIL", payload: e.target.value })}
+          />
+        </div>
+        <div className="flex w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="password">비밀번호</Label>
+          <Input
+            id="passwordInput"
+            type="password"
+            value={state.password}
+            onChange={(e) => dispatch({ type: "SET_PASSWORD", payload: e.target.value })}
+            placeholder="비밀번호를 입력해주세요"
+          />
+        </div>
+        {/* <p className="mt-2 ml-24 text-xs text-red-500">{errMsg}</p> */}
+        <Button
+          variant="active"
           onClick={handleOnSubmit}
           data-cy="loginBtn"
-          disabled={disabled}
-          className="w-full h-10 mt-5 text-white bg-black rounded disabled:opacity-30 "
+          disabled={state.email !== "" && state.password !== ""}
         >
           로그인
-        </button>
+        </Button>
       </div>
     </div>
   );

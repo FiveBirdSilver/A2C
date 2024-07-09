@@ -7,7 +7,7 @@ const Leaflet = dynamic(() => import("../../components/utils/leaflet"), { ssr: f
 const Mapbox = dynamic(() => import("../../components/utils/mapBox"), { ssr: false });
 
 export default function Page() {
-  const [type, setType] = useState<string>("cluster");
+  const [type, setType] = useState<string>("marker");
 
   const handleOnClick = (e: any) => {
     setType(e.target.value);

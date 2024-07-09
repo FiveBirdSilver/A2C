@@ -6,12 +6,12 @@ interface IinputType {
   testId?: string;
   type: string;
   value: string;
-  setState: Dispatch<SetStateAction<string>>;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
 }
 
 export default function Input(data: IinputType) {
-  const { label, id, type, value, setState, placeholder } = data;
+  const { label, id, type, value, onChange, placeholder } = data;
 
   return (
     <div className="flex items-center justify-between gap-4 w-96">
@@ -19,7 +19,7 @@ export default function Input(data: IinputType) {
       <input
         id={id}
         value={value}
-        onChange={(e) => setState(e.target.value)}
+        onChange={onChange}
         data-cy={id}
         type={type}
         placeholder={placeholder}

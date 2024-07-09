@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { Button } from "./components/ui/button";
 
 //모듈이 클라이언트 번들의 일부로 간주
 export default function Login() {
@@ -20,24 +21,18 @@ export default function Login() {
   //     new naver.maps.Marker({
   //       position: location,
   //       map,
-  //     });
+  //  s   });
   //   }
   // }, []);
 
   return (
     <div className="flex flex-col items-center gap-5">
-      <button
-        onClick={() => router.push("/login")}
-        className="px-3 py-1 border border-gray-300 rounded min-w-28 hover:bg-gray-100 font-PretendardM"
-      >
-        로그인
-      </button>
-      <button
-        onClick={() => router.push("/view")}
-        className="px-3 py-1 border border-gray-300 rounded min-w-28 hover:bg-gray-100 font-PretendardM"
-      >
+      <Button variant="outline" onClick={() => router.push("/view")}>
         지도 뷰어
-      </button>
+      </Button>
+      <Button variant="outline" onClick={() => router.push("/login")}>
+        로그인
+      </Button>
     </div>
   );
 }
