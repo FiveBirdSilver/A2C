@@ -7,6 +7,7 @@ import { useLogin } from "app/hooks/useLogin";
 import { Input } from "app/components/ui/input";
 import { Label } from "app/components/ui/label";
 import { Button } from "app/components/ui/button";
+import Image from "next/image";
 
 interface ILogin {
   email: string;
@@ -44,9 +45,7 @@ export default function Page() {
     else await mutate({ email: state.email, password: state.password });
   };
 
-  useEffect(() => {
-    console.log(state);
-  }, [state]);
+  const LogInOnGoogle = () => {};
   return (
     <div className="flex justify-center w-full h-full">
       <div className="flex flex-col items-center justify-center gap-5 min-w-96 ">
@@ -97,6 +96,10 @@ export default function Page() {
           disabled={state.email !== "" && state.password !== ""}
         >
           로그인
+        </Button>
+        <Button variant="default" onClick={handleOnSubmit}>
+          <Image src="/google.svg" width={20} height={20} alt="google" className="mx-2" onClick={() => LogInOnGoogle} />
+          Google 계정으로 계속하기
         </Button>
       </div>
     </div>
