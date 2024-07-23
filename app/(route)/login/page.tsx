@@ -1,23 +1,19 @@
 "use client"; //모듈이 클라이언트 번들의 일부로 간주
+
 import { useEffect, useReducer, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
+import { User } from "app/Interfaces/user.ts";
 import { useLogin } from "app/hooks/useLogin";
-// import Input from "app/components/elements/input";
 import { Input } from "app/components/ui/input";
 import { Label } from "app/components/ui/label";
 import { Button } from "app/components/ui/button";
-import Image from "next/image";
-
-interface ILogin {
-  email: string;
-  password: string;
-}
 
 type Action = { type: "SET_EMAIL"; payload: string } | { type: "SET_PASSWORD"; payload: string };
 
 // 리듀서 함수 정의
-const reducer = (state: ILogin, action: Action): ILogin => {
+const reducer = (state: User, action: Action): User => {
   switch (action.type) {
     case "SET_EMAIL":
       return { ...state, email: action.payload };
@@ -45,29 +41,10 @@ export default function Page() {
     else await mutate({ email: state.email, password: state.password });
   };
 
-  const LogInOnGoogle = () => {};
+  // const LogInOnGoogle = () => {};
   return (
     <div className="flex justify-center w-full h-full">
       <div className="flex flex-col items-center justify-center gap-5 min-w-96 ">
-        {/* <div>
-          <Input
-            // label="이메일"
-            id="emailInput"
-            type="email"
-            value={state.email}
-            onChange={(e) => dispatch({ type: "SET_EMAIL", payload: e.target.value })}
-            placeholder="이메일을 입력해주세요"
-          />
-          <p className="mt-2 ml-24 text-xs text-red-500">{errMsg}</p>
-        </div>
-        <Input
-          // label="비밀번호"
-          id="passwordInput"
-          type="password"
-          value={state.password}
-          onChange={(e) => dispatch({ type: "SET_PASSWORD", payload: e.target.value })}
-          placeholder="비밀번호를 입력해주세요"
-        /> */}
         <div className="flex w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="email">이메일</Label>
           <Input
@@ -97,10 +74,10 @@ export default function Page() {
         >
           로그인
         </Button>
-        <Button variant="default" onClick={handleOnSubmit}>
+        {/* <Button variant="default" onClick={handleOnSubmit}>
           <Image src="/google.svg" width={20} height={20} alt="google" className="mx-2" onClick={() => LogInOnGoogle} />
           Google 계정으로 계속하기
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

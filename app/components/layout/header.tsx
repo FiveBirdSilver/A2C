@@ -7,10 +7,12 @@ export default function Header() {
     router.push("/");
   };
   return (
-    <div className="fixed top-0 flex content-center w-full px-2 py-3 mb-4 bg-black font-PretendardM">
-      <span className="text-white cursor-pointer" onClick={handleOnClick}>
-        FIVEBIRDSILVER
-      </span>
+    <div className="fixed top-0 w-full border-b border-gray-200">
+      <div className="flex items-center h-16 mx-auto my-0 sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl font-PretendardM">
+        <span className="text-black cursor-pointer" onClick={handleOnClick}>
+          A2C
+        </span>
+      </div>
     </div>
   );
 }

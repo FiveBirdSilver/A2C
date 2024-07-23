@@ -82,18 +82,9 @@ html {
 body {
   height: 100%;
   margin: 0;
-  background-color: #f6f5f5;
+  background-color: #fff;
 }
 
-.leaflet {
-  height: 100%;
-  width: 100%;
-}
-
-.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {
-  border-top-left-radius: 1rem;
-  border-bottom-left-radius: 1rem;
-}
 @font-face {
   font-family: "PretendardR";
   font-style: normal;
