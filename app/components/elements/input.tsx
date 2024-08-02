@@ -1,20 +1,17 @@
-import { Dispatch, SetStateAction } from "react";
-
-interface IinputType {
+interface InputType {
   label: string;
   id: string;
-  testId?: string;
   type: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
 }
 
-export default function Input(data: IinputType) {
+export default function Input(data: InputType) {
   const { label, id, type, value, onChange, placeholder } = data;
 
   return (
-    <div className="flex items-center justify-between gap-4 w-96">
+    <div className="flex items-center justify-between gap-4 text-sm w-96">
       <label htmlFor={id}>{label}</label>
       <input
         id={id}
@@ -24,7 +21,7 @@ export default function Input(data: IinputType) {
         type={type}
         placeholder={placeholder}
         autoComplete="off"
-        className="h-10 pl-3 border border-gray-700 rounded min-w-72 w-72 focus-visible:outline-none"
+        className="h-10 pl-3 border rounded-md outline-none min-w-72 w-72 focus-visible:outline-none placeholder:text-sm"
       />
     </div>
   );
