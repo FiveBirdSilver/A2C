@@ -8,6 +8,7 @@ import { useLogin } from "app/hooks/useLogin";
 import Input from "app/components/elements/Input";
 import Button from "app/components/elements/Button";
 import axios from "axios";
+import Image from "next/image";
 
 type Action = { type: "SET_EMAIL"; payload: string } | { type: "SET_PASSWORD"; payload: string };
 
@@ -42,7 +43,8 @@ export default function Page() {
 
   return (
     <div className="flex justify-center w-full h-full">
-      <div className="flex flex-col items-center justify-center gap-5 min-w-80">
+      <div className="flex flex-col items-center justify-center gap-5 mb-8 min-w-80">
+        <Image src={"/logo_text.jpeg"} width={100} height={30} alt="logo" />
         <div className="flex w-full max-w-sm items-center gap-1.5">
           <Input
             label="이메일"
