@@ -5,6 +5,7 @@ import "../assets/styles/global.css";
 import TanstackProvider from "./provider";
 import Header from "./components/layout/header";
 import Wrapper from "./components/layout/wrapper";
+import Footer from "./components/layout/footer";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -17,6 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <AppRouterCacheProvider>
             <Header />
             <Wrapper>{children}</Wrapper>
+            <Footer />
           </AppRouterCacheProvider>
         </TanstackProvider>
         <Script

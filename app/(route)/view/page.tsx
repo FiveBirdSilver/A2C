@@ -1,10 +1,6 @@
 "use client";
 import dynamic from "next/dynamic";
 import { useState } from "react";
-import { CustomSelect } from "app/components/elements/select";
-
-const Leaflet = dynamic(() => import("../../components/utils/leaflet"), { ssr: false });
-const Mapbox = dynamic(() => import("../../components/utils/mapBox"), { ssr: false });
 
 export default function Page() {
   const [type, setType] = useState<string>("marker");

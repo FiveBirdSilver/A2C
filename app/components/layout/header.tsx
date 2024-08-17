@@ -8,10 +8,10 @@ export default function Header() {
     router.push("/");
   };
   return (
-    <div className="fixed top-0 w-full border-b border-gray-200">
-      <div className="flex items-center h-16 gap-3 mx-auto my-0 sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl font-PretendardM">
-        <Image src={"/logo.jpeg"} width={30} height={30} alt="logo" />
-        <Image src={"/logo_text.jpeg"} width={50} height={15} alt="logo" />
+    <div className="fixed top-0 w-full border-b border-gray-100">
+      <div className="flex items-center gap-3 px-6 mx-auto my-0 h-14 sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl font-PretendardM">
+        <Image src={"/logo.jpeg"} width={30} height={30} alt="logo" priority />
+        <Image src={"/logo_text.jpeg"} width={50} height={15} alt="logo" priority />
       </div>
     </div>
   );
