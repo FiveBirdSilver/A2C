@@ -11,9 +11,6 @@ export default function Header() {
     <div className="fixed top-0 w-full border-b border-gray-200">
       <div className="flex items-center h-16 gap-3 mx-auto my-0 sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl font-PretendardM">
         <Image src={"/logo.jpeg"} width={30} height={30} alt="logo" />
-        {/* <span className="text-xl font-bold text-green-400 cursor-pointer" onClick={handleOnClick}>
-          A2C
-        </span> */}
         <Image src={"/logo_text.jpeg"} width={50} height={15} alt="logo" />
       </div>
     </div>

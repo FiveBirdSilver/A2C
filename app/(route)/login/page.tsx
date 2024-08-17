@@ -44,7 +44,7 @@ export default function Page() {
   return (
     <div className="flex justify-center w-full h-full">
       <div className="flex flex-col items-center justify-center gap-5 mb-8 min-w-80">
-        <Image src={"/logo_text.jpeg"} width={100} height={30} alt="logo" />
+        <Image src={"/logo_text.jpeg"} width={100} height={30} alt="logo" className="mb-5" />
         <div className="flex w-full max-w-sm items-center gap-1.5">
           <Input
             label="이메일"
