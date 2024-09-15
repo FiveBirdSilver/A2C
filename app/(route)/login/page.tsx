@@ -1,6 +1,6 @@
 "use client"; //모듈이 클라이언트 번들의 일부로 간주
 
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { User } from "app/Interfaces/user.ts";
@@ -27,6 +27,8 @@ const reducer = (state: User, action: Action): User => {
 export default function Page() {
   const router = useRouter();
   const [state, dispatch] = useReducer(reducer, { email: "", password: "" });
+  const test = useRef({ name: "Dog", value: "foot" });
+
   const [errMsg, setErrMsg] = useState<string>("");
   const { mutate, isError, isSuccess } = useLogin();
 
