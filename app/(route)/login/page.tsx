@@ -10,7 +10,9 @@ import Button from "app/components/elements/Button";
 import axios from "axios";
 import Image from "next/image";
 
-type Action = { type: "SET_EMAIL"; payload: string } | { type: "SET_PASSWORD"; payload: string };
+type Action =
+  | { type: "SET_EMAIL"; payload: string }
+  | { type: "SET_PASSWORD"; payload: string };
 
 // 리듀서 함수 정의
 const reducer = (state: User, action: Action): User => {
@@ -39,14 +41,21 @@ export default function Page() {
   const handleOnSubmit = async () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!emailRegex.test(state.email)) setErrMsg("올바른 이메일 형식이 아닙니다.");
+    if (!emailRegex.test(state.email))
+      setErrMsg("올바른 이메일 형식이 아닙니다.");
     else await mutate({ email: state.email, password: state.password });
   };
 
   return (
     <div className="flex justify-center w-full h-full">
       <div className="flex flex-col items-center justify-center gap-5 mb-8 min-w-80">
-        <Image src={"/logo_text.jpeg"} width={100} height={30} alt="logo" className="mb-5" />
+        <Image
+          src={"/logo_text.jpeg"}
+          width={100}
+          height={30}
+          alt="logo"
+          className="mb-5"
+        />
         <div className="flex w-full max-w-sm items-center gap-1.5">
           <Input
             label="이메일"
@@ -54,7 +63,9 @@ export default function Page() {
             id="email"
             placeholder="이메일을 입력해주세요"
             value={state.email}
-            onChange={(e) => dispatch({ type: "SET_EMAIL", payload: e.target.value })}
+            onChange={(e) =>
+              dispatch({ type: "SET_EMAIL", payload: e.target.value })
+            }
           />
         </div>
         <div className="flex w-full max-w-sm items-center gap-1.5">
@@ -63,7 +74,9 @@ export default function Page() {
             id="passwordInput"
             type="password"
             value={state.password}
-            onChange={(e) => dispatch({ type: "SET_PASSWORD", payload: e.target.value })}
+            onChange={(e) =>
+              dispatch({ type: "SET_PASSWORD", payload: e.target.value })
+            }
             placeholder="비밀번호를 입력해주세요"
           />
         </div>
@@ -75,8 +88,14 @@ export default function Page() {
             text="로그인"
           />
           <div className="relative pt-10 mt-5 border-t border-gray-200">
-            <p className="absolute text-sm text-center text-gray-500 -top-3 left-40 min-w-16 bg-body">또는</p>
-            <Button variant="outline" onClick={handleOnSubmit} text="회원가입" />
+            <p className="absolute text-sm text-center text-gray-500 -top-3 left-36 min-w-16 bg-body">
+              또는
+            </p>
+            <Button
+              variant="outline"
+              onClick={handleOnSubmit}
+              text="회원가입"
+            />
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 module.exports = {
   images: {
-    domains: ["png.pngtree.com"],
+    domains: [],
   },
   reactStrictMode: false,
 };

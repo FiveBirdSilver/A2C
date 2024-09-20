@@ -11,7 +11,7 @@ export default function Input(data: InputType) {
   const { label, id, type, value, onChange, placeholder } = data;
 
   return (
-    <div className="flex items-center justify-between gap-4 text-sm w-96">
+    <div className="flex items-center justify-between text-sm w-96">
       <label htmlFor={id}>{label}</label>
       <input
         id={id}
@@ -21,7 +21,7 @@ export default function Input(data: InputType) {
         type={type}
         placeholder={placeholder}
         autoComplete="off"
-        className="h-10 pl-3 border rounded-md outline-none min-w-72 w-72 focus-visible:outline-none placeholder:text-sm"
+        className="h-10 pl-3 border rounded-md outline-none min-w-64 focus-visible:outline-none placeholder:text-sm"
       />
     </div>
   );
