@@ -1,14 +1,13 @@
 "use client"; //모듈이 클라이언트 번들의 일부로 간주
 
+import Image from "next/image";
 import { useEffect, useReducer, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { User } from "app/Interfaces/user.ts";
-import { useLogin } from "app/hooks/useLogin";
-import Input from "app/components/elements/Input";
-import Button from "app/components/elements/Button";
-import axios from "axios";
-import Image from "next/image";
+import { User } from "@/app/Interfaces/user.ts";
+import { useLogin } from "@/app/hooks/useLogin";
+import Button from "@/app/components/elements/Button";
+import Input from "@/app/components/elements/Input";
 
 type Action =
   | { type: "SET_EMAIL"; payload: string }
