@@ -1,10 +1,6 @@
 "use client";
-import dynamic from "next/dynamic";
-import { useState } from "react";
 
 export default function Page() {
-  const [type, setType] = useState<string>("marker");
-
   // const mapRef = useRef(null);
   // const lat = 37.55395662140252;
   // const lng = 126.9923164220069;

@@ -36,6 +36,8 @@ export default function Page() {
   const [errMsg, setErrMsg] = useState<string>("");
   const { mutate, isError, isSuccess } = useLogin();
 
+  console.log(errMsg, isError);
+
   useEffect(() => {
     if (isSuccess) router.push("/");
   }, [isSuccess]);

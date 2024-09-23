@@ -20,7 +20,10 @@ export default function Button(data: ButtonType) {
     <button
       disabled={disabled}
       onClick={onClick}
-      className={cn(colorVariants[variant], "w-full h-10 rounded cursor-pointer text-sm")}
+      className={cn(
+        colorVariants[variant],
+        "w-full h-10 rounded cursor-pointer text-sm",
+      )}
     >
       {text}
     </button>
