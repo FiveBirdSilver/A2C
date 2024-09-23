@@ -1,5 +1,5 @@
-import Footer from "@/app/components/layouts/Footer.tsx";
-import Header from "@/app/components/layouts/Header.tsx";
+import Footer from "@/components/layouts/Footer.tsx";
+import Header from "@/components/layouts/Header.tsx";
 
 export default function Wrapper({ children }: { children: React.ReactNode }) {
   return (

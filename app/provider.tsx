@@ -13,7 +13,6 @@ function Providers({ children }: Props) {
     new QueryClient({
       defaultOptions: {
         queries: {
-          refetchOnWindowFocus: false,
           retry: false,
         },
       },

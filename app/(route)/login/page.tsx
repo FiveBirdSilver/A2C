@@ -4,17 +4,21 @@ import Image from "next/image";
 import { useEffect, useReducer, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { User } from "@/app/Interfaces/user.ts";
-import { useLogin } from "@/app/hooks/useLogin";
-import Button from "@/app/components/elements/Button";
-import Input from "@/app/components/elements/Input";
+import { useLogin } from "@/hooks/useLogin";
+import Input from "@/components/elements/Input";
+import Button from "@/components/elements/Button";
+
+interface UserType {
+  email: string;
+  password: string;
+}
 
 type Action =
   | { type: "SET_EMAIL"; payload: string }
   | { type: "SET_PASSWORD"; payload: string };
 
 // 리듀서 함수 정의
-const reducer = (state: User, action: Action): User => {
+const reducer = (state: UserType, action: Action): UserType => {
   switch (action.type) {
     case "SET_EMAIL":
       return { ...state, email: action.payload };

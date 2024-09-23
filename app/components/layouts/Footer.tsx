@@ -1,5 +1,5 @@
 "use client";
-import { FiUser, FiMapPin } from "react-icons/fi";
+import { FiMapPin } from "react-icons/fi";
 import { GrHomeRounded } from "react-icons/gr";
 import { FaRegUser } from "react-icons/fa";
 
