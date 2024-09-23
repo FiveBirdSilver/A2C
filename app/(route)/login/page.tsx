@@ -32,7 +32,6 @@ const reducer = (state: UserType, action: Action): UserType => {
 export default function Page() {
   const router = useRouter();
   const [state, dispatch] = useReducer(reducer, { email: "", password: "" });
-  const test = useRef({ name: "Dog", value: "foot" });
 
   const [errMsg, setErrMsg] = useState<string>("");
   const { mutate, isError, isSuccess } = useLogin();
