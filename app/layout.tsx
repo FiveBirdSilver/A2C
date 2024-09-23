@@ -3,7 +3,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 
 import "../assets/styles/global.css";
 import Providers from "./provider";
-import Wrapper from "@/components/layouts/Wrapper";
+import Wrapper from "@/components/layouts/Wrapper.tsx";
 
 export default function RootLayout({
   children,

@@ -1,12 +1,12 @@
 "use client"; //모듈이 클라이언트 번들의 일부로 간주
 
 import Image from "next/image";
-import { useEffect, useReducer, useRef, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { useLogin } from "@/hooks/useLogin";
-import Input from "@/components/elements/Input";
-import Button from "@/components/elements/Button";
+import Input from "@/components/elements/Input.tsx";
+import Button from "@/components/elements/Button.tsx";
 
 interface UserType {
   email: string;
