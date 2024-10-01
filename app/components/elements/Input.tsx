@@ -1,28 +1,41 @@
-interface InputType {
+import React, { forwardRef } from "react";
+import cn from "classnames";
+
+interface InputType extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   id: string;
-  type: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  placeholder: string;
+  variant?: "default" | "primary" | "warning";
 }
 
-export default function Input(data: InputType) {
-  const { label, id, type, value, onChange, placeholder } = data;
+const Input = forwardRef<HTMLInputElement, InputType>(
+  ({ label, id, type, variant = "default", placeholder, ...rest }, ref) => {
+    const borderVariants = {
+      default: "",
+      primary: "",
+      warning: "border-red-300",
+    };
 
-  return (
-    <div className="flex items-center justify-between text-sm w-96">
-      <label htmlFor={id}>{label}</label>
-      <input
-        id={id}
-        value={value}
-        onChange={onChange}
-        data-cy={id}
-        type={type}
-        placeholder={placeholder}
-        autoComplete="off"
-        className="h-10 pl-3 border rounded-md outline-none min-w-64 focus-visible:outline-none placeholder:text-sm"
-      />
-    </div>
-  );
-}
+    return (
+      <div className="flex items-center justify-between text-sm">
+        <label htmlFor={id}>{label}</label>
+        <input
+          id={id}
+          data-cy={id}
+          type={type}
+          placeholder={placeholder}
+          autoComplete="off"
+          className={cn(
+            borderVariants[variant],
+            "h-10 pl-3 border rounded-md outline-none min-w-64 focus-visible:outline-none placeholder:text-sm "
+          )}
+          ref={ref}
+          {...rest}
+        />
+      </div>
+    );
+  }
+);
+
+Input.displayName = "Input";
+
+export default Input;

@@ -1,27 +1,28 @@
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import instance from "@/lib/instance.ts";
+import { AxiosError } from "axios";
 
 interface LoginResponse {
   email: string;
   password: string;
 }
 
-const login = (data: LoginResponse) => {
-  const result = axios.post("/api/login", data);
-  return result;
+const login = async (data: LoginResponse) => {
+  return await instance.post("/user/login", data);
 };
 
+// test@test.com, gp7181811
 export const useLogin = () => {
   return useMutation({
     mutationFn: async (data: LoginResponse) => {
       return login(data);
     },
     onSuccess: (res) => {
-      console.log(res);
-      // handleOnSuccess();
+      return res;
     },
-    onError: (err) => {
-      console.log(err);
+    onError: (err: AxiosError) => {
+      console.log(err.response); // 상태코드 반환 안됌 확인 필요
+      return err;
     },
   });
 };
