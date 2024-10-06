@@ -1,41 +1,69 @@
-import React, { forwardRef } from "react";
-import cn from "classnames";
+import React, { forwardRef } from 'react'
+import cn from 'classnames'
 
 interface InputType extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string;
-  id: string;
-  variant?: "default" | "primary" | "warning";
+  id: string
+  label?: string
+  variant?: 'default' | 'primary' | 'warning'
+  direction: 'row' | 'column'
+  children?: React.ReactNode
 }
 
 const Input = forwardRef<HTMLInputElement, InputType>(
-  ({ label, id, type, variant = "default", placeholder, ...rest }, ref) => {
+  (
+    {
+      label,
+      id,
+      type,
+      direction,
+      children,
+      variant = 'default',
+      placeholder,
+      ...rest
+    },
+    ref
+  ) => {
     const borderVariants = {
-      default: "",
-      primary: "",
-      warning: "border-red-300",
-    };
+      default: '',
+      primary: '',
+      warning: 'border-red-300',
+    }
 
+    const directionVariants = {
+      column: 'flex-col items-start',
+      row: 'flex-row items-center',
+    }
     return (
-      <div className="flex items-center justify-between text-sm">
-        <label htmlFor={id}>{label}</label>
+      <div
+        className={cn(
+          directionVariants[direction],
+          'flex justify-between text-sm gap-1 relative w-full'
+        )}
+      >
+        {label && (
+          <label htmlFor={id} className='min-w-16 pl-[2px]'>
+            {label}
+          </label>
+        )}
         <input
           id={id}
           data-cy={id}
           type={type}
           placeholder={placeholder}
-          autoComplete="off"
+          autoComplete='off'
           className={cn(
             borderVariants[variant],
-            "h-10 pl-3 border rounded-md outline-none min-w-64 focus-visible:outline-none placeholder:text-sm "
+            'h-10 pl-3 border rounded-md outline-none min-w-64 focus-visible:outline-none placeholder:text-sm w-full'
           )}
           ref={ref}
           {...rest}
         />
+        {children}
       </div>
-    );
+    )
   }
-);
+)
 
-Input.displayName = "Input";
+Input.displayName = 'Input'
 
-export default Input;
+export default Input
