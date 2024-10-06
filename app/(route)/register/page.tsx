@@ -22,7 +22,7 @@ export default function Page() {
   const [authNum, setAuthNum] = useState<string>()
 
   // 인증번호 유효시간
-  const { timeLeft, startTimer, resetTimer } = useTimer(180) // 3분(180초) 타이머
+  const { timeLeft, startTimer } = useTimer(180) // 3분(180초) 타이머
 
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60)
