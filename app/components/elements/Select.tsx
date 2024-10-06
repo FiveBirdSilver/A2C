@@ -1,3 +1,3 @@
 export function CustomSelect() {
-  return <></>;
+  return <></>
 }

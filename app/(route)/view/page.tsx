@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 export default function Page() {
   // const mapRef = useRef(null);
@@ -21,9 +21,9 @@ export default function Page() {
   // }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full font-PretendardM">
-      <div className="flex items-start w-3/4 gap-3 mb-1"></div>
-      <div className="flex justify-between w-3/4 bg-white rounded-2xl h-4/5"></div>
+    <div className='flex flex-col items-center justify-center w-full h-full font-PretendardM'>
+      <div className='flex items-start w-3/4 gap-3 mb-1'></div>
+      <div className='flex justify-between w-3/4 bg-white rounded-2xl h-4/5'></div>
     </div>
-  );
+  )
 }
