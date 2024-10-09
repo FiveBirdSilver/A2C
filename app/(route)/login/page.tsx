@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 
 import Input from '@/components/elements/Input.tsx'
 import Button from '@/components/elements/Button.tsx'
-import { useLogin } from '@/hooks/useLogin.tsx'
+import { useLogin } from '@/app/apis/user/useLogin.tsx'
 
 interface WarningType {
   email: boolean

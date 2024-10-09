@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
@@ -9,6 +9,8 @@ import { CiCircleInfo } from 'react-icons/ci'
 import Button from '@/app/components/elements/Button'
 import Input from '@/app/components/elements/Input'
 import InputMessage from '@/app/components/elements/InputMessage'
+import { useVerifySend } from '@/app/apis/user/useVerifySend.tsx'
+import { useVerifyCheck } from '@/app/apis/user/useVerifyCheck.tsx'
 import useTimer from '@/hooks/useTimer'
 
 interface RegisterType {
@@ -19,10 +21,14 @@ interface RegisterType {
 }
 
 export default function Page() {
-  const [authNum, setAuthNum] = useState<string>()
+  const [authCode, setAuthCode] = useState<string>('')
+  const [openCodeBox, setOpenCodeBox] = useState<boolean>(false)
+
+  const sendVerificationMutation = useVerifySend()
+  const checkVerificationMutation = useVerifyCheck()
 
   // 인증번호 유효시간
-  const { timeLeft, startTimer } = useTimer(180) // 3분(180초) 타이머
+  const { timeLeft, startTimer, resetTimer } = useTimer(180) // 3분(180초) 타이머
 
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60)
@@ -62,9 +68,15 @@ export default function Page() {
   })
 
   // 인증번호 보내기
-  const sendAuthNumber = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  const sendAuthNumber = async (
+    event: React.MouseEvent<HTMLButtonElement>,
+    type: 'start' | 'reset'
+  ) => {
     event.preventDefault()
-    startTimer()
+    setOpenCodeBox(true)
+    sendVerificationMutation.mutate({ email: watch('email') })
+
+    type === 'start' ? startTimer() : resetTimer()
   }
 
   // 인증번호 확인
@@ -72,7 +84,21 @@ export default function Page() {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault()
+    checkVerificationMutation.mutate({
+      email: watch('email'),
+      authNum: authCode,
+    })
   }
+
+  // 인증번호 성공 실패 처리
+  useEffect(() => {
+    if (checkVerificationMutation.isSuccess) {
+      setOpenCodeBox(false)
+      alert('인증이 성공적으로 완료되었습니다.')
+    } else if (checkVerificationMutation.isError) {
+      alert('인증에 실패했습니다. 다시 시도해주세요.')
+    }
+  }, [checkVerificationMutation.isSuccess, checkVerificationMutation.isError])
 
   // 회원가입 등록
   const registerUser = async (data: RegisterType) => {
@@ -99,13 +125,13 @@ export default function Page() {
               {errors.email && <InputMessage msg={errors.email?.message} />}
             </div>
             <Button
-              onClick={(e) => sendAuthNumber(e)}
+              onClick={(e) => sendAuthNumber(e, 'start')}
               variant={watch('email') ? 'outline' : 'disabled'}
               disabled={!watch('email')}
               text='이메일 인증하기'
             />
           </div>
-          {timeLeft !== 180 && (
+          {openCodeBox && (
             <div className='flex flex-col gap-1 bg-gray-50 px-2.5 py-3.5'>
               <span className={'text-xs pl-1'}>
                 이메일로 받은 인증코드를 입력해주세요.
@@ -115,9 +141,10 @@ export default function Page() {
                   id='authnum'
                   placeholder='인증코드 6자리'
                   direction={'column'}
-                  value={authNum}
+                  value={authCode}
                   variant={timeLeft === 0 ? 'warning' : 'default'}
-                  onChange={(e) => setAuthNum(e.target.value)}
+                  onChange={(e) => setAuthCode(e.target.value)}
+                  maxLength={6}
                 >
                   <p
                     className={
@@ -136,19 +163,18 @@ export default function Page() {
               </div>
               {timeLeft === 0 && (
                 <span className={'text-xs text-red-500'}>
-                  {`
-                  유효기간이 지났습니다.'이메일 재전송하기'를 눌러주세요`}
+                  {`유효기간이 지났습니다. '이메일 재전송하기'를 눌러주세요`}
                 </span>
               )}
               <div className={'flex gap-1 items-center text-gray-500 text-xs'}>
                 <CiCircleInfo />
                 <span>이메일을 받지 못하셨나요?</span>
-                <a
-                  // onClick={(e) => sendAuthNumber(e)}
+                <button
+                  onClick={(e) => sendAuthNumber(e, 'reset')}
                   className={'decoration-solid underline cursor-pointer'}
                 >
                   이메일 재전송하기
-                </a>
+                </button>
               </div>
             </div>
           )}

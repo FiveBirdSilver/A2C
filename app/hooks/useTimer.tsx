@@ -17,7 +17,7 @@ const useTimer = (initialTime: number) => {
   const startTimer = () => setIsRunning(true)
   const resetTimer = () => {
     setTimeLeft(initialTime)
-    setIsRunning(false)
+    setIsRunning(true)
   }
 
   return { timeLeft, startTimer, resetTimer }
