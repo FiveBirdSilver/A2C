@@ -61,6 +61,7 @@ export default function Page() {
     }
   }, [])
 
+  console.log(bounds)
   return (
     <div className='flex items-center justify-center w-full h-full'>
       <div ref={mapRef} className='w-full h-full'></div>
