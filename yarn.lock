@@ -1452,10 +1452,10 @@
     "@types/mapbox__point-geometry" "*"
     "@types/pbf" "*"
 
-"@types/navermaps@^3.7.4":
-  version "3.7.6"
-  resolved "https://registry.yarnpkg.com/@types/navermaps/-/navermaps-3.7.6.tgz#e5ec37104e667c44206ad323c55ae34f64a540c8"
-  integrity sha512-WDNc45CuZ5pD7BKlmwb4+cpxqxrH/uT+C6Ap/TXTUijSo+q8T+x+LWEGOLT1cYVmVu8Ph8LWve6xcmSGURX61g==
+"@types/navermaps@^3.7.8":
+  version "3.7.8"
+  resolved "https://registry.yarnpkg.com/@types/navermaps/-/navermaps-3.7.8.tgz#e4a3a4f351537dfc7dd66c29f48db88a489d2fe1"
+  integrity sha512-LzQffMWcUfhKzOuPpUONaXmMN6sAkNf92q1nycRplqorIl2oDjgdPftOw0LttTS0/k/YsotizawK+PtcRWbuog==
   dependencies:
     "@types/geojson" "*"
 
