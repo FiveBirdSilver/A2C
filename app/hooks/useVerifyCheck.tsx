@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
-import instance from '@/app/apis/instance.ts'
+import instance from '@/app/libs/apis/instance.ts'
 import { AxiosError } from 'axios'
 
 interface VerifyCheckType {

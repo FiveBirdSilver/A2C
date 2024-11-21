@@ -1,24 +1,22 @@
 import { useMutation } from '@tanstack/react-query'
-import instance from '@/app/apis/instance.ts'
+import instance from '@/app/libs/apis/instance.ts'
 import { AxiosError } from 'axios'
 
-interface LoginType {
+interface VerifySendType {
   email: string
-  password: string
 }
 
-const fetchData = async (data: LoginType) => {
-  return await instance.post('/user/login', data)
+const fetchData = async (data: VerifySendType) => {
+  return await instance.post('/user/verifySend', data)
 }
 
-// test@test.com, gp7181811
-
-export const useLogin = () => {
+export const useVerifySend = () => {
   return useMutation({
-    mutationFn: async (data: LoginType) => {
+    mutationFn: async (data: VerifySendType) => {
       return fetchData(data)
     },
     onSuccess: (res) => {
+      console.log(res)
       return res
     },
     onError: (err: AxiosError) => {

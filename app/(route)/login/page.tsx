@@ -1,12 +1,12 @@
 'use client' //모듈이 클라이언트 번들의 일부로 간주
 
 import Image from 'next/image'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 import Input from '@/components/elements/Input.tsx'
 import Button from '@/components/elements/Button.tsx'
-import { useLogin } from '@/app/apis/user/useLogin.tsx'
+import { useLogin } from '@/hooks/useLogin.tsx'
 
 interface WarningType {
   email: boolean
@@ -23,12 +23,7 @@ export default function Page() {
     password: false,
   })
 
-  const { mutate, isError, isSuccess } = useLogin()
-
-  useEffect(() => {
-    if (isSuccess) router.push('/')
-    if (isError) alert('아이디나 비밀번호가 일치하지 않습니다.')
-  }, [isSuccess, isError, router])
+  const { mutate } = useLogin()
 
   // 유효성 검사
   const validateForm = (): boolean => {
@@ -64,8 +59,8 @@ export default function Page() {
   }
 
   return (
-    <div className='flex justify-center w-full h-full'>
-      <div className='flex flex-col items-center justify-center gap-4 mb-8 w-full max-w-96'>
+    <div className='flex justify-center w-full h-full px-[1rem]'>
+      <div className='flex flex-col items-center justify-center gap-4  w-full max-w-96'>
         <Image
           src={'/logo_text.jpeg'}
           width={100}
@@ -114,6 +109,12 @@ export default function Page() {
             text='회원가입'
           />
         </div>
+        <span
+          className='underline text-[0.7rem] mt-3 text-gray-500 cursor-pointer'
+          onClick={() => router.push('/find')}
+        >
+          비밀번호를 잊으셨나요?
+        </span>
       </div>
     </div>
   )

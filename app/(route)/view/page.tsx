@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { useFetch } from '@/hooks/useFetch.tsx'
 
 export default function Page() {
   const mapRef = useRef(null)
@@ -11,7 +12,13 @@ export default function Page() {
     southWest: { lat: 0, lng: 0 },
   })
 
-  const data = [
+  const { data } = useFetch(
+    `northEast=${bounds.northEast.lng},${bounds.northEast.lat}&southWest=${bounds.southWest.lng},${bounds.southWest.lat}`
+  )
+
+  console.log(data)
+
+  const test_data = [
     { name: '골든플래닛', lat: 37.5058315272521, lng: 127.040806473603 },
     { name: '센터필드', lat: 37.5028813541774, lng: 127.041356540268 },
   ]
@@ -19,14 +26,14 @@ export default function Page() {
   useEffect(() => {
     const { naver } = window
     if (mapRef.current && naver) {
-      const center = new naver.maps.LatLng(data[0].lat, data[0].lng)
+      const center = new naver.maps.LatLng(test_data[0].lat, test_data[0].lng)
       const map = new naver.maps.Map(mapRef.current, {
         center: center,
         zoom: 15,
       })
 
       // 모든 위치에 마커 생성
-      data.forEach((location) => {
+      test_data.forEach((location) => {
         new naver.maps.Marker({
           position: new naver.maps.LatLng(location.lat, location.lng),
           map: map,
@@ -34,12 +41,12 @@ export default function Page() {
       })
 
       // 모든 마커가 보이도록 지도 범위 조정
-      if (data.length > 1) {
-        const sw = new naver.maps.LatLng(data[0].lat, data[0].lng)
-        const ne = new naver.maps.LatLng(data[0].lat, data[0].lng)
+      if (test_data.length > 1) {
+        const sw = new naver.maps.LatLng(test_data[0].lat, test_data[0].lng)
+        const ne = new naver.maps.LatLng(test_data[0].lat, test_data[0].lng)
         const bounds = new naver.maps.LatLngBounds(sw, ne)
 
-        data.forEach((location) => {
+        test_data.forEach((location) => {
           bounds.extend(new naver.maps.LatLng(location.lat, location.lng))
         })
         map.fitBounds(bounds)
@@ -61,7 +68,6 @@ export default function Page() {
     }
   }, [])
 
-  console.log(bounds)
   return (
     <div className='flex items-center justify-center w-full h-full'>
       <div ref={mapRef} className='w-full h-full'></div>

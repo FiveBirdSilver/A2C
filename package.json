@@ -43,6 +43,7 @@
     "react-leaflet": "^4.2.1",
     "react-map-gl": "^7.1.7",
     "react-mapbox-gl": "^5.1.1",
+    "react-toastify": "^10.0.6",
     "server-only": "^0.0.1",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",

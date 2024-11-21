@@ -9,9 +9,10 @@ import { CiCircleInfo } from 'react-icons/ci'
 import Button from '@/app/components/elements/Button'
 import Input from '@/app/components/elements/Input'
 import InputMessage from '@/app/components/elements/InputMessage'
-import { useVerifySend } from '@/app/apis/user/useVerifySend.tsx'
-import { useVerifyCheck } from '@/app/apis/user/useVerifyCheck.tsx'
+import { useVerifySend } from '@/hooks/useVerifySend.tsx'
+import { useVerifyCheck } from '@/hooks/useVerifyCheck.tsx'
 import useTimer from '@/hooks/useTimer'
+import { useRegister } from '@/hooks/useRegister.tsx'
 
 interface RegisterType {
   email: string
@@ -26,6 +27,7 @@ export default function Page() {
 
   const sendVerificationMutation = useVerifySend()
   const checkVerificationMutation = useVerifyCheck()
+  const registerMutation = useRegister()
 
   // 인증번호 유효시간
   const { timeLeft, startTimer, resetTimer } = useTimer(180) // 3분(180초) 타이머
@@ -101,14 +103,13 @@ export default function Page() {
   }, [checkVerificationMutation.isSuccess, checkVerificationMutation.isError])
 
   // 회원가입 등록
-  const registerUser = async (data: RegisterType) => {
-    console.log(data)
-    console.log('timeLeft', timeLeft)
+  const registerUser = async () => {
+    registerMutation.mutate(watch())
   }
 
   return (
-    <div className='flex justify-center w-full h-full'>
-      <div className='flex flex-col items-center justify-center gap-4 mb-8 w-full max-w-96'>
+    <div className='flex justify-center w-full h-full px-[1rem]'>
+      <div className='flex flex-col items-center justify-center gap-4  w-full max-w-96'>
         <form
           className={'w-full flex flex-col gap-6'}
           onSubmit={handleSubmit(registerUser)}
