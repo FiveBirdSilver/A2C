@@ -6,8 +6,7 @@
 
 <br>
 
-<details><summary> 1. Commit Messge Convention 
-</summary>
+### 1. Commit Messge Convention 
 
 - feat : 새로운 기능 추가
 - fix : 버그 수정
@@ -20,13 +19,15 @@
 - build: 빌드 시스템 또는 외부 종속성 변경
 - ci: CI/CD 설정 변경 및 스크립트 수정
 
-</details>
-<details><summary> 2. TEST Code Convention
-</summary>
+### 2. TEST Code Convention
 
 - 폴더 이름은 00-페이지명, 파일명은 기능명으로 설정. (ex. 01-login / feature.test.ts)
 - 테스트 제목은 서술적이며 명확하게 표현.
 - 'describe' 블록 하에 여러 it를 사용해 개별 테스트.
 - 속성 선택은 'id'나 'data-\*'로 사용.
 
-</details>
+### 3. 기술 스택 (Tech Stack)
+- Frontend: React, NextJs, Vite, TypeScript
+- Styling: Tailwind CSS
+- Package Management: Yarn
+
