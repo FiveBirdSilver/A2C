@@ -19,9 +19,8 @@ export const useFindAccount = () => {
       return fetchData(data)
     },
     onSuccess: (response) => {
-      // router.push('/')
       console.log(response)
-      notify('유효하지 않은 이메일 주소입니다.')
+      notify('인증번호가 발송되었습니다.')
     },
     onError: (error: AxiosError) => {
       console.error(error)
