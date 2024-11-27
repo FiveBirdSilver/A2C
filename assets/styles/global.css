@@ -30,3 +30,8 @@ body {
   /*background: #fefefe;*/
   font-family: PretendardR;
 }
+
+/*토스트 알림*/
+.Toastify__toast {
+  font-size: .825rem
+}

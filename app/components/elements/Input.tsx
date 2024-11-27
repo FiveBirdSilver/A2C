@@ -3,9 +3,10 @@ import cn from 'classnames'
 
 interface InputType extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string
-  label?: string
-  variant?: 'default' | 'primary' | 'warning'
+  label: string
+  message?: string
   direction: 'row' | 'column'
+  variant?: 'default' | 'primary' | 'warning'
   children?: React.ReactNode
 }
 
@@ -17,6 +18,7 @@ const Input = forwardRef<HTMLInputElement, InputType>(
       type,
       direction,
       children,
+      message,
       variant = 'default',
       placeholder,
       ...rest
@@ -33,6 +35,7 @@ const Input = forwardRef<HTMLInputElement, InputType>(
       column: 'flex-col items-start',
       row: 'flex-row items-center',
     }
+
     return (
       <div
         className={cn(
@@ -59,6 +62,7 @@ const Input = forwardRef<HTMLInputElement, InputType>(
           {...rest}
         />
         {children}
+        <p className='text-xs text-red-500 pl-1'>{message}</p>
       </div>
     )
   }

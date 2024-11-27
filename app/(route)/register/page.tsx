@@ -1,110 +1,50 @@
 'use client'
-
-import React, { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
+import { MouseEvent } from 'react'
 import { CiCircleInfo } from 'react-icons/ci'
 
-import Button from '@/app/components/elements/Button'
-import Input from '@/app/components/elements/Input'
-import InputMessage from '@/app/components/elements/InputMessage'
-import { useVerifySend } from '@/hooks/useVerifySend.tsx'
-import { useVerifyCheck } from '@/hooks/useVerifyCheck.tsx'
-import useTimer from '@/hooks/useTimer'
-import { useRegister } from '@/hooks/useRegister.tsx'
-
-interface RegisterType {
-  email: string
-  password: string
-  confirmPassword?: string
-  nickname: string
-}
+import Button from '@/components/elements/Button'
+import Input from '@/components/elements/Input'
+import { formatTime } from '@/libs/utils/formatTime.ts'
+import useTimer from '@/hooks/common/useTimer.tsx'
+import useVerifyMutation from '@/hooks/useVerifyMutation.tsx'
+import { useRegisterMutation } from '@/hooks/useRegisterMutation.tsx'
+import useField from '@/hooks/common/useForm.tsx'
+import { notify } from '@/libs/utils/notify.ts'
 
 export default function Page() {
-  const [authCode, setAuthCode] = useState<string>('')
-  const [openCodeBox, setOpenCodeBox] = useState<boolean>(false)
-
-  const sendVerificationMutation = useVerifySend()
-  const checkVerificationMutation = useVerifyCheck()
-  const registerMutation = useRegister()
+  const { register, handleSubmit, watch, errors } = useField()
+  const registerMutation = useRegisterMutation()
+  const {
+    sendCode,
+    checkCode,
+    openCodeBox,
+    setOpenCodeBox,
+    authCode,
+    handleOnChange,
+  } = useVerifyMutation()
 
   // 인증번호 유효시간
   const { timeLeft, startTimer, resetTimer } = useTimer(180) // 3분(180초) 타이머
 
-  const formatTime = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60)
-    const secs = seconds % 60
-    return `${minutes}:${secs < 10 ? '0' : ''}${secs}`
-  }
-
-  // 회원가입 정보 유효성 검사 및 에러 메시지 출력
-  const formSchema = yup.object({
-    email: yup
-      .string()
-      .required('이메일은 필수 입력 정보입니다 입력해주세요')
-      .email('이메일 형식이 아닙니다.'),
-    password: yup
-      .string()
-      .required('영문, 숫자, 특수문자 포함 8자리를 입력해주세요.')
-      .min(8, '최소 8자 이상 가능합니다')
-      .max(16, '최대 20자 까지만 가능합니다')
-      .matches(
-        /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[,./;'<>?:"~!@#$%^&*()])[a-zA-Z0-9,./;'<>?:"~!@#$%^&*()]{8,20}$/,
-        '영문, 숫자, 특수문자 포함 8자리를 입력해주세요.'
-      ),
-    confirmPassword: yup
-      .string()
-      .oneOf([yup.ref('password')], '비밀번호가 일치하지 않습니다'),
-    nickname: yup.string().required('닉네임은 필수 입력 정보입니다'),
-  })
-
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-    watch,
-  } = useForm<RegisterType>({
-    mode: 'onChange',
-    resolver: yupResolver(formSchema),
-  })
-
   // 인증번호 보내기
-  const sendAuthNumber = async (
-    event: React.MouseEvent<HTMLButtonElement>,
+  const handleOnSendCode = async (
+    event: MouseEvent<HTMLButtonElement>,
     type: 'start' | 'reset'
   ) => {
     event.preventDefault()
     setOpenCodeBox(true)
-    sendVerificationMutation.mutate({ email: watch('email') })
+    sendCode.mutate({ email: watch('email') })
 
     type === 'start' ? startTimer() : resetTimer()
   }
 
   // 인증번호 확인
-  const confirmAuthNumber = async (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
+  const confirmAuthNumber = async (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
-    checkVerificationMutation.mutate({
+    checkCode.mutate({
       email: watch('email'),
       authNum: authCode,
     })
-  }
-
-  // 인증번호 성공 실패 처리
-  useEffect(() => {
-    if (checkVerificationMutation.isSuccess) {
-      setOpenCodeBox(false)
-      alert('인증이 성공적으로 완료되었습니다.')
-    } else if (checkVerificationMutation.isError) {
-      alert('인증에 실패했습니다. 다시 시도해주세요.')
-    }
-  }, [checkVerificationMutation.isSuccess, checkVerificationMutation.isError])
-
-  // 회원가입 등록
-  const registerUser = async () => {
-    registerMutation.mutate(watch())
   }
 
   return (
@@ -112,21 +52,21 @@ export default function Page() {
       <div className='flex flex-col items-center justify-center gap-4  w-full max-w-96'>
         <form
           className={'w-full flex flex-col gap-6'}
-          onSubmit={handleSubmit(registerUser)}
+          onSubmit={handleSubmit(() => registerMutation.mutate(watch()))}
         >
           <div className='flex flex-col gap-3'>
             <div className='flex flex-col gap-1'>
               <Input
+                id='email'
                 label='이메일'
                 direction={'column'}
-                id='email'
                 placeholder='이메일을 입력해주세요'
+                message={errors.email?.message}
                 {...register('email')}
               />
-              {errors.email && <InputMessage msg={errors.email?.message} />}
             </div>
             <Button
-              onClick={(e) => sendAuthNumber(e, 'start')}
+              onClick={(e) => handleOnSendCode(e, 'start')}
               variant={watch('email') ? 'outline' : 'disabled'}
               disabled={!watch('email')}
               text='이메일 인증하기'
@@ -140,11 +80,12 @@ export default function Page() {
               <div className={'flex w-full'}>
                 <Input
                   id='authnum'
+                  label={''}
                   placeholder='인증코드 6자리'
                   direction={'column'}
                   value={authCode}
                   variant={timeLeft === 0 ? 'warning' : 'default'}
-                  onChange={(e) => setAuthCode(e.target.value)}
+                  onChange={handleOnChange}
                   maxLength={6}
                 >
                   <p
@@ -171,7 +112,7 @@ export default function Page() {
                 <CiCircleInfo />
                 <span>이메일을 받지 못하셨나요?</span>
                 <button
-                  onClick={(e) => sendAuthNumber(e, 'reset')}
+                  onClick={(e) => handleOnSendCode(e, 'reset')}
                   className={'decoration-solid underline cursor-pointer'}
                 >
                   이메일 재전송하기
@@ -181,14 +122,14 @@ export default function Page() {
           )}
           <div className='flex flex-col gap-1'>
             <Input
+              id='password'
+              type='password'
               label='비밀번호'
               direction={'column'}
-              type='password'
-              id='password'
-              {...register('password')}
+              message={errors.password?.message}
               placeholder='비밀번호를 입력해주세요'
+              {...register('password')}
             />
-            {errors.password && <InputMessage msg={errors.password?.message} />}
           </div>
           <div className='flex flex-col gap-1'>
             <Input
@@ -196,26 +137,24 @@ export default function Page() {
               direction={'column'}
               type='password'
               id='confirmPassword'
-              {...register('confirmPassword')}
+              message={errors.confirmPassword?.message}
               placeholder='비밀번호를 한번 더 입력해주세요'
+              {...register('confirmPassword')}
             />
-            {errors.confirmPassword && (
-              <InputMessage msg={errors.confirmPassword?.message} />
-            )}
           </div>
           <div className='flex flex-col gap-1'>
             <Input
               label='닉네임'
               direction={'column'}
               id='nickname'
-              {...register('nickname')}
+              message={errors.nickname?.message}
               placeholder='닉네임을 입력해주세요'
+              {...register('nickname')}
             />
-            {errors.nickname && <InputMessage msg={errors.nickname?.message} />}
           </div>
           <Button
             variant='fill'
-            onClick={handleSubmit(registerUser)}
+            onClick={handleSubmit(() => registerMutation.mutate(watch()))}
             // disabled={!(email !== "" && password !== "")}
             text='회원가입'
           />

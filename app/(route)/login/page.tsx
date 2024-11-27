@@ -1,61 +1,22 @@
 'use client' //모듈이 클라이언트 번들의 일부로 간주
 
 import Image from 'next/image'
-import React, { useCallback, useState } from 'react'
+import { FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
 
 import Input from '@/components/elements/Input.tsx'
 import Button from '@/components/elements/Button.tsx'
-import { useLogin } from '@/hooks/useLogin.tsx'
-
-interface WarningType {
-  email: boolean
-  password: boolean
-}
+import { useLoginMutation } from '@/hooks/useLoginMutation.tsx'
 
 export default function Page() {
   const router = useRouter()
-
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
-  const [warning, setWarning] = useState<WarningType>({
-    email: false,
-    password: false,
-  })
-
-  const { mutate } = useLogin()
-
-  // 유효성 검사
-  const validateForm = (): boolean => {
-    const newWarning = {
-      email: email.trim() === '',
-      password: password.trim() === '',
-    }
-
-    setWarning(newWarning)
-    return !newWarning.email && !newWarning.password
-  }
-
-  const handleOnChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const { id, value } = event.target
-
-      if (id === 'email' || id === 'password') {
-        const setter = id === 'email' ? setEmail : setPassword
-        setter(value)
-
-        if (value.trim()) {
-          setWarning((prev) => ({ ...prev, [id]: false }))
-        }
-      }
-    },
-    []
-  )
+  const { login, handleOnChange, validateForm, warning, email, password } =
+    useLoginMutation()
 
   // 로그인 폼 제출
-  const handleOnSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleOnSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (validateForm()) mutate({ email, password })
+    if (validateForm()) login.mutate()
   }
 
   return (

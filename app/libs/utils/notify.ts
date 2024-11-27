@@ -1,9 +1,8 @@
-// 에러 알림
 import { toast } from 'react-toastify'
 
 export const notify = (text: string) =>
   toast.error(text, {
-    position: 'bottom-center',
+    position: 'top-center',
     autoClose: 1500,
     hideProgressBar: true,
     closeOnClick: false,

@@ -3,6 +3,8 @@
 import React from 'react'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer } from 'react-toastify'
 
 type Props = {
   children: React.ReactNode
@@ -23,6 +25,7 @@ function Providers({ children }: Props) {
     <QueryClientProvider client={client}>
       {children}
       <ReactQueryDevtools initialIsOpen={false} />
+      <ToastContainer />
     </QueryClientProvider>
   )
 }
