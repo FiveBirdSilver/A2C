@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 
 import Input from '@/components/elements/Input.tsx'
 import Button from '@/components/elements/Button.tsx'
-import { useLoginMutation } from '@/hooks/useLoginMutation.tsx'
+import { useLoginMutation } from '@/hooks/mutations/useLoginMutation.tsx'
 
 export default function Page() {
   const router = useRouter()
@@ -55,7 +55,11 @@ export default function Page() {
               placeholder='비밀번호를 입력해주세요'
             />
           </>
-          <Button variant='fill' onClick={() => handleOnSubmit} text='로그인' />
+          <Button
+            variant='primary'
+            onClick={() => handleOnSubmit}
+            text='로그인'
+          />
         </form>
         <div className='relative w-full mt-5 border-t border-gray-200 pt-9'>
           <p

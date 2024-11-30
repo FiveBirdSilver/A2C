@@ -1,21 +1,21 @@
 import { useMutation } from '@tanstack/react-query'
-import instance from '@/app/libs/apis/instance.ts'
-import { AxiosError } from 'axios'
-import { notify } from '@/libs/utils/notify.ts'
 import { useRouter } from 'next/navigation'
+import { AxiosError } from 'axios'
 
-interface RegisterType {
+import instance from '@/libs/apis/instance.ts'
+import { notify } from '@/libs/utils/notify.ts'
+
+interface IRegister {
   email: string
   password: string
   confirmPassword?: string
   nickname: string
 }
 
-// test@test.com, gp7181811
 export const useRegisterMutation = () => {
   const router = useRouter()
   return useMutation({
-    mutationFn: async (data: RegisterType) => {
+    mutationFn: async (data: IRegister) => {
       return await instance.post('/user/signup', data)
     },
     onSuccess: (res) => {
@@ -24,7 +24,7 @@ export const useRegisterMutation = () => {
     },
     onError: (err: AxiosError) => {
       console.error(err)
-      notify('일시적인 오류입니다. 다시 시도해주세요.')
+      alert('일시적인 오류입니다. 다시 시도해주세요.')
     },
   })
 }

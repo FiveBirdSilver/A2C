@@ -9,8 +9,8 @@
     "allowImportingTsExtensions": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -18,9 +18,9 @@
     "baseUrl": ".",  // 프로젝트 루트 경로로 설정
     "paths": {
       "@/*": ["./*"],
-      "@/components/*": ["./app/components/*"],
-      "@/libs/*": ["./app/libs/*"],
-      "@/hooks/*": ["./app/hooks/*"],
+      "@/components/*": ["./components/*"],
+      "@/libs/*": ["./libs/*"],
+      "@/hooks/*": ["./hooks/*"],
     },
     "plugins": [
       {
@@ -31,3 +31,4 @@
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "types.d.ts", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }
+

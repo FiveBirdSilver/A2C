@@ -1,15 +1,14 @@
 import { useQuery } from '@tanstack/react-query'
-import instance from '@/app/libs/apis/instance.ts'
-
-const fetchData = async (param: string) => {
-  return await instance.get(`/GetClimbInfo?${param}`)
-}
+import axios from 'axios'
 
 export const useFetch = (coordinate: string) => {
   return useQuery({
     queryKey: [coordinate],
     queryFn: async () => {
-      return fetchData(coordinate)
+      const response = await axios.get(
+        `http://34.64.197.167:9001/api/map/GetClimbPlaceInfo?${coordinate}`
+      )
+      return response.data
     },
   })
 }

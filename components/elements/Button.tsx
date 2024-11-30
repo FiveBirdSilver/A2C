@@ -1,19 +1,19 @@
 import cn from 'classnames'
 import React from 'react'
 
-interface ButtonType {
+interface IButton {
   text: string
-  variant: 'fill' | 'outline' | 'disabled'
+  variant: 'primary' | 'outline' | 'disabled'
   disabled?: boolean
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-export default function Button(data: ButtonType) {
-  const { variant, text, disabled, onClick } = data
+export default function Button(props: IButton) {
+  const { variant, text, disabled, onClick } = props
 
   const colorVariants = {
     default: '',
-    fill: 'bg-green-400 text-white',
+    primary: 'bg-green-400 text-white',
     outline: 'bg-transparent text-green-400 border-green-400 border',
     disabled: 'bg-gray-50 text-gray-400 border-gray-200 border',
   }

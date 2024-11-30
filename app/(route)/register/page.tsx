@@ -6,10 +6,9 @@ import Button from '@/components/elements/Button'
 import Input from '@/components/elements/Input'
 import { formatTime } from '@/libs/utils/formatTime.ts'
 import useTimer from '@/hooks/common/useTimer.tsx'
-import useVerifyMutation from '@/hooks/useVerifyMutation.tsx'
-import { useRegisterMutation } from '@/hooks/useRegisterMutation.tsx'
+import useVerifyMutation from '@/hooks/mutations/useVerifyMutation.tsx'
+import { useRegisterMutation } from '@/hooks/mutations/useRegisterMutation.tsx'
 import useField from '@/hooks/common/useForm.tsx'
-import { notify } from '@/libs/utils/notify.ts'
 
 export default function Page() {
   const { register, handleSubmit, watch, errors } = useField()
@@ -153,7 +152,7 @@ export default function Page() {
             />
           </div>
           <Button
-            variant='fill'
+            variant='primary'
             onClick={handleSubmit(() => registerMutation.mutate(watch()))}
             // disabled={!(email !== "" && password !== "")}
             text='회원가입'

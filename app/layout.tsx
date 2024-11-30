@@ -1,9 +1,8 @@
 import Script from 'next/script'
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter'
 
 import '../assets/styles/global.css'
-import Providers from './provider'
 import Wrapper from '@/components/layouts/Wrapper'
+import Providers from './provider'
 
 export default function RootLayout({
   children,
@@ -11,15 +10,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html>
+    <html suppressHydrationWarning>
       <head>
         <title>A2C</title>
       </head>
       <body>
         <Providers>
-          <AppRouterCacheProvider>
-            <Wrapper>{children}</Wrapper>
-          </AppRouterCacheProvider>
+          <Wrapper>{children}</Wrapper>
         </Providers>
         <Script
           src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_MAP_KEY}`}

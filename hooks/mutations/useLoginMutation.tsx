@@ -1,12 +1,11 @@
 import { useCallback, useState, ChangeEvent } from 'react'
+import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { AxiosError } from 'axios'
 
-import { useMutation } from '@tanstack/react-query'
-import instance from '@/app/libs/apis/instance.ts'
-import { notify } from '@/libs/utils/notify.ts'
+import instance from '@/libs/apis/instance.ts'
 
-interface WarningType {
+interface IWarning {
   email: boolean
   password: boolean
 }
@@ -16,7 +15,7 @@ export const useLoginMutation = () => {
   const router = useRouter()
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-  const [warning, setWarning] = useState<WarningType>({
+  const [warning, setWarning] = useState<IWarning>({
     email: false,
     password: false,
   })
@@ -25,13 +24,12 @@ export const useLoginMutation = () => {
     mutationFn: async () => {
       return await instance.post('/user/login', { email, password })
     },
-    onSuccess: (response) => {
+    onSuccess: () => {
       router.push('/')
-      return response
     },
     onError: (error: AxiosError) => {
       console.error(error)
-      notify('아이디나 비밀번호가 일치하지 않습니다.') // 상태코드 반환 안됌 확인 필요
+      alert('아이디나 비밀번호가 일치하지 않습니다.') // 상태코드 반환 안됌 확인 필요
     },
   })
 

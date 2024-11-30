@@ -3,6 +3,17 @@
 import { useEffect, useRef, useState } from 'react'
 import { useFetch } from '@/hooks/useFetch.tsx'
 
+interface ICoordinate {
+  id: string
+  name: string
+  tel: string
+  addr: string
+  road_addr: string
+  img: string
+  lat: number
+  lng: number
+}
+
 export default function Page() {
   const mapRef = useRef(null)
 
@@ -15,56 +26,50 @@ export default function Page() {
   const { data } = useFetch(
     `northEast=${bounds.northEast.lng},${bounds.northEast.lat}&southWest=${bounds.southWest.lng},${bounds.southWest.lat}`
   )
-
   console.log(data)
-
-  const test_data = [
-    { name: '골든플래닛', lat: 37.5058315272521, lng: 127.040806473603 },
-    { name: '센터필드', lat: 37.5028813541774, lng: 127.041356540268 },
-  ]
 
   useEffect(() => {
     const { naver } = window
     if (mapRef.current && naver) {
-      const center = new naver.maps.LatLng(test_data[0].lat, test_data[0].lng)
-      const map = new naver.maps.Map(mapRef.current, {
-        center: center,
-        zoom: 15,
-      })
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords
+            const center = new naver.maps.LatLng(latitude, longitude)
+            const map = new naver.maps.Map(mapRef.current!, {
+              center: center,
+              zoom: 15,
+            })
 
-      // 모든 위치에 마커 생성
-      test_data.forEach((location) => {
-        new naver.maps.Marker({
-          position: new naver.maps.LatLng(location.lat, location.lng),
-          map: map,
-        })
-      })
+            // 모든 위치에 마커 생성
+            data?.forEach((location: ICoordinate) => {
+              new naver.maps.Marker({
+                position: new naver.maps.LatLng(location.lat, location.lng),
+                map: map,
+              })
+            })
 
-      // 모든 마커가 보이도록 지도 범위 조정
-      if (test_data.length > 1) {
-        const sw = new naver.maps.LatLng(test_data[0].lat, test_data[0].lng)
-        const ne = new naver.maps.LatLng(test_data[0].lat, test_data[0].lng)
-        const bounds = new naver.maps.LatLngBounds(sw, ne)
+            const updateBounds = () => {
+              const currentBounds = map.getBounds()
+              const northEast = currentBounds.getMax()
+              const southWest = currentBounds.getMin()
+              setBounds({
+                northEast: { lat: northEast.y, lng: northEast.x },
+                southWest: { lat: southWest.y, lng: southWest.x },
+              })
+            }
 
-        test_data.forEach((location) => {
-          bounds.extend(new naver.maps.LatLng(location.lat, location.lng))
-        })
-        map.fitBounds(bounds)
+            updateBounds()
+
+            naver.maps.Event.addListener(map, 'bounds_changed', updateBounds)
+          },
+          (error) => {
+            console.error('Error getting location', error)
+          }
+        )
+      } else {
+        console.error('Geolocation is not supported by this browser.')
       }
-
-      const updateBounds = () => {
-        const currentBounds = map.getBounds()
-        const northEast = currentBounds.getMax()
-        const southWest = currentBounds.getMin()
-        setBounds({
-          northEast: { lat: northEast.y, lng: northEast.x },
-          southWest: { lat: southWest.y, lng: southWest.x },
-        })
-      }
-
-      updateBounds()
-
-      naver.maps.Event.addListener(map, 'bounds_changed', updateBounds)
     }
   }, [])
 
