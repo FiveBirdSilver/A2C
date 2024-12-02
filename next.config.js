@@ -1,6 +1,6 @@
 module.exports = {
   images: {
-    domains: [],
+    domains: ['postfiles.pstatic.net'],
   },
   reactStrictMode: false,
   experimental: {

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { useFetch } from '@/hooks/useFetch.tsx'
+import { useQueries } from '@/hooks/queries/useQueries.tsx'
 
 interface ICoordinate {
   id: string
@@ -23,7 +23,7 @@ export default function Page() {
     southWest: { lat: 0, lng: 0 },
   })
 
-  const { data } = useFetch(
+  const { data } = useQueries(
     `northEast=${bounds.northEast.lng},${bounds.northEast.lat}&southWest=${bounds.southWest.lng},${bounds.southWest.lat}`
   )
   console.log(data)

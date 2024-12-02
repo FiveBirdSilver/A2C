@@ -12,11 +12,11 @@ interface ISegmented {
 
 const CustomSegmentedControl = styled(SegmentedControl)`
   height: auto;
-  padding: 8px 12px;
+  padding: 6px 10px;
   background-color: #fbfbfb;
 
   label {
-    padding: 6px 14px;
+    padding: 4px 12px;
   }
 
   span {
@@ -35,7 +35,7 @@ export default function Segmented(props: ISegmented) {
 
   return (
     <CustomSegmentedControl
-      size={'sm'}
+      size={'xs'}
       value={value}
       onValueChange={(e) => setState(e.value)}
       items={items}
