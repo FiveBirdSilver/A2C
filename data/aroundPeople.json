@@ -1,0 +1,19 @@
+[
+  {
+    "id": 0,
+    "name" : "fivebirdsilver",
+    "type" : "같이해요",
+    "location" : "더클라임 강남점",
+    "contents" : "오늘 강남에서 같이 운동할 사람!",
+    "profile" : "https://postfiles.pstatic.net/MjAyNDA4MTFfMTE1/MDAxNzIzMzU2Mjc0MDAw.pffzKEUOeZCD-Z7YT5A560qiLhkbL-hEkCmhYrtWOhIg.GN28igOFZjLiNiDF6_9s5QCp6U98X9Ajkjn3Jh2Lb38g.JPEG/IMG_7910.JPG?type=w773"
+  },
+  {
+    "id": 1,
+    "name" : "테스트",
+    "type" : "구해요",
+    "location" : "클라이밍파크 성수점",
+    "contents" : "성수에서 일일 선생님 구해요",
+    "profile" : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjepDE3ruoOrlYbvxkka73HQmWWR6WuolLNNkFSUiPrKFSKZzWi8gGrT79JpBhY5HVD34&usqp=CAU"
+
+  }
+]
