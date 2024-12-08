@@ -1,4 +1,4 @@
-'use client' //모듈이 클라이언트 번들의 일부로 간주
+'use client'
 
 import Image from 'next/image'
 import { FormEvent } from 'react'
@@ -76,7 +76,7 @@ export default function Page() {
         </div>
         <span
           className='underline text-[0.7rem] mt-3 text-gray-500 cursor-pointer'
-          onClick={() => router.push('/find')}
+          onClick={() => router.push('/password/find')}
         >
           비밀번호를 잊으셨나요?
         </span>
