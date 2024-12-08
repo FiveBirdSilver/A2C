@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import { ChakraProvider, defaultSystem } from '@chakra-ui/react'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { ToastContainer } from 'react-toastify'
@@ -24,7 +23,7 @@ function Providers({ children }: Props) {
 
   return (
     <QueryClientProvider client={client}>
-      <ChakraProvider value={defaultSystem}>{children}</ChakraProvider>
+      {children}
       <ReactQueryDevtools initialIsOpen={false} />
       <ToastContainer />
     </QueryClientProvider>

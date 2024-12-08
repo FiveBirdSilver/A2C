@@ -1,9 +1,5 @@
-import { SkeletonText } from '@/components/ui/skeleton'
-
-export const Skeleton = () => {
-  return (
-    <div className='p-4'>
-      <SkeletonText noOfLines={4} gap='5' />
-    </div>
-  )
+const Skeleton = () => {
+  return <div className='space-y-2 mb-2'></div>
 }
+
+export default Skeleton

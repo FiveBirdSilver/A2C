@@ -1,9 +1,6 @@
 module.exports = {
   images: {
-    domains: ['postfiles.pstatic.net'],
+    domains: ['postfiles.pstatic.net', 'encrypted-tbn0.gstatic.com'],
   },
   reactStrictMode: false,
-  experimental: {
-    optimizePackageImports: ['@chakra-ui/react'],
-  },
 }

@@ -1,19 +1,18 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Image from 'next/image'
-import { Separator } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
 import dayjs from 'dayjs'
 
 import { useInView } from 'react-intersection-observer'
 import { IoChatbubbleOutline, IoHeartOutline } from 'react-icons/io5'
-import { HiPaperAirplane } from 'react-icons/hi'
 import { HiOutlinePencilAlt } from 'react-icons/hi'
 
-import Segmented from '@/components/elements/Segmented.tsx'
 import { useInfiniteQueries } from '@/hooks/queries/useInfiniteQueries.tsx'
-import { Skeleton } from '@/components/elements/Skeleton.tsx'
+import Skeleton from '@/components/elements/Skeleton.tsx'
+import Tabs from '@/components/elements/Tabs.tsx'
+import Carousel from '@/components/elements/Carousel.tsx'
+import aroundPeopleData from '@/data/aroundPeople.json'
 
 interface IBoard {
   _id: string
@@ -44,14 +43,11 @@ const Page = () => {
     if (inView && hasNextPage) fetchNextPage()
   }, [inView, fetchNextPage, hasNextPage])
 
-  {
-    /*<div className='flex justify-center w-full h-full py-4'>*/
-  }
   return (
     <div className='flex justify-center] w-full h-full py-4 sm:gap-0 md:gap-0 lg:gap-6 relative'>
       <div className='flex-[6] flex-col items-center w-full'>
         <div className='flex flex-col items-center justify-center'>
-          <Segmented
+          <Tabs
             items={['전체', '구해요', '같이해요', '공유해요']}
             value={checkedOption}
             setState={setCheckedOption}
@@ -100,12 +96,12 @@ const Page = () => {
                       </span>
                     </div>
                   </div>
-                  <Separator className='border-gray-100 border-[0.5px]' />
+                  <div className='border-gray-100 border-[0.5px]' />
                 </div>
               ))}
           <div ref={ref} className='p-0.5' />
           <button
-            onClick={() => router.push('/')}
+            onClick={() => router.push('/board/write')}
             className='fixed bg-green-400 w-12 h-12 rounded-full flex items-center justify-center text-lg text-white z-10 bottom-[4.5rem] right-4 cursor-pointer'
           >
             <HiOutlinePencilAlt />
@@ -114,37 +110,7 @@ const Page = () => {
       </div>
       <div className='relative sm:flex-none md:flex-none lg:flex-[4]'>
         <div className='fixed bg-gray-50 text-white p-4 w-72 rounded-xl'>
-          <div className='flex items-center gap-4'>
-            {/* 프로필 이미지 */}
-            <Image
-              src='https://postfiles.pstatic.net/MjAyNDA4MTFfMTE1/MDAxNzIzMzU2Mjc0MDAw.pffzKEUOeZCD-Z7YT5A560qiLhkbL-hEkCmhYrtWOhIg.GN28igOFZjLiNiDF6_9s5QCp6U98X9Ajkjn3Jh2Lb38g.JPEG/IMG_7910.JPG?type=w773' // 여기에 실제 이미지 경로를 삽입
-              alt='프로필'
-              className='rounded object-cover'
-              priority
-              width={60}
-              height={60}
-            />
-            {/* 이름, 역할, 경력 */}
-            <div className='flex flex-col gap-2'>
-              <h2 className='text-[1rem] text-gray-900 font-semibold'>
-                배부르다이말이야
-              </h2>
-              <div className='flex items-center space-x-2 text-sm text-gray-400'>
-                <span className='text-green-400'>fivebirdsilver</span>
-                <span>|</span>
-                <span>seoul-강남</span>
-              </div>
-            </div>
-          </div>
-          {/* 상태 메시지 */}
-          <p className='mt-4 mb-10 text-gray-400 text-sm '>
-            안녕해? 안녕하냐고!
-          </p>
-          {/* 대화 시작하기 버튼 */}
-          <button className='flex items-center px-4 py-2 text-sm text-white font-bold bg-green-500 rounded-lg hover:bg-green-600  w-full justify-center '>
-            <HiPaperAirplane className='text-xl rotate-45 mr-2 mb-1' />
-            대화 시작하기
-          </button>
+          <Carousel data={aroundPeopleData} />
         </div>
       </div>
     </div>
