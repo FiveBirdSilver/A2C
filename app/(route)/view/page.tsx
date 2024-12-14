@@ -23,10 +23,10 @@ export default function Page() {
     southWest: { lat: 0, lng: 0 },
   })
 
-  const { data } = useQueries(
-    `northEast=${bounds.northEast.lng},${bounds.northEast.lat}&southWest=${bounds.southWest.lng},${bounds.southWest.lat}`
-  )
-  console.log(data)
+  const { data } = useQueries({
+    queryKey: 'getMapAll',
+    endpoint: `northEast=${bounds.northEast.lng},${bounds.northEast.lat}&southWest=${bounds.southWest.lng},${bounds.southWest.lat}`,
+  })
 
   useEffect(() => {
     const { naver } = window

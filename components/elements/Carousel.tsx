@@ -32,7 +32,6 @@ const Carousel = (props: { data: ICarousel[] }) => {
       {data?.map((v) => (
         <SwiperSlide key={v.id}>
           <div className='flex items-center gap-4'>
-            {/* 프로필 이미지 */}
             <Image
               src={v.profile}
               alt='프로필'
@@ -41,7 +40,6 @@ const Carousel = (props: { data: ICarousel[] }) => {
               width={60}
               height={60}
             />
-            {/* 이름, 역할, 경력 */}
             <div className='flex flex-col gap-2'>
               <h2 className='text-[1rem] text-gray-900 font-semibold'>
                 {v.name}
@@ -54,7 +52,6 @@ const Carousel = (props: { data: ICarousel[] }) => {
             </div>
           </div>
           <p className='mt-4 mb-10 text-gray-400 text-sm '>{v.contents}</p>
-          {/* 대화 시작하기 버튼 */}
           <button className='flex items-center px-4 py-2 text-sm text-white font-bold bg-green-500 rounded-lg hover:bg-green-600  w-full justify-center '>
             <HiPaperAirplane className='text-xl rotate-45 mr-2 mb-1' />
             대화 시작하기

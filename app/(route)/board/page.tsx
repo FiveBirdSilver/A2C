@@ -32,8 +32,14 @@ interface IBoard {
 
 const Page = () => {
   const router = useRouter()
-  const [checkedOption, setCheckedOption] = useState<string>('전체')
+
+  // 탭 메뉴 상태
+  const [checkedMenu, setCheckedMenu] = useState<string>('전체')
+
+  // 게시글 무한 스크롤 마지막 시점
   const { ref, inView } = useInView({ threshold: 0 })
+
+  // 게시글 무한 스크롤 조회
   const { isLoading, isSuccess, data, fetchNextPage, hasNextPage } =
     useInfiniteQueries({
       queryKey: 'board',
@@ -44,13 +50,13 @@ const Page = () => {
   }, [inView, fetchNextPage, hasNextPage])
 
   return (
-    <div className='flex justify-center] w-full h-full py-4 sm:gap-0 md:gap-0 lg:gap-6 relative'>
-      <div className='flex-[6] flex-col items-center w-full'>
+    <div className='flex justify-center w-full h-full py-4 sm:gap-0 md:gap-0 lg:gap-6 relative'>
+      <div className='flex-[7] flex-col items-center w-full'>
         <div className='flex flex-col items-center justify-center'>
           <Tabs
             items={['전체', '구해요', '같이해요', '공유해요']}
-            value={checkedOption}
-            setState={setCheckedOption}
+            value={checkedMenu}
+            setState={setCheckedMenu}
           />
         </div>
         <div className='flex flex-col w-full'>
@@ -60,7 +66,11 @@ const Page = () => {
               ))
             : isSuccess &&
               data?.pages?.map((page: IBoard) => (
-                <div key={page._id}>
+                <div
+                  key={page._id}
+                  onClick={() => router.push(`/board/detail/${page._id}`)}
+                  className='cursor-pointer'
+                >
                   <div className='text-gray-900 p-4 rounded-lg w-full space-y-4 '>
                     <div className='flex justify-between'>
                       <div className='bg-green-500 text-xs px-2 py-1 rounded-full inline-block text-white font-bold'>
@@ -102,13 +112,13 @@ const Page = () => {
           <div ref={ref} className='p-0.5' />
           <button
             onClick={() => router.push('/board/write')}
-            className='fixed bg-green-400 w-12 h-12 rounded-full flex items-center justify-center text-lg text-white z-10 bottom-[4.5rem] right-4 cursor-pointer'
+            className='absolute bg-green-400 w-12 h-12 rounded-full flex items-center justify-center text-lg text-white z-10 md:bottom-12 md:right-8 bottom-8 right-4 cursor-pointer'
           >
             <HiOutlinePencilAlt />
           </button>
         </div>
       </div>
-      <div className='relative sm:flex-none md:flex-none lg:flex-[4]'>
+      <div className='relative sm:flex-none md:flex-none lg:flex-[3]'>
         <div className='fixed bg-gray-50 text-white p-4 w-72 rounded-xl'>
           <Carousel data={aroundPeopleData} />
         </div>
