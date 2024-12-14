@@ -10,13 +10,13 @@ import { useLoginMutation } from '@/hooks/mutations/useLoginMutation.tsx'
 
 export default function Page() {
   const router = useRouter()
-  const { login, handleOnChange, validateForm, warning, email, password } =
+  const { postLogin, handleOnChange, validateForm, warning, email, password } =
     useLoginMutation()
 
   // 로그인 폼 제출
   const handleOnSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (validateForm()) login.mutate()
+    if (validateForm()) postLogin.mutate()
   }
 
   return (

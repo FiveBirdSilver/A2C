@@ -14,11 +14,17 @@ interface IVerifyCheck {
 }
 
 const useVerifyMutation = () => {
+  // 인증번호 코드
   const [authCode, setAuthCode] = useState<string>('')
-  const [openCodeBox, setOpenCodeBox] = useState<boolean>(false)
+
+  // 인증번호 폼 열림 state
+  const [openAuthCodeBox, setOpenAuthCodeBox] = useState<boolean>(false)
+
+  // 인증 유무
+  const [isAuthCheck, setIsAuthCheck] = useState<boolean>(false)
 
   // 인증번호 발송
-  const sendCode = useMutation({
+  const postSendCode = useMutation({
     mutationKey: ['sendCode'],
     mutationFn: async (data: IVerifySend) => {
       return await instance.post('/user/verifySend', data)
@@ -27,13 +33,13 @@ const useVerifyMutation = () => {
       alert('인증번호가 발송되었습니다.')
     },
     onError: (error: AxiosError) => {
-      console.log(error)
+      console.error(error)
       alert('일시적인 오류입니다. 다시 시도해주세요.')
     },
   })
 
   // 인증번호 체크
-  const checkCode = useMutation({
+  const postCheckCode = useMutation({
     mutationKey: ['checkCode'],
     mutationFn: async (data: IVerifyCheck) => {
       return await instance.get(
@@ -42,10 +48,11 @@ const useVerifyMutation = () => {
     },
     onSuccess: () => {
       alert('인증이 성공적으로 완료되었습니다.')
-      setOpenCodeBox(false)
+      setIsAuthCheck(true)
+      setOpenAuthCodeBox(false)
     },
     onError: (error: AxiosError) => {
-      console.log(error.response)
+      console.error(error)
       alert('인증에 실패했습니다. 다시 시도해주세요.')
     },
   })
@@ -55,10 +62,11 @@ const useVerifyMutation = () => {
   }
 
   return {
-    sendCode,
-    checkCode,
-    openCodeBox,
-    setOpenCodeBox,
+    postSendCode,
+    postCheckCode,
+    isAuthCheck,
+    openAuthCodeBox,
+    setOpenAuthCodeBox,
     authCode,
     handleOnChange,
   }

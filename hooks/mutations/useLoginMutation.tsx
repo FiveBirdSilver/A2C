@@ -4,13 +4,13 @@ import { useRouter } from 'next/navigation'
 import { AxiosError } from 'axios'
 
 import instance from '@/libs/apis/instance.ts'
+import { notify } from '@/libs/utils/notify.ts'
 
 interface IWarning {
   email: boolean
   password: boolean
 }
 
-// test@test.com, gp7181811
 export const useLoginMutation = () => {
   const router = useRouter()
   const [email, setEmail] = useState<string>('')
@@ -20,7 +20,7 @@ export const useLoginMutation = () => {
     password: false,
   })
 
-  const login = useMutation({
+  const postLogin = useMutation({
     mutationFn: async () => {
       return await instance.post('/user/login', { email, password })
     },
@@ -28,8 +28,10 @@ export const useLoginMutation = () => {
       router.push('/')
     },
     onError: (error: AxiosError) => {
-      console.error(error)
-      alert('아이디나 비밀번호가 일치하지 않습니다.') // 상태코드 반환 안됌 확인 필요
+      const status = error.response?.status
+      if (status === 400 || status === 401)
+        notify('아이디나 비밀번호가 일치하지 않습니다. 다시 시도해주세요.')
+      else notify('일시적인 오류입니다. 다시 시도해주세요.')
     },
   })
 
@@ -57,5 +59,5 @@ export const useLoginMutation = () => {
     return !newWarning.email && !newWarning.password
   }
 
-  return { login, handleOnChange, validateForm, warning, email, password }
+  return { postLogin, handleOnChange, validateForm, warning, email, password }
 }

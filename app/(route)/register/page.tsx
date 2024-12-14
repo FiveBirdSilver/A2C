@@ -12,13 +12,14 @@ import useField from '@/hooks/common/useForm.tsx'
 
 export default function Page() {
   const { register, handleSubmit, watch, errors } = useField()
-  const registerMutation = useRegisterMutation()
+  const { postRegister } = useRegisterMutation()
   const {
-    sendCode,
-    checkCode,
-    openCodeBox,
-    setOpenCodeBox,
+    postSendCode,
+    postCheckCode,
     authCode,
+    openAuthCodeBox,
+    isAuthCheck,
+    setOpenAuthCodeBox,
     handleOnChange,
   } = useVerifyMutation()
 
@@ -31,8 +32,8 @@ export default function Page() {
     type: 'start' | 'reset'
   ) => {
     event.preventDefault()
-    setOpenCodeBox(true)
-    sendCode.mutate({ email: watch('email') })
+    setOpenAuthCodeBox(true)
+    postSendCode.mutate({ email: watch('email') })
 
     type === 'start' ? startTimer() : resetTimer()
   }
@@ -40,7 +41,7 @@ export default function Page() {
   // 인증번호 확인
   const confirmAuthNumber = async (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
-    checkCode.mutate({
+    postCheckCode.mutate({
       email: watch('email'),
       authNum: authCode,
     })
@@ -51,7 +52,9 @@ export default function Page() {
       <div className='flex flex-col items-center justify-center gap-4  w-full max-w-96'>
         <form
           className={'w-full flex flex-col gap-6'}
-          onSubmit={handleSubmit(() => registerMutation.mutate(watch()))}
+          onSubmit={handleSubmit(() =>
+            postRegister.mutate({ ...watch(), isAuthCheck })
+          )}
         >
           <div className='flex flex-col gap-3'>
             <div className='flex flex-col gap-1'>
@@ -71,7 +74,7 @@ export default function Page() {
               text='이메일 인증하기'
             />
           </div>
-          {openCodeBox && (
+          {openAuthCodeBox && (
             <div className='flex flex-col gap-1 bg-gray-50 px-2.5 py-3.5'>
               <span className={'text-xs pl-1'}>
                 이메일로 받은 인증코드를 입력해주세요.
@@ -153,7 +156,9 @@ export default function Page() {
           </div>
           <Button
             variant='primary'
-            onClick={handleSubmit(() => registerMutation.mutate(watch()))}
+            onClick={handleSubmit(() =>
+              postRegister.mutate({ ...watch(), isAuthCheck })
+            )}
             // disabled={!(email !== "" && password !== "")}
             text='회원가입'
           />
