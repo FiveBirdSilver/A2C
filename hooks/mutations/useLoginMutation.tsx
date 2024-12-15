@@ -1,7 +1,7 @@
 import { useCallback, useState, ChangeEvent } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 
 import instance from '@/libs/apis/instance.ts'
 import { notify } from '@/libs/utils/notify.ts'
@@ -37,7 +37,7 @@ export const useLoginMutation = () => {
 
   // 카카오로 로그인하기
   const handleOnKaKaoLogin = () => {
-    return axios.get('/kakaoLogin')
+    return instance.get('/kakaoLogin')
   }
 
   const handleOnChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
