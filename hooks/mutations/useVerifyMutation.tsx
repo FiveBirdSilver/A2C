@@ -27,7 +27,7 @@ const useVerifyMutation = () => {
   const postSendCode = useMutation({
     mutationKey: ['sendCode'],
     mutationFn: async (data: IVerifySend) => {
-      return await instance.post('/user/verifySend', data)
+      return await instance.post('/api/user/verifySend', data)
     },
     onSuccess: () => {
       alert('인증번호가 발송되었습니다.')
