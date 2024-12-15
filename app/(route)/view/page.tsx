@@ -79,8 +79,3 @@ export default function Page() {
     </div>
   )
 }
-
-interface IMap {
-  data: { name: string; lat: number; lng: number }[]
-  standard: 'board' | 'location'
-}

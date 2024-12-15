@@ -12,10 +12,10 @@ const Page = () => {
   const [price, setPrice] = useState<string>('')
   const [type, setType] = useState<string>('find')
 
-  const [location, setLocation] = useState<{ lat: number; lng: number }>({
-    lat: 0,
-    lng: 0,
-  })
+  // const [location, setLocation] = useState<{ lat: number; lng: number }>({
+  //   lat: 0,
+  //   lng: 0,
+  // })
 
   const typeItems = [
     { text: '구해요', value: 'find' },
