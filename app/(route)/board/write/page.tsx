@@ -53,7 +53,7 @@ const Page = () => {
         />
         <div className='flex flex-col gap-3'>
           <div className='flex items-center space-x-2'>
-            {typeItems.map((item, i) => (
+            {typeItems.map((item) => (
               <Label
                 key={item.value}
                 text={item.text}
