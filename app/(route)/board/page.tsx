@@ -112,7 +112,7 @@ const Page = () => {
           <div ref={ref} className='p-0.5' />
           <button
             onClick={() => router.push('/board/write')}
-            className='absolute bg-green-400 w-12 h-12 rounded-full flex items-center justify-center text-lg text-white z-10 md:bottom-12 md:right-8 bottom-8 right-4 cursor-pointer'
+            className='fixex md:absolute bg-green-400 w-12 h-12 rounded-full flex items-center justify-center text-lg text-white z-10 md:bottom-12 md:right-8 bottom-24 right-4 cursor-pointer'
           >
             <HiOutlinePencilAlt />
           </button>

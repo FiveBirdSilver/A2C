@@ -23,7 +23,7 @@ export default function Button(props: IButton) {
       onClick={onClick}
       className={cn(
         colorVariants[variant],
-        'w-full h-10 rounded cursor-pointer text-sm'
+        'w-full h-10 rounded-md cursor-pointer text-sm'
       )}
     >
       {text}

@@ -6,7 +6,7 @@ interface IMap {
   lng: number
 }
 
-const useMap = ({ name, lat, lng }: IMap) => {
+const useBoardMap = ({ name, lat, lng }: IMap) => {
   const mapRef = useRef<HTMLDivElement | null>(null)
   const [bounds, setBounds] = useState({
     northEast: { lat: 0, lng: 0 },
@@ -52,4 +52,4 @@ const useMap = ({ name, lat, lng }: IMap) => {
   return { mapRef, bounds }
 }
 
-export default useMap
+export default useBoardMap
