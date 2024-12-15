@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
+import { RiKakaoTalkFill } from 'react-icons/ri'
 
 import Input from '@/components/elements/Input.tsx'
 import Button from '@/components/elements/Button.tsx'
@@ -10,8 +11,15 @@ import { useLoginMutation } from '@/hooks/mutations/useLoginMutation.tsx'
 
 export default function Page() {
   const router = useRouter()
-  const { postLogin, handleOnChange, validateForm, warning, email, password } =
-    useLoginMutation()
+  const {
+    postLogin,
+    handleOnChange,
+    validateForm,
+    warning,
+    email,
+    password,
+    handleOnKaKaoLogin,
+  } = useLoginMutation()
 
   // 로그인 폼 제출
   const handleOnSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -68,18 +76,29 @@ export default function Page() {
           >
             또는
           </p>
-          <Button
-            variant='outline'
-            onClick={() => router.push('/register')}
-            text='회원가입'
-          />
+          <button
+            onClick={handleOnKaKaoLogin}
+            className='w-full h-10  cursor-pointer text-sm flex items-center justify-center gap-2 bg-[#FEE500] rounded-md'
+          >
+            <RiKakaoTalkFill />
+            <span>카카오 계정으로 계속하기</span>
+          </button>
         </div>
-        <span
-          className='underline text-[0.7rem] mt-3 text-gray-500 cursor-pointer'
-          onClick={() => router.push('/password/find')}
-        >
-          비밀번호를 잊으셨나요?
-        </span>
+        <div className='flex gap-2 mt-3'>
+          <span
+            className='underline text-[0.7rem] text-gray-500 cursor-pointer'
+            onClick={() => router.push('/password/find')}
+          >
+            비밀번호 재설정
+          </span>
+          <span className='text-[0.7rem] text-gray-500'>|</span>
+          <span
+            className='underline text-[0.7rem] text-gray-500 cursor-pointer'
+            onClick={() => router.push('/register')}
+          >
+            이메일로 회원가입
+          </span>
+        </div>
       </div>
     </div>
   )
