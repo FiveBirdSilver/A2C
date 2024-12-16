@@ -37,7 +37,7 @@ export const useLoginMutation = () => {
 
   // 카카오로 로그인하기
   const handleOnKaKaoLogin = () => {
-    return instance.get('/kakaoLogin')
+    router.push(`${process.env.NEXT_PUBLIC_API_URL}/kakaoLogin`)
   }
 
   const handleOnChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
