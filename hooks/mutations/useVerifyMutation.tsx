@@ -43,7 +43,7 @@ const useVerifyMutation = () => {
     mutationKey: ['checkCode'],
     mutationFn: async (data: IVerifyCheck) => {
       return await instance.get(
-        `/user/verifyCheck?email=${data.email}&code=${data.authNum}`
+        `/api/user/verifyCheck?email=${data.email}&code=${data.authNum}`
       )
     },
     onSuccess: () => {
