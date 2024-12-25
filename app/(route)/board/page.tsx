@@ -12,7 +12,7 @@ import { useInfiniteQueries } from '@/hooks/queries/useInfiniteQueries.tsx'
 import Skeleton from '@/components/elements/Skeleton.tsx'
 import Tabs from '@/components/elements/Tabs.tsx'
 import Carousel from '@/components/elements/Carousel.tsx'
-import aroundPeopleData from '@/data/aroundPeople.json'
+import aroundPeopleData from '@/data/climbingPartners.json'
 
 interface IBoard {
   _id: string

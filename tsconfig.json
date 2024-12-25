@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
+    "types": ["jest", "@testing-library/jest-dom"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -28,7 +29,7 @@
       }
     ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "types.d.ts", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
-}
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "types.d.ts", "setupTests.ts",".next/types/**/*.ts"],
+  "exclude": ["node_modules"],
 
+}
