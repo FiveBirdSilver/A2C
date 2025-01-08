@@ -21,7 +21,7 @@ const Tabs = (props: ITabs) => {
   )
 
   return (
-    <div className='bg-gray-50 rounded-md border border-gray-200 px-3 py-2 mb-4'>
+    <div className='bg-gray-50 rounded-md border border-gray-200 px-3 py-2 m-4'>
       <nav aria-label='Tabs' className='flex space-x-2'>
         {items.map((name) => (
           <button

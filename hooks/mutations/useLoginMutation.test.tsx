@@ -2,8 +2,9 @@ import { ChangeEvent, ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
 import { renderHook, act } from '@testing-library/react-hooks'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
 import { useLoginMutation } from '@/hooks/mutations/useLoginMutation'
-import instance from '@/libs/apis/instance'
+import { instance } from '@/libs/apis/instance'
 
 // instance 모킹
 jest.mock('@libs/apis/instance', () => ({

@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
-import instance from '@/libs/apis/instance.ts'
+import { instance } from '@/libs/apis/instance.ts'
 
 interface IUseInfiniteQuery {
   queryKey: string
@@ -11,7 +11,7 @@ export const useInfiniteQueries = (props: IUseInfiniteQuery) => {
   return useInfiniteQuery({
     queryKey: [queryKey],
     queryFn: async ({ pageParam = 2 }) => {
-      const response = await instance.get(`/api/${queryKey}?page=${pageParam}`)
+      const response = await instance.get(`/${queryKey}?page=${pageParam}`)
       return response.data.data
     },
     initialPageParam: 1,
@@ -19,7 +19,7 @@ export const useInfiniteQueries = (props: IUseInfiniteQuery) => {
       return allPages.length + 1
     },
     select: (data) => ({
-      pages: data.pages[0].flatMap((page: object[]) => page),
+      pages: data.pages.flatMap((page: any) => page),
       pageParams: data.pageParams,
     }),
   })

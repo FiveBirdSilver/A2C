@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios'
 import { useQuery } from '@tanstack/react-query'
 
-import instance from '@/libs/apis/instance.ts'
+import { instance } from '@/libs/apis/instance.ts'
 import { notify } from '@/libs/utils/notify.ts'
 import { useRouter } from 'next/navigation'
 
@@ -17,7 +17,7 @@ export function useQueries<TData>({ endpoint, queryKey }: QueryConfig) {
     queryKey: [queryKey],
     queryFn: async () => {
       try {
-        const response = await instance.get(`/api/${endpoint}`)
+        const response = await instance.get(`/${endpoint}`)
         return response.data
       } catch (error) {
         if (error instanceof AxiosError) {

@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { AxiosError } from 'axios'
 
-import instance from '@/libs/apis/instance.ts'
+import { instance } from '@/libs/apis/instance.ts'
 import { notify } from '@/libs/utils/notify.ts'
 
 interface IRegister {
@@ -22,7 +22,7 @@ export const useRegisterMutation = () => {
         notify('이메일 인증이 필요합니다. 인증을 완료해주세요.')
         return
       }
-      return await instance.post('/api/user/signup', data)
+      return await instance.post('/user/signup', data)
     },
     onSuccess: (res) => {
       if (res?.data.result === 'fail_email') notify('이미 존재하는 계정입니다.')

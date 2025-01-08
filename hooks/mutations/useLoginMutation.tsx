@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { AxiosError } from 'axios'
 
-import instance from '@/libs/apis/instance.ts'
+import { instance } from '@/libs/apis/instance.ts'
 import { notify } from '@/libs/utils/notify.ts'
 
 interface IWarning {
@@ -23,7 +23,7 @@ export const useLoginMutation = () => {
   // 로그인
   const postLogin = useMutation({
     mutationFn: async () => {
-      return await instance.post('/api/user/login', { email, password })
+      return await instance.post('/user/login', { email, password })
     },
     onSuccess: () => {
       router.push('/')

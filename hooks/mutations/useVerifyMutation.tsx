@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from 'react'
 import { AxiosError } from 'axios'
 import { useMutation } from '@tanstack/react-query'
 
-import instance from '@/libs/apis/instance.ts'
+import { instance } from '@/libs/apis/instance.ts'
 
 interface IVerifySend {
   email: string
@@ -43,7 +43,7 @@ const useVerifyMutation = () => {
     mutationKey: ['checkCode'],
     mutationFn: async (data: IVerifyCheck) => {
       return await instance.get(
-        `/api/user/verifyCheck?email=${data.email}&code=${data.authNum}`
+        `/user/verifyCheck?email=${data.email}&code=${data.authNum}`
       )
     },
     onSuccess: () => {
