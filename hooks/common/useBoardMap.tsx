@@ -12,6 +12,7 @@ const useBoardMap = ({ name, lat, lng }: IMap) => {
     northEast: { lat: 0, lng: 0 },
     southWest: { lat: 0, lng: 0 },
   })
+
   useEffect(() => {
     const { naver } = window
     if (mapRef.current && naver) {
@@ -29,9 +30,9 @@ const useBoardMap = ({ name, lat, lng }: IMap) => {
       })
 
       // 현재 `fitBounds`를 사용하지 않음
-      // const bounds = new naver.maps.LatLngBounds(center, center)
-      // bounds.extend(center)
-      // map.fitBounds(bounds)
+      const bounds = new naver.maps.LatLngBounds(center, center)
+      bounds.extend(center)
+      map.fitBounds(bounds)
 
       // 지도 범위 업데이트
       const updateBounds = () => {

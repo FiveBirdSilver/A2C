@@ -1,81 +1,45 @@
 'use client'
+import Image from 'next/image'
 
-import { useEffect, useRef, useState } from 'react'
-import { useQueries } from '@/hooks/queries/useQueries.tsx'
-
-interface ICoordinate {
-  id: string
-  name: string
-  tel: string
-  addr: string
-  road_addr: string
-  img: string
-  lat: number
-  lng: number
-}
+import useAllMap from '@/hooks/common/useAllMap.tsx'
 
 export default function Page() {
-  const mapRef = useRef(null)
-
-  // 초기 경계 설정
-  const [bounds, setBounds] = useState({
-    northEast: { lat: 0, lng: 0 },
-    southWest: { lat: 0, lng: 0 },
-  })
-
-  const getMapAll = useQueries<{ data: ICoordinate[] }>({
-    queryKey: 'getMapAll',
-    endpoint: `northEast=${bounds.northEast.lng},${bounds.northEast.lat}&southWest=${bounds.southWest.lng},${bounds.southWest.lat}`,
-  })
-
-  useEffect(() => {
-    const { naver } = window
-    if (mapRef.current && naver) {
-      // if (navigator.geolocation) {
-      navigator.geolocation?.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords
-          const center = new naver.maps.LatLng(latitude, longitude)
-          const map = new naver.maps.Map(mapRef.current!, {
-            center: center,
-            zoom: 15,
-          })
-
-          // 모든 위치에 마커 생성
-          getMapAll.data?.data.forEach((location: ICoordinate) => {
-            new naver.maps.Marker({
-              position: new naver.maps.LatLng(location.lat, location.lng),
-              map: map,
-            })
-          })
-
-          const updateBounds = () => {
-            const currentBounds = map.getBounds()
-            const northEast = currentBounds.getMax()
-            const southWest = currentBounds.getMin()
-            setBounds({
-              northEast: { lat: northEast.y, lng: northEast.x },
-              southWest: { lat: southWest.y, lng: southWest.x },
-            })
-          }
-
-          updateBounds()
-
-          naver.maps.Event.addListener(map, 'bounds_changed', updateBounds)
-        },
-        (error) => {
-          console.error('Error getting location', error)
-        }
-      )
-    } else {
-      console.error('Geolocation is not supported by this browser.')
-    }
-    // }
-  }, [])
+  const { mapRef, selectPlace } = useAllMap()
 
   return (
-    <div className='flex items-center justify-center w-full h-full'>
+    <div className='flex items-center justify-center w-full h-full relative'>
       <div ref={mapRef} className='w-full h-full'></div>
+      {selectPlace && (
+        <div
+          className={
+            'bg-white absolute w-11/12 bottom-10 rounded-lg shadow-md z-10 flex p-4 gap-4'
+          }
+        >
+          {selectPlace.img && (
+            <Image
+              src={selectPlace.img}
+              alt='climbImg'
+              width={100}
+              height={100}
+              layout='fixed'
+              className='rounded-lg w-20 h-20 md:w-28 md:h-28'
+            />
+          )}
+          <div className={'flex flex-col justify-between'}>
+            <div className={'max-w-52 md:max-w-lg lg:max-w-3xl'}>
+              <p className={'font-bold'}>{selectPlace.name}</p>
+              <p className='text-sm overflow-hidden whitespace-nowrap text-ellipsis break-all text-gray-400'>
+                {selectPlace.road_addr}
+              </p>
+            </div>
+            <div className={'max-w-52 md:max-w-lg lg:max-w-3xl'}>
+              <p className='text-xs overflow-hidden whitespace-nowrap text-ellipsis break-all'>
+                {selectPlace.info}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

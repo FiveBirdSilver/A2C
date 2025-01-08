@@ -26,6 +26,7 @@ interface IBoardDetail {
 
 const Page = () => {
   const { id } = useParams()
+
   const { mapRef } = useBoardMap({
     name: '골든플래닛',
     lat: 37.5058315272521,

@@ -51,7 +51,7 @@ const Carousel = (props: { data: ICarousel[] }) => {
               </div>
             </div>
           </div>
-          <p className='mt-4 mb-10 text-gray-400 text-sm '>{v.contents}</p>
+          <p className='mt-4 mb-14 text-gray-400 text-sm '>{v.contents}</p>
           <button className='flex items-center px-4 py-2 text-sm text-white font-bold bg-green-500 rounded-lg hover:bg-green-600  w-full justify-center '>
             <HiPaperAirplane className='text-xl rotate-45 mr-2 mb-1' />
             대화 시작하기

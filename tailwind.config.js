@@ -1,13 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: ['class'],
+  darkMode: ['class'], // Dark mode 지원
   content: [
-    './pages/**/*.{ts,tsx}',
+    './pages/**/*.{ts,tsx}', // Tailwind 클래스 탐색 경로
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
   ],
-  prefix: '',
+  prefix: '', // 클래스 앞에 추가 프리픽스 (필요 시 사용)
   theme: {
     colors: {
       body: '#fefefe',
@@ -49,6 +49,18 @@ module.exports = {
         900: '#3d3d3d',
       },
     },
+    // extend: {
+    //   screens: {
+    //     'xs-mobile': '320px', // iPhone SE
+    //     'sm-mobile': '360px', // Galaxy S8, Pixel
+    //     'md-mobile': '480px', // 작은 모바일
+    //     'lg-mobile': '640px', // 기본 모바일
+    //     'sm-tablet': '768px', // 태블릿
+    //     'lg-tablet': '1024px', // 큰 태블릿
+    //     'sm-desktop': '1280px', // 작은 데스크탑
+    //     'lg-desktop': '1536px', // 데스크탑+
+    //   },
+    // },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [require('tailwindcss-animate')], // 애니메이션 플러그인
 }

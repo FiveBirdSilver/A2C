@@ -1,15 +1,18 @@
+import { ReactNode } from 'react'
 import Script from 'next/script'
+import dynamic from 'next/dynamic'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
 import Providers from './provider'
-import Wrapper from '@/components/layouts/Wrapper'
-import '../assets/styles/global.css'
+import '@/assets/styles/global.css'
+import Spinner from '@/components/elements/Spinner.tsx'
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+const Wrapper = dynamic(() => import('@/components/layouts/Wrapper'), {
+  loading: () => <Spinner />,
+  ssr: true,
+})
+
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html suppressHydrationWarning>
       <head>

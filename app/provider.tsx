@@ -11,7 +11,6 @@ type Props = {
 }
 
 function Providers({ children }: Props) {
-  // useMemo를 사용하여 상태 초기화 최적화
   const client = useMemo(
     () =>
       new QueryClient({
@@ -21,7 +20,7 @@ function Providers({ children }: Props) {
           },
         },
       }),
-    [] // 빈 배열을 의존성으로 두어 최초 렌더링에서만 생성
+    []
   )
 
   return (

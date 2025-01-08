@@ -1,8 +1,13 @@
-import axios from 'axios'
+import axios, { AxiosInstance } from 'axios'
 
-const instance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+const instance: AxiosInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_NODE_URL,
   withCredentials: true,
 })
 
-export default instance
+const mapInstance: AxiosInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_PHYTHON_URL,
+  withCredentials: true,
+})
+
+export { instance, mapInstance }
