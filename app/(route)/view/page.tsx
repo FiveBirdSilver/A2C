@@ -1,16 +1,65 @@
 'use client'
 import Image from 'next/image'
+import { HiOutlinePlus, HiOutlineMinus } from 'react-icons/hi2'
+import { CiLocationArrow1 } from 'react-icons/ci'
+import { MdError } from 'react-icons/md'
 
 import useAllMap from '@/hooks/common/useAllMap.tsx'
-// import Spinner from '@/components/elements/Spinner.tsx'
+import Spinner from '@/components/elements/Spinner.tsx'
+import { useMemo } from 'react'
 
 export default function Page() {
-  const { mapRef, selectPlace } = useAllMap()
+  const {
+    loading,
+    error,
+    mapRef,
+    selectPlace,
+    moveToCurrentLocation,
+    zoomIn,
+    zoomOut,
+  } = useAllMap()
 
-  // if(!loading) return <Spinner />
+  const renderBeforeMap = useMemo(() => {
+    if (loading) return <Spinner />
+    if (error)
+      return (
+        <div className='text-center flex flex-col gap-4 items-center justify-center'>
+          <MdError className='text-red-500 text-5xl' />
+          <h6 className='text-xl'>문제가 발생했습니다</h6>
+          <p className='text-sm'>
+            현재 위치에서 주변 클라이밍 시설을 불러오지 못했습니다
+            <br />
+            잠시 후 다시 시도해 주세요
+          </p>
+        </div>
+      )
+    if (!loading && !error)
+      return (
+        <div className='absolute left-6 md:left-10 top-4 flex flex-col gap-4'>
+          <div className='flex flex-col bg-white rounded-lg p-2 shadow-[0_2px_14px_rgba(0,0,0,0.12)] opacity-90'>
+            <button onClick={zoomIn}>
+              <HiOutlinePlus className='text-2xl text-gray-600' />
+            </button>
+            <p className='border-b border-b-gray-200 h-2 mb-1'></p>
+            <button onClick={zoomOut}>
+              <HiOutlineMinus className='text-2xl text-gray-600' />
+            </button>
+          </div>
+          <button
+            className='bg-white rounded-lg p-2 shadow-[0_2px_14px_rgba(0,0,0,0.12)] opacity-90'
+            onClick={moveToCurrentLocation}
+          >
+            <CiLocationArrow1 className='text-2xl text-gray-600' />
+          </button>
+        </div>
+      )
+  }, [loading, error])
+
   return (
     <div className='flex items-center justify-center w-full h-full relative'>
-      <div ref={mapRef} className='w-full h-full'></div>
+      <div ref={mapRef} className='w-full h-full'>
+        {renderBeforeMap}
+      </div>
       {selectPlace && (
         <div
           className={

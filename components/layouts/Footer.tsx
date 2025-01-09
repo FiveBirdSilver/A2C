@@ -16,28 +16,28 @@ export default function Footer() {
           onClick={() => router.push('/board')}
         >
           <FaRegComments />
-          <span className='text-[9px]'>COMMUNITY</span>
+          <span className='text-[9px]'>커뮤니티</span>
         </div>
         <div
           className='flex flex-col items-center cursor-pointer'
           onClick={() => router.push('/view')}
         >
           <FiMapPin />
-          <span className='text-[9px]'>FACILITIES</span>
+          <span className='text-[9px]'>내주변</span>
         </div>
         <div
           className='flex flex-col items-center cursor-pointer'
           onClick={() => router.push('/')}
         >
           <GrHomeRounded />
-          <span className='text-[9px]'>HOME</span>
+          <span className='text-[9px]'>홈</span>
         </div>
         <div
           className='flex flex-col items-center cursor-pointer'
           onClick={() => router.push('/login')}
         >
           <FaRegUser />
-          <span className='text-[9px]'>MY</span>
+          <span className='text-[9px]'>로그인</span>
         </div>
       </div>
     </div>
