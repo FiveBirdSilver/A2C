@@ -53,7 +53,7 @@ const Page = () => {
 
   return (
     <>
-      <div className='flex flex-col items-start justify-center'>
+      <div className='flex flex-col items-center justify-center'>
         <Tabs
           items={['전체', '구해요', '같이해요']}
           value={checkedMenu}

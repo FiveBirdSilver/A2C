@@ -2,17 +2,19 @@
 import Image from 'next/image'
 
 import useAllMap from '@/hooks/common/useAllMap.tsx'
+// import Spinner from '@/components/elements/Spinner.tsx'
 
 export default function Page() {
   const { mapRef, selectPlace } = useAllMap()
 
+  // if(!loading) return <Spinner />
   return (
     <div className='flex items-center justify-center w-full h-full relative'>
       <div ref={mapRef} className='w-full h-full'></div>
       {selectPlace && (
         <div
           className={
-            'bg-white absolute w-11/12 bottom-10 rounded-lg shadow-md z-10 flex p-4 gap-4'
+            'bg-white absolute w-11/12 bottom-5 rounded-lg shadow-md z-10 flex p-4 gap-4'
           }
         >
           {selectPlace.img && (

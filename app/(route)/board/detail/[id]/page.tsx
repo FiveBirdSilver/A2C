@@ -4,7 +4,9 @@ import { HiPaperAirplane } from 'react-icons/hi'
 import dayjs from 'dayjs'
 
 import useBoardMap from '@/hooks/common/useBoardMap.tsx'
-import { useQueries } from '@/hooks/queries/useQueries.tsx'
+import { useQuery } from '@tanstack/react-query'
+import axios, { AxiosError } from 'axios'
+import { notify } from '@/libs/utils/notify.ts'
 
 interface IBoardDetail {
   images: string[]
@@ -33,9 +35,27 @@ const Page = () => {
     lng: 127.040806473603,
   })
 
-  const getBoardDetail = useQueries<{ data: IBoardDetail; isLiked: boolean }>({
-    queryKey: `getBoardDetail`,
-    endpoint: `board/${id}`,
+  // const getBoardDetail = useQueries<{ data: IBoardDetail; isLiked: boolean }>({
+  //   queryKey: `getBoardDetail`,
+  //   endpoint: `board/${id}`,
+  // })
+
+  const getBoardDetail = useQuery<{ data: IBoardDetail; isLiked: boolean }>({
+    queryKey: ['getBoardDetail'],
+    queryFn: async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_IP_URL}/board/${id}`,
+          { withCredentials: true }
+        )
+        return response.data
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          console.error(error)
+          notify(`일시적인 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.`)
+        }
+      }
+    },
   })
 
   return (

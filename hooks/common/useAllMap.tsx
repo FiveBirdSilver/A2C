@@ -1,9 +1,11 @@
 /// <reference types="navermaps" />
 
 import { useEffect, useRef, useCallback, useState } from 'react'
+import debounce from 'lodash/debounce'
+
 import { mapInstance } from '@/libs/apis/instance'
 import useCurrentLocation from '@/hooks/common/useCurrentLocation'
-import debounce from 'lodash/debounce'
+// import Spinner from '@/components/elements/Spinner.tsx'
 
 interface IMapList {
   addr: string
@@ -47,6 +49,8 @@ const useAllMap = () => {
       } catch (error) {
         console.error(error)
         setError(true)
+        setLoading(false)
+
         return []
       }
     },
@@ -122,7 +126,7 @@ const useAllMap = () => {
       const data = await getMapList(northEast, southWest)
       updateMarkers(mapInstanceRef.current, data)
     }, 100),
-    [getMapList, updateMarkers, setLoading]
+    [getMapList, updateMarkers]
   )
 
   useEffect(() => {
@@ -148,7 +152,7 @@ const useAllMap = () => {
         naver.maps.Event.removeListener(listener)
       }
     }
-  }, [location, bound, handleMapUpdate, setLoading])
+  }, [location, bound, handleMapUpdate])
 
   return { loading, error, mapRef, selectPlace }
 }
