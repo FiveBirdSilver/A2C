@@ -38,7 +38,7 @@ export const useLoginMutation = () => {
 
   // 카카오로 로그인하기
   const handleOnKaKaoLogin = () => {
-    router.push(`${process.env.NEXT_PUBLIC_API_NODE_URL}/kakaoLogin`)
+    router.push(`https://a2climbing.kro.kr/node/kakaoLogin`)
   }
 
   const handleOnChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {

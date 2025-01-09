@@ -6,8 +6,6 @@ import debounce from 'lodash/debounce'
 import { mapInstance } from '@/libs/apis/instance'
 import useCurrentLocation from '@/hooks/common/useCurrentLocation'
 
-// import Spinner from '@/components/elements/Spinner.tsx'
-
 interface IMapList {
   addr: string
   id: string
