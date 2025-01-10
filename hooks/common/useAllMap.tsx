@@ -92,8 +92,8 @@ const useAllMap = () => {
             title: markerData.name,
             icon: {
               content: `
-                 <div style="width: 20px; height: 20px; display: flex; justify-content: center; align-items: center;">
-                  <svg fill="#fff" viewBox="-5 -5 60.00 60.00" xmlns="http://www.w3.org/2000/svg" overflow="inherit" stroke="#fff">
+                 <div style="transform: scale(0.5); transform-origin: center; display: flex; justify-content: center; align-items: center;">
+                  <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" overflow="inherit" stroke="#fff">
                     <g id="SVGRepo_bgCarrier" stroke-width="0">
                       <rect x="-5" y="-5" width="60.00" height="60.00" rx="30" fill="#5bac73"></rect>
                     </g>
@@ -174,7 +174,7 @@ const useAllMap = () => {
       icon: {
         content: `
         <div style="width: 30px; height: 30px; display: flex; justify-content: center; align-items: center;">
-          <svg width="30" height="30" fill="#0080ff" id="Capa_1" xmlns="http://www.w3.org/2000/svg" viewBox="-39.57 -39.57 474.85 474.85" xml:space="preserve" stroke="#0080ff">
+          <svg fill="#0080ff" id="Capa_1" xmlns="http://www.w3.org/2000/svg" viewBox="-39.57 -39.57 474.85 474.85" xml:space="preserve" stroke="#0080ff">
           <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M197.849,0C122.131,0,60.531,61.609,60.531,137.329c0,72.887,124.591,243.177,129.896,250.388l4.951,6.738 c0.579,0.792,1.501,1.255,2.471,1.255c0.985,0,1.901-0.463,2.486-1.255l4.948-6.738c5.308-7.211,129.896-177.501,129.896-250.388 C335.179,61.609,273.569,0,197.849,0z M197.849,88.138c27.13,0,49.191,22.062,49.191,49.191c0,27.115-22.062,49.191-49.191,49.191 c-27.114,0-49.191-22.076-49.191-49.191C148.658,110.2,170.734,88.138,197.849,88.138z"></path> </g> </g></svg>
         </div>`,
       },
