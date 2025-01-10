@@ -5,7 +5,7 @@
       "headers": [
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "https://a2-c.vercel.app/login"
+          "value": "https://a2-c.vercel.app"
         },
         {
           "key": "Access-Control-Allow-Credentials",
