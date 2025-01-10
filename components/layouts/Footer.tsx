@@ -16,7 +16,7 @@ export default function Footer() {
           onClick={() => router.push('/board')}
         >
           <FaRegComments />
-          <span className='text-[9px]'>커뮤니티</span>
+          <span className='text-[9px]'>운동생활</span>
         </div>
         <div
           className='flex flex-col items-center cursor-pointer'
