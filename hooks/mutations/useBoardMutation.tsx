@@ -11,7 +11,7 @@ interface IBoard {
 export const useBoardMutation = () => {
   const postBoard = useMutation({
     mutationFn: async (data: IBoard) => {
-      return await instance.post('/board', data)
+      return await instance.post('/node/api/board', data)
     },
     onSuccess: () => {},
     onError: () => {},

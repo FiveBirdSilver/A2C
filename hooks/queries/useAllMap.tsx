@@ -3,8 +3,8 @@
 import { useEffect, useRef, useCallback, useState } from 'react'
 import debounce from 'lodash/debounce'
 
-import { mapInstance } from '@/libs/apis/instance'
-import useCurrentLocation from '@/hooks/common/useCurrentLocation'
+import { instance } from '@/libs/apis/instance.ts'
+import useCurrentLocation from '@/hooks/common/useCurrentLocation.tsx'
 
 interface IMapList {
   addr: string
@@ -40,8 +40,8 @@ const useAllMap = () => {
   const getMapList = useCallback(
     async (northEast: naver.maps.LatLng, southWest: naver.maps.LatLng) => {
       try {
-        const response = await mapInstance.get<IMapList[]>(
-          `/map/GetClimbPlace?northEast=${northEast.lng()},${northEast.lat()}&southWest=${southWest.lng()},${southWest.lat()}`
+        const response = await instance.get<IMapList[]>(
+          `/python/api/map/GetClimbPlace?northEast=${northEast.lng()},${northEast.lat()}&southWest=${southWest.lng()},${southWest.lat()}`
         )
         setLoading(false)
         return response.data

@@ -3,7 +3,7 @@ import { useParams } from 'next/navigation'
 import { HiPaperAirplane } from 'react-icons/hi'
 import dayjs from 'dayjs'
 
-import useBoardMap from '@/hooks/common/useBoardMap.tsx'
+import useBoardMap from '@/hooks/queries/useBoardMap.tsx'
 import { useQueries } from '@/hooks/queries/useQueries.tsx'
 
 interface IBoardDetail {
@@ -35,7 +35,7 @@ const Page = () => {
 
   const getBoardDetail = useQueries<{ data: IBoardDetail; isLiked: boolean }>({
     queryKey: `getBoardDetail`,
-    endpoint: `board/${id}`,
+    endpoint: `/node/api/board/${id}`,
   })
 
   return (

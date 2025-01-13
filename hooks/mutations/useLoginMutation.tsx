@@ -23,7 +23,7 @@ export const useLoginMutation = () => {
   // 로그인
   const postLogin = useMutation({
     mutationFn: async () => {
-      return await instance.post('/user/login', { email, password })
+      return await instance.post('/node/api/user/login', { email, password })
     },
     onSuccess: () => {
       router.push('/')

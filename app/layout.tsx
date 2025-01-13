@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </Providers>
         <SpeedInsights />
         <Script
-          src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_MAP_KEY}`}
+          src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_MAP_KEY}&submodules=geocoder`}
           strategy='beforeInteractive'
         />
       </body>

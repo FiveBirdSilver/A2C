@@ -14,6 +14,7 @@ import Skeleton from '@/components/elements/Skeleton.tsx'
 import Tabs from '@/components/elements/Tabs.tsx'
 import Carousel from '@/components/elements/Carousel.tsx'
 import climbingPartners from '@/constants/climbingPartners.json'
+import useMediaQuery from '@/hooks/common/useMediaQuery.tsx'
 
 interface IBoard {
   _id: string
@@ -34,6 +35,7 @@ interface IBoard {
 
 const Page = () => {
   const router = useRouter()
+  const isMobile = useMediaQuery('(max-width: 768px)')
 
   // 탭 메뉴 상태
   const [checkedMenu, setCheckedMenu] = useState<string>('전체')
@@ -44,7 +46,7 @@ const Page = () => {
   // 게시글 무한 스크롤 조회
   const { isLoading, isSuccess, data, fetchNextPage, hasNextPage } =
     useInfiniteQueries({
-      queryKey: 'board',
+      queryKey: '/node/api/board',
     })
 
   useEffect(() => {
@@ -53,7 +55,7 @@ const Page = () => {
 
   return (
     <>
-      <div className='flex flex-col items-center justify-center'>
+      <div className='flex flex-col items-center md:items-start justify-center'>
         <Tabs
           items={['전체', '구해요', '같이해요']}
           value={checkedMenu}
@@ -119,19 +121,21 @@ const Page = () => {
             <div ref={ref} className='p-0.5' />
           </div>
         </div>
-        <div className='col-span-1 m:hidden'>
-          <div className='sticky top-20'>
-            <div className='hidden md:block bg-gray-50 text-white p-4 w-80 rounded-xl mb-4'>
-              <Carousel data={climbingPartners} />
-            </div>
-            <div className='hidden md:block bg-gray-50 text-white p-4 w-80 rounded-xl'>
-              {/*<Calendars />*/}
+        {!isMobile && (
+          <div className='col-span-1'>
+            <div className='sticky top-20'>
+              <div className='hidden md:block bg-gray-50 text-white p-4 w-80 rounded-xl mb-4'>
+                <Carousel data={climbingPartners} />
+              </div>
+              <div className='hidden md:block bg-gray-50 text-white p-4 w-80 rounded-xl'>
+                {/*<Calendars />*/}
+              </div>
             </div>
           </div>
-        </div>
+        )}
         <button
           onClick={() => router.push('/board/write')}
-          className='fixed  bg-green-400 w-12 h-12 rounded-full flex items-center justify-center text-lg text-white z-10 md:bottom-20  bottom-24 right-4 cursor-pointer'
+          className='fixed bg-green-400 w-12 h-12 rounded-full flex items-center justify-center text-lg text-white z-10 md:bottom-20  bottom-24 right-4 cursor-pointer'
         >
           <HiOutlinePencilAlt />
         </button>

@@ -22,7 +22,7 @@ export const useRegisterMutation = () => {
         notify('이메일 인증이 필요합니다. 인증을 완료해주세요.')
         return
       }
-      return await instance.post('/user/signup', data)
+      return await instance.post('/node/api/user/signup', data)
     },
     onSuccess: (res) => {
       if (res?.data.result === 'fail_email') notify('이미 존재하는 계정입니다.')

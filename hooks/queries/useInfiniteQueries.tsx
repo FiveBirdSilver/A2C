@@ -11,7 +11,7 @@ export const useInfiniteQueries = (props: IUseInfiniteQuery) => {
   return useInfiniteQuery({
     queryKey: [queryKey],
     queryFn: async ({ pageParam = 2 }) => {
-      const response = await instance.get(`/${queryKey}?page=${pageParam}`)
+      const response = await instance.get(`${queryKey}?page=${pageParam}`)
       return response.data.data
     },
     initialPageParam: 1,

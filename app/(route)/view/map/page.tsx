@@ -2,11 +2,11 @@
 import Image from 'next/image'
 import { HiOutlinePlus, HiOutlineMinus } from 'react-icons/hi2'
 import { CiLocationArrow1 } from 'react-icons/ci'
-import { MdError } from 'react-icons/md'
 
-import useAllMap from '@/hooks/common/useAllMap.tsx'
+import useAllMap from '@/hooks/queries/useAllMap.tsx'
 import Spinner from '@/components/elements/Spinner.tsx'
 import { useMemo } from 'react'
+import ErrorTemplate from '@/components/templates/ErrorTemplate.tsx'
 
 export default function Page() {
   const {
@@ -23,15 +23,9 @@ export default function Page() {
     if (loading) return <Spinner />
     if (error)
       return (
-        <div className='text-center flex flex-col gap-4 items-center justify-center'>
-          <MdError className='text-red-500 text-5xl' />
-          <h6 className='text-xl'>문제가 발생했습니다</h6>
-          <p className='text-sm'>
-            현재 위치에서 주변 클라이밍 시설을 불러오지 못했습니다
-            <br />
-            잠시 후 다시 시도해 주세요
-          </p>
-        </div>
+        <ErrorTemplate
+          message={'현재 위치에서 주변 클라이밍 시설을 불러오지 못했습니다'}
+        />
       )
     if (!loading && !error)
       return (
@@ -66,16 +60,22 @@ export default function Page() {
             'bg-white absolute w-11/12 bottom-5 rounded-lg shadow-md z-10 flex p-4 gap-4'
           }
         >
-          {selectPlace.img && (
-            <Image
-              src={selectPlace.img}
-              alt='climbImg'
-              width={100}
-              height={100}
-              layout='fixed'
-              className='rounded-lg w-20 h-20 md:w-28 md:h-28'
-            />
-          )}
+          <div className='w-20 h-20 md:w-28 md:h-28 relative'>
+            {selectPlace.img && (
+              <Image
+                src={selectPlace.img}
+                alt='climbImg'
+                fill
+                sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+                style={{ objectFit: 'cover' }}
+                placeholder={'blur'}
+                blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg=='
+                priority
+                // className='rounded-lg w-20 h-20 md:w-28 md:h-28'
+                className='rounded-lg object-cover'
+              />
+            )}
+          </div>
           <div className={'flex flex-col justify-between'}>
             <div className={'max-w-52 md:max-w-lg lg:max-w-3xl'}>
               <p className={'font-bold'}>{selectPlace.name}</p>

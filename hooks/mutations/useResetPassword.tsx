@@ -9,7 +9,7 @@ interface IFindAccount {
 export const useResetPassword = () => {
   const postSendEmail = useMutation({
     mutationFn: async (data: IFindAccount) => {
-      return await instance.post('/user/forget', data)
+      return await instance.post('/node/api/user/forget', data)
     },
     onSuccess: () => {
       alert('비밀번호 변경이 가능한 링크가 이메일로 전송되었습니다.')
