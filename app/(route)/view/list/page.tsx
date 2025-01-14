@@ -8,7 +8,6 @@ import Loading from '@/app/loading.tsx'
 import useCurrentLocation from '@/hooks/common/useCurrentLocation'
 import { useQueries } from '@/hooks/queries/useQueries'
 import ErrorTemplate from '@/components/templates/ErrorTemplate'
-import { useQuery } from '@tanstack/react-query'
 
 interface IList {
   id: string
@@ -65,7 +64,6 @@ const ListItem = ({ list, index }: { list: IList; index: number }) => (
 
 export default function Page() {
   const { location } = useCurrentLocation()
-  const [address, setAddress] = useState<string>('')
   const { isPending, isLoading, isSuccess, isError, data } = useQueries<
     IList[]
   >({
