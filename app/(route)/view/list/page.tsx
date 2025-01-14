@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 import Image from 'next/image'
 import { IoCall } from 'react-icons/io5'
 
