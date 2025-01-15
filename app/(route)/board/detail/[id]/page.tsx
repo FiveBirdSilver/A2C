@@ -35,7 +35,7 @@ const Page = () => {
 
   const getBoardDetail = useQueries<{ data: IBoardDetail; isLiked: boolean }>({
     queryKey: `getBoardDetail`,
-    endpoint: `/node/api/board/${id}`,
+    endpoint: `/board/${id}`,
   })
 
   return (
