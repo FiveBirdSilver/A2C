@@ -1,7 +1,7 @@
 {
   "rewrites": [
     {
-      "source": "/node/api/:path*",
+      "source": "/route/:path*",
       "destination": "https://a2climbing.kro.kr/:path*"
     }
   ],
