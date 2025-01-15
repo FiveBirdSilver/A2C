@@ -19,5 +19,11 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/login",
+      "destination": "https://a2-c.vercel.app/login"
+    }
   ]
 }
