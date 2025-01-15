@@ -1,11 +1,11 @@
 'use client'
 import Image from 'next/image'
+import { useMemo } from 'react'
 import { HiOutlinePlus, HiOutlineMinus } from 'react-icons/hi2'
 import { CiLocationArrow1 } from 'react-icons/ci'
 
-import useAllMap from '@/hooks/queries/useAllMap.tsx'
+import useAllMap from '@/hooks/common/useAllMap.tsx'
 import Spinner from '@/components/elements/Spinner.tsx'
-import { useMemo } from 'react'
 import ErrorTemplate from '@/components/templates/ErrorTemplate.tsx'
 
 export default function Page() {

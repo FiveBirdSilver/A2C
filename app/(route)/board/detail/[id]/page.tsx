@@ -3,7 +3,7 @@ import { useParams } from 'next/navigation'
 import { HiPaperAirplane } from 'react-icons/hi'
 import dayjs from 'dayjs'
 
-import useBoardMap from '@/hooks/queries/useBoardMap.tsx'
+import useBoardMap from '@/hooks/common/useBoardMap.tsx'
 import { useQueries } from '@/hooks/queries/useQueries.tsx'
 
 interface IBoardDetail {
