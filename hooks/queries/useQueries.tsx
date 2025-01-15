@@ -17,7 +17,7 @@ export function useQueries<TData>({
   return useQuery<TData, AxiosError>({
     queryKey: [queryKey],
     queryFn: async () => {
-      const response = await axios.get(`/api123${endpoint}`, {
+      const response = await axios.get(`/api${endpoint}`, {
         withCredentials: true,
       })
       return response.data
