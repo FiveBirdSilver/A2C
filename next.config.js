@@ -7,13 +7,13 @@ module.exports = {
       'naverbooking-phinf.pstatic.net',
     ],
   },
-  // async rewrites() {
-  //   return [
-  //     {
-  //       source: '/python/api/:path*',
-  //       destination: 'https://a2climbing.kro.kr/:path*',
-  //     },
-  //   ]
-  // },
+  async rewrites() {
+    return [
+      {
+        source: '/route/:path*',
+        destination: 'https://a2climbing.kro.kr/:path*',
+      },
+    ]
+  },
   reactStrictMode: false,
 }

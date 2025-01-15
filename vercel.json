@@ -23,8 +23,7 @@
   "redirects": [
     {
       "source": "/login",
-      "destination": "/",
-      "statusCode": 302
+      "destination": "https://github.com/vercel/vercel"
     }
   ]
 }
