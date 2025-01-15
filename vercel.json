@@ -23,7 +23,8 @@
   "redirects": [
     {
       "source": "/login",
-      "destination": "https://github.com/vercel/vercel"
+      "destination": "/",
+      "permanent": false
     }
   ]
 }
