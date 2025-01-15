@@ -24,7 +24,7 @@
     {
       "source": "/login",
       "destination": "/",
-      "statusCode": 200
+      "statusCode": 302
     }
   ]
 }
