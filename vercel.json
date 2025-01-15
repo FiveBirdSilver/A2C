@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/api/:path*",
-      "destination": "https://a2climbing.kro.kr/node/:path*"
+      "source": "/node/api/:path*",
+      "destination": "https://a2climbing.kro.kr/:path*"
     }
   ],
   "headers": [
