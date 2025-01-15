@@ -1,4 +1,10 @@
 {
+  "rewrites": [
+    {
+      "source": "/api123/:path*",
+      "destination": "https://a2climbing.kro.kr/:path*"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",

@@ -1,13 +1,15 @@
 'use client'
 
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import Image from 'next/image'
 import { IoCall } from 'react-icons/io5'
+import { BsFillPinMapFill } from 'react-icons/bs'
 
 import Loading from '@/app/loading.tsx'
 import useCurrentLocation from '@/hooks/common/useCurrentLocation'
 import { useQueries } from '@/hooks/queries/useQueries'
 import ErrorTemplate from '@/components/templates/ErrorTemplate'
+import useMediaQuery from '@/hooks/common/useMediaQuery.tsx'
 
 interface IList {
   id: string
@@ -64,6 +66,7 @@ const ListItem = ({ list, index }: { list: IList; index: number }) => (
 
 export default function Page() {
   const { location } = useCurrentLocation()
+  const isMobile = useMediaQuery('(max-width: 768px)')
   const { isPending, isLoading, isSuccess, isError, data } = useQueries<
     IList[]
   >({
@@ -72,31 +75,6 @@ export default function Page() {
     enabled: location !== null,
   })
 
-  useEffect(() => {
-    const { naver } = window
-
-    if (location && naver)
-      naver.maps.Service?.reverseGeocode(
-        {
-          coords: new window.naver.maps.LatLng(location?.lat, location?.lng),
-          orders: [
-            naver.maps.Service.OrderType.ADDR,
-            naver.maps.Service.OrderType.ROAD_ADDR,
-          ].join(','),
-        },
-        function (status, response) {
-          console.log(response, status)
-          if (status !== naver.maps.Service.Status.OK) {
-            // return alert('오류가 발생했습니다.')
-          }
-          const result = response.result
-          const items = result.items
-          console.log(items)
-          // items 배열에서 주소 정보를 확인할 수 있습니다.
-        }
-      )
-  }, [location])
-
   const renderList = useMemo(() => {
     if (isLoading || isPending) return <Loading />
     if (isError)
@@ -104,15 +82,21 @@ export default function Page() {
     if (data)
       return (
         <div className='relative'>
-          <div className='sticky top-10 bg-white flex flex-col items-center justify-center h-16 z-10'>
-            <p>강남구 역삼동</p>
-          </div>
-          {/*<div>가까운순</div>*/}
+          {/*<div className='sticky top-12 bg-white flex flex-col items-center justify-center h-16 z-10'>*/}
+          {/*  <p>강남구 역삼동</p>*/}
+          {/*</div>*/}
           <div className='flex items-center flex-col w-full'>
             {data.map((list: IList, index: number) => (
               <ListItem key={list.id} list={list} index={index} />
             ))}
           </div>
+          {isMobile && (
+            <button className='sticky bottom-10 left-1/2 transform -translate-x-1/2 bg-white flex items-center justify-center z-10 border-gray-200 border rounded-full py-2 px-4 gap-1 shadow-lg'>
+              <BsFillPinMapFill className='text-gray-700' />
+              <span className='text-sm text-gray-700 font-bold'>지도보기</span>
+            </button>
+          )}
+          {/*<div ref={mapRef} className='w-full h-full'></div>*/}
         </div>
       )
     return null

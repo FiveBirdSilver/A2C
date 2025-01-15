@@ -20,7 +20,7 @@ export default function Footer() {
         </div>
         <div
           className='flex flex-col items-center cursor-pointer'
-          onClick={() => router.push('/view/map')}
+          onClick={() => router.push('/view/list')}
         >
           <FiMapPin />
           <span className='text-[9px]'>내주변</span>
