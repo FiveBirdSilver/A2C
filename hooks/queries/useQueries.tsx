@@ -18,6 +18,7 @@ export function useQueries<TData>({
     queryFn: async () => {
       const response = await instance.get(`${endpoint}`, {
         withCredentials: true,
+        maxRedirects: 5,
       })
       return response.data
     },
