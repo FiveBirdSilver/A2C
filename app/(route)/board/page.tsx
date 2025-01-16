@@ -18,20 +18,28 @@ import useMediaQuery from '@/hooks/common/useMediaQuery.tsx'
 import ErrorTemplate from '@/components/templates/ErrorTemplate.tsx'
 
 interface IBoard {
+  images: string[]
+  location: {
+    point: string
+    lat: number
+    lng: number
+  }
   _id: string
   title: string
+  type: string
   content: string
-  priceType: string
-  location: string
+  contentType: string
   chatCount: number
   viewCount: number
   heartCount: number
-  price: string | number
+  priceType: string
+  price: string
   author: {
     nickname: string
   }
   createdAt: string
   updatedAt: string
+  __v: string
 }
 
 const Page = () => {
@@ -123,7 +131,7 @@ const Page = () => {
                             {/*</span>*/}
                             <MdLocationPin className='text-green-400' />
                             <span className='text-green-400 text-xs font-bold'>
-                              더클라임 - 양재
+                              {page.location.point}
                             </span>
                           </div>
                         </div>
@@ -154,7 +162,7 @@ const Page = () => {
           </div>
         </>
       )
-  }, [isError, isLoading, isSuccess])
+  }, [isLoading, isError, isSuccess, data, fetchNextPage, hasNextPage])
 
   return <>{renderBoard}</>
 }
