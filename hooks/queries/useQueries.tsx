@@ -18,8 +18,16 @@ export function useQueries<TData>({
     queryFn: async () => {
       const response = await instance.get(`${endpoint}`, {
         withCredentials: true,
-        maxRedirects: 5,
       })
+
+      if (response.status === 302) {
+        const location = response.headers.location
+        if (location) {
+          window.location.href = location // 리다이렉트 처리
+        }
+        throw new Error('Redirection required')
+      }
+
       return response.data
     },
     enabled: enabled,
