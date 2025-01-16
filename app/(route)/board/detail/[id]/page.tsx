@@ -1,5 +1,5 @@
 'use client'
-import { useParams } from 'next/navigation'
+import { useParams, useSearchParams } from 'next/navigation'
 import { HiPaperAirplane } from 'react-icons/hi'
 import dayjs from 'dayjs'
 
@@ -35,6 +35,8 @@ interface IBoardDetail {
 
 const Page = () => {
   const { id } = useParams()
+  const searchParams = useSearchParams()
+  const contentType = searchParams.get('contentType')
 
   const { mapRef } = useBoardMap({
     name: '골든플래닛',
@@ -47,10 +49,8 @@ const Page = () => {
     isLiked: boolean
   }>({
     queryKey: `getBoardDetail`,
-    endpoint: `/node/api/board/${id}`,
+    endpoint: `/node/api/board/${id}?contentType=${contentType}`,
   })
-
-  console.log('data', data)
 
   const renderDetail = useMemo(() => {
     if (isLoading) return <Loading />

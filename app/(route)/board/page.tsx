@@ -90,7 +90,11 @@ const Page = () => {
                     data?.pages?.map((page: IBoard) => (
                       <div
                         key={page._id}
-                        onClick={() => router.push(`/board/detail/${page._id}`)}
+                        onClick={() =>
+                          router.push(
+                            `/board/detail/${page._id}?contentType=${page.contentType}`
+                          )
+                        }
                         className='cursor-pointer'
                       >
                         <div className='text-gray-900 p-4 rounded-lg w-full space-y-4 '>

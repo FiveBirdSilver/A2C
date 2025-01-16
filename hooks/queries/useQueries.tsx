@@ -21,9 +21,8 @@ export function useQueries<TData>({
       })
 
       if (response.status === 302) {
-        const location = response.headers.location
         if (location) {
-          window.location.href = location // 리다이렉트 처리
+          window.location.href = '/login'
         }
         throw new Error('Redirection required')
       }
