@@ -17,7 +17,7 @@ export default function Page() {
     moveToCurrentLocation,
     zoomIn,
     zoomOut,
-  } = useAllMap()
+  } = useAllMap({})
 
   const renderBeforeMap = useMemo(() => {
     if (loading) return <Spinner />
@@ -47,7 +47,7 @@ export default function Page() {
           </button>
         </div>
       )
-  }, [loading, error])
+  }, [loading, error, mapRef.current])
 
   return (
     <div className='flex items-center justify-center w-full h-full relative'>

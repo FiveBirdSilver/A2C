@@ -1,7 +1,6 @@
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 import { useQuery } from '@tanstack/react-query'
-
-// import { instance } from '@/libs/apis/instance.ts'
+import { instance } from '@/libs/apis/instance.ts'
 
 interface QueryConfig {
   endpoint: string
@@ -17,7 +16,7 @@ export function useQueries<TData>({
   return useQuery<TData, AxiosError>({
     queryKey: [queryKey],
     queryFn: async () => {
-      const response = await axios.get(`/route${endpoint}`, {
+      const response = await instance.get(`${endpoint}`, {
         withCredentials: true,
       })
       return response.data

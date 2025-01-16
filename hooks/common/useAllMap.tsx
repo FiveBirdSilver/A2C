@@ -3,10 +3,10 @@
 import { useEffect, useRef, useCallback, useState } from 'react'
 import debounce from 'lodash/debounce'
 
-import { instance } from '@/libs/apis/instance.ts'
 import useCurrentLocation from '@/hooks/common/useCurrentLocation.tsx'
+import { instance } from '@/libs/apis/instance.ts'
 
-interface IMapList {
+export interface IMapList {
   addr: string
   id: string
   info?: string
@@ -16,13 +16,19 @@ interface IMapList {
   name: string
   road_addr: string
   tel: string
+  diff?: number
+  rank?: number
 }
 
-const useAllMap = () => {
+interface IMapProps {
+  lat?: number
+  lng?: number
+}
+
+const useAllMap = ({ lat, lng }: IMapProps) => {
   const mapRef = useRef<HTMLDivElement | null>(null)
   // 지도 객체 저장
   const mapInstanceRef = useRef<naver.maps.Map | null>(null)
-
   const markersRef = useRef<
     Array<{
       marker: naver.maps.Marker
@@ -41,7 +47,10 @@ const useAllMap = () => {
     async (northEast: naver.maps.LatLng, southWest: naver.maps.LatLng) => {
       try {
         const response = await instance.get<IMapList[]>(
-          `/python/api/map/GetClimbPlace?northEast=${northEast.lng()},${northEast.lat()}&southWest=${southWest.lng()},${southWest.lat()}`
+          `/python/api/map/GetClimbPlace?northEast=${northEast.lng()},${northEast.lat()}&southWest=${southWest.lng()},${southWest.lat()}`,
+          {
+            withCredentials: true,
+          }
         )
         setLoading(false)
         return response.data
@@ -158,6 +167,23 @@ const useAllMap = () => {
     const currentZoom = mapInstanceRef.current?.getZoom() || 10
     mapInstanceRef.current?.setZoom(currentZoom - 1) // 줌 축소
   }
+
+  // 리스트에서 클릭 시 마커 이동
+  const handleOnMoveLocation = useCallback(
+    debounce(() => {
+      if (lat && lng && mapInstanceRef.current) {
+        const newCenter = new naver.maps.LatLng(lat, lng)
+        mapInstanceRef.current.panTo(newCenter)
+        // mapInstanceRef.current.setZoom(15)
+      }
+    }, 200),
+    [lat, lng]
+  )
+
+  useEffect(() => {
+    handleOnMoveLocation()
+    return handleOnMoveLocation.cancel
+  }, [handleOnMoveLocation])
 
   useEffect(() => {
     if (!mapRef.current || !location || !bound) return
