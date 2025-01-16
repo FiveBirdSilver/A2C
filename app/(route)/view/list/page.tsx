@@ -115,7 +115,7 @@ export default function Page() {
               ))}
           </div>
           {isMobile && (
-            <button className='sticky bottom-10 left-1/2 transform -translate-x-1/2 bg-white flex items-center justify-center z-10 border-gray-200 border rounded-full py-2 px-4 gap-1 shadow-lg'>
+            <button className='sticky bottom-20 left-1/2 transform -translate-x-1/2 bg-white flex items-center justify-center z-10 border-gray-200 border rounded-full py-2 px-4 gap-1 shadow-lg'>
               <BsFillPinMapFill className='text-gray-700' />
               <span
                 className='text-sm text-gray-700 font-bold'
