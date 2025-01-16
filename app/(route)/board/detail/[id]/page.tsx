@@ -1,5 +1,5 @@
 'use client'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import { HiPaperAirplane } from 'react-icons/hi'
 import dayjs from 'dayjs'
 
@@ -7,7 +7,7 @@ import useBoardMap from '@/hooks/common/useBoardMap.tsx'
 import { useQueries } from '@/hooks/queries/useQueries.tsx'
 import { useMemo } from 'react'
 import Loading from '@/app/loading.tsx'
-// import ErrorTemplate from '@/components/templates/ErrorTemplate.tsx'
+import ErrorTemplate from '@/components/templates/ErrorTemplate.tsx'
 
 interface IBoardDetail {
   images: string[]
@@ -35,7 +35,6 @@ interface IBoardDetail {
 
 const Page = () => {
   const { id } = useParams()
-  const router = useRouter()
 
   const { mapRef } = useBoardMap({
     name: '골든플래닛',
@@ -51,10 +50,12 @@ const Page = () => {
     endpoint: `/node/api/board/${id}`,
   })
 
+  console.log('data', data)
+
   const renderDetail = useMemo(() => {
     if (isLoading) return <Loading />
-    if (isError) router.push('/login')
-    // return <ErrorTemplate message={'일시적인 오류가 발생했습니다'} />
+    if (isError)
+      return <ErrorTemplate message={'일시적인 오류가 발생했습니다'} />
     if (isSuccess)
       return (
         <div className='grid w-full'>
