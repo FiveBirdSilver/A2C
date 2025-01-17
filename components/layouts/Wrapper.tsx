@@ -7,11 +7,10 @@ import useMediaQuery from '@/hooks/common/useMediaQuery'
 
 export default function Wrapper({ children }: { children: ReactNode }) {
   const isMobile = useMediaQuery('(max-width: 768px)')
-  const isDesktop = useMediaQuery('(min-width: 1024px)')
 
   return (
     <div className='sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg mx-auto h-full'>
-      {isDesktop && <Header />}
+      <Header />
       <div className='h-full md:pt-14 mx-auto my-0 sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl '>
         {children}
       </div>
