@@ -16,18 +16,14 @@ export function useQueries<TData>({
   return useQuery<TData, AxiosError>({
     queryKey: [queryKey],
     queryFn: async () => {
-      const response = await instance.get(`${endpoint}`, {
-        withCredentials: true,
-      })
-
-      if (response.status === 302) {
-        if (location) {
-          window.location.href = '/login'
-        }
-        throw new Error('Redirection required')
+      try {
+        const response = await instance.get(`${endpoint}`, {
+          withCredentials: true,
+        })
+        return response.data
+      } catch (error) {
+        console.log('error', error)
       }
-
-      return response.data
     },
     enabled: enabled,
   })
