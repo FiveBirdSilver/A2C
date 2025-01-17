@@ -16,14 +16,10 @@ export function useQueries<TData>({
   return useQuery<TData, AxiosError>({
     queryKey: [queryKey],
     queryFn: async () => {
-      try {
-        const response = await instance.get(`${endpoint}`, {
-          withCredentials: true,
-        })
-        return response.data
-      } catch (error) {
-        console.log('error', error)
-      }
+      const response = await instance.get(`${endpoint}`, {
+        withCredentials: true,
+      })
+      return response.data
     },
     enabled: enabled,
   })

@@ -4,8 +4,8 @@ import { useMemo } from 'react'
 import { HiOutlinePlus, HiOutlineMinus } from 'react-icons/hi2'
 import { CiLocationArrow1 } from 'react-icons/ci'
 
+import Loading from '@/app/loading.tsx'
 import useAllMap from '@/hooks/common/useAllMap.tsx'
-import Spinner from '@/components/elements/Spinner.tsx'
 import ErrorTemplate from '@/components/templates/ErrorTemplate.tsx'
 
 export default function Page() {
@@ -20,7 +20,7 @@ export default function Page() {
   } = useAllMap({})
 
   const renderBeforeMap = useMemo(() => {
-    if (loading) return <Spinner />
+    if (loading) return <Loading />
     if (error)
       return (
         <ErrorTemplate
@@ -47,7 +47,7 @@ export default function Page() {
           </button>
         </div>
       )
-  }, [loading, error, mapRef.current])
+  }, [loading, error])
 
   return (
     <div className='flex items-center justify-center w-full h-full relative'>

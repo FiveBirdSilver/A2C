@@ -34,10 +34,10 @@ export default function Footer() {
         </div>
         <div
           className='flex flex-col items-center cursor-pointer'
-          onClick={() => router.push('/login')}
+          onClick={() => router.push('/mypage')}
         >
           <FaRegUser />
-          <span className='text-[9px]'>로그인</span>
+          <span className='text-[9px]'>마이</span>
         </div>
       </div>
     </div>

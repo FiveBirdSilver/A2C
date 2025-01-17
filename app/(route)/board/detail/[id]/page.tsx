@@ -1,13 +1,11 @@
 'use client'
-import { useParams, useSearchParams } from 'next/navigation'
+import { useMemo } from 'react'
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import { HiPaperAirplane } from 'react-icons/hi'
 import dayjs from 'dayjs'
-
+import Loading from '@/app/loading.tsx'
 import useBoardMap from '@/hooks/common/useBoardMap.tsx'
 import { useQueries } from '@/hooks/queries/useQueries.tsx'
-import { useMemo } from 'react'
-import Loading from '@/app/loading.tsx'
-import ErrorTemplate from '@/components/templates/ErrorTemplate.tsx'
 
 interface IBoardDetail {
   images: string[]
@@ -33,16 +31,22 @@ interface IBoardDetail {
   __v: string
 }
 
-const Page = () => {
+// async function fetchDetail(id: string, contentType: string) {
+//   const url = `https://a2climbing.kro.kr/node/api/board/id=676e608f83d4c857194a6367?contentType=community`
+//   const res = await fetch(url, { credentials: 'include' })
+//   return res.json()
+// }
+
+export default function Page() {
+  // const data = await fetchDetail('676e608f83d4c857194a6367', 'community')
+  // console.log('data', data)
+  // if (!data) {
+  //   redirect('/login')
+  // }
   const { id } = useParams()
+  const router = useRouter()
   const searchParams = useSearchParams()
   const contentType = searchParams.get('contentType')
-
-  const { mapRef } = useBoardMap({
-    name: '골든플래닛',
-    lat: 37.5058315272521,
-    lng: 127.040806473603,
-  })
 
   const { data, isLoading, isSuccess, isError } = useQueries<{
     data: IBoardDetail
@@ -52,10 +56,18 @@ const Page = () => {
     endpoint: `/node/api/board/${id}?contentType=${contentType}`,
   })
 
+  const { mapRef } = useBoardMap({
+    name: data?.data.location.point ?? '',
+    lat: data?.data.location?.lat ?? 0,
+    lng: data?.data.location?.lng ?? 0,
+  })
+
   const renderDetail = useMemo(() => {
     if (isLoading) return <Loading />
-    if (isError)
-      return <ErrorTemplate message={'일시적인 오류가 발생했습니다'} />
+    if (isError) {
+      router.prefetch('/login')
+      router.push('/login')
+    }
     if (isSuccess)
       return (
         <div className='grid w-full'>
@@ -108,5 +120,3 @@ const Page = () => {
   }, [data, isLoading, isSuccess, isError])
   return <>{renderDetail}</>
 }
-
-export default Page

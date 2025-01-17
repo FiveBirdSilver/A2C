@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 interface IMap {
   name: string
@@ -8,10 +8,6 @@ interface IMap {
 
 const useBoardMap = ({ name, lat, lng }: IMap) => {
   const mapRef = useRef<HTMLDivElement | null>(null)
-  const [bounds, setBounds] = useState({
-    northEast: { lat: 0, lng: 0 },
-    southWest: { lat: 0, lng: 0 },
-  })
 
   useEffect(() => {
     const { naver } = window
@@ -33,24 +29,10 @@ const useBoardMap = ({ name, lat, lng }: IMap) => {
       const bounds = new naver.maps.LatLngBounds(center, center)
       bounds.extend(center)
       map.fitBounds(bounds)
-
-      // 지도 범위 업데이트
-      const updateBounds = () => {
-        const currentBounds = map.getBounds()
-        const northEast = currentBounds.getMax()
-        const southWest = currentBounds.getMin()
-        setBounds({
-          northEast: { lat: northEast.y, lng: northEast.x },
-          southWest: { lat: southWest.y, lng: southWest.x },
-        })
-      }
-
-      updateBounds()
-      naver.maps.Event.addListener(map, 'bounds_changed', updateBounds)
     }
   }, [lat, lng])
 
-  return { mapRef, bounds }
+  return { mapRef }
 }
 
 export default useBoardMap
