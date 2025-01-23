@@ -5,6 +5,7 @@ import React, { ChangeEvent, FormEvent, useState } from 'react'
 import Input from '@/components/elements/Input.tsx'
 import Button from '@/components/elements/Button.tsx'
 import { useResetPassword } from '@/hooks/mutations/useResetPassword.tsx'
+import { notify } from '@/libs/utils/notify.ts'
 
 export default function Page() {
   const [email, setEmail] = useState<string>('')
@@ -13,6 +14,10 @@ export default function Page() {
 
   const handleOnSendEmail = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    if (!email) {
+      notify('가입한 이메일 주소를 입력해주세요')
+      return
+    }
     postSendEmail.mutate({ email })
   }
 
@@ -36,7 +41,7 @@ export default function Page() {
           />
           <Button
             variant={'primary'}
-            onClick={() => postSendEmail.mutate({ email })}
+            onClick={() => {}}
             text='이메일로 인증코드 받기'
           />
         </form>

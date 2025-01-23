@@ -1,4 +1,4 @@
-import { router } from 'next/client'
+import { useRouter } from 'next/navigation'
 import { useMutation } from '@tanstack/react-query'
 import { instance } from '@/libs/apis/instance.ts'
 
@@ -7,6 +7,8 @@ interface IFindAccount {
 }
 
 export const useResetPassword = () => {
+  const router = useRouter()
+
   const postSendEmail = useMutation({
     mutationFn: async (data: IFindAccount) => {
       return await instance.post('/node/api/user/forget', data)

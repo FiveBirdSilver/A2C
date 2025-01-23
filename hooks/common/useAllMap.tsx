@@ -55,7 +55,6 @@ const useAllMap = ({ lat, lng }: IMapProps) => {
         setLoading(false)
         return response.data
       } catch (error) {
-        console.error(error)
         setError(true)
         setLoading(false)
 

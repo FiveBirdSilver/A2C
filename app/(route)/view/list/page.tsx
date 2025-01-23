@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
+import Link from 'next/link'
 import Image from 'next/image'
 import { IoCall } from 'react-icons/io5'
 import { BsFillPinMapFill } from 'react-icons/bs'
@@ -8,10 +9,9 @@ import { BsFillPinMapFill } from 'react-icons/bs'
 import Loading from '@/app/loading.tsx'
 import useCurrentLocation from '@/hooks/common/useCurrentLocation'
 import { useQueries } from '@/hooks/queries/useQueries'
-import ErrorTemplate from '@/components/templates/ErrorTemplate'
+import Error from '@/app/error.tsx'
 import useMediaQuery from '@/hooks/common/useMediaQuery.tsx'
 import useAllMap, { IMapList } from '@/hooks/common/useAllMap.tsx'
-import { useRouter } from 'next/navigation'
 
 const ListItem = ({
   list,
@@ -30,7 +30,7 @@ const ListItem = ({
   >
     <div className='flex w-full p-4 gap-4'>
       {list.img && (
-        <div className='w-36 h-24 md:w-44 md:h-28 relative'>
+        <div className='w-32 h-24 md:w-44 md:h-28 relative'>
           <Image
             src={list.img}
             alt={'thumbnail'}
@@ -68,15 +68,19 @@ const ListItem = ({
 )
 
 export default function Page() {
-  const router = useRouter()
   const { location } = useCurrentLocation()
   const isMobile = useMediaQuery('(max-width: 768px)')
   const [currentPlace, setCurrentPlace] = useState<IMapList>()
 
-  const { mapRef, selectPlace } = useAllMap({
+  console.log(currentPlace?.lat)
+  const { mapRef, selectPlace, loading, error } = useAllMap({
     lat: currentPlace?.lat,
     lng: currentPlace?.lng,
   })
+
+  useEffect(() => {
+    setCurrentPlace(selectPlace)
+  }, [selectPlace])
 
   const { isPending, isLoading, isSuccess, isError, data } = useQueries<
     IMapList[]
@@ -86,51 +90,48 @@ export default function Page() {
     enabled: location !== null,
   })
 
-  useEffect(() => {
-    setCurrentPlace(selectPlace)
-  }, [selectPlace])
+  const renderBeforeList = useMemo(() => {
+    if (isLoading || isPending || loading) return <Loading />
+    if (isError || error)
+      return (
+        <Error
+          message={'현재 위치에서 주변 클라이밍 시설을 불러오지 못했습니다'}
+        />
+      )
 
-  const renderBefore = useMemo(() => {
-    if (isLoading || isPending) return <Loading />
-    if (isError)
-      return <ErrorTemplate message={'일시적인 오류가 발생했습니다'} />
-  }, [isLoading, isError])
+    return (
+      <div className='relative overflow-auto'>
+        <div className='flex items-center flex-col w-full'>
+          {isSuccess &&
+            data?.map((list: IMapList, index: number) => (
+              <ListItem
+                key={list.id}
+                list={list}
+                index={index}
+                onClick={() => setCurrentPlace(list)} // 클릭 시 onClickHandler 실행
+                isSelected={currentPlace?.id === list.id}
+              />
+            ))}
+        </div>
+        {isMobile && (
+          <button className='sticky bottom-10 left-1/2 transform -translate-x-1/2 bg-white flex items-center justify-center z-10 border-gray-200 border rounded-full py-2 px-4 gap-1 shadow-lg'>
+            <BsFillPinMapFill className='text-gray-700' />
+            <Link href='/view/map' className='text-sm text-gray-700 font-bold'>
+              지도보기
+            </Link>
+          </button>
+        )}
+      </div>
+    )
+  }, [isPending, isLoading, isSuccess, isError, data, loading, error])
 
   return (
-    <>
-      {renderBefore}
-      {/*<div className='grid w-full h-full'>*/}
-      <div className='grid md:grid-cols-[4fr_6fr] w-full h-full'>
-        <div className='relative overflow-auto'>
-          <div className='flex items-center flex-col w-full'>
-            {isSuccess &&
-              data?.map((list: IMapList, index: number) => (
-                <ListItem
-                  key={list.id}
-                  list={list}
-                  index={index}
-                  onClick={() => setCurrentPlace(list)} // 클릭 시 onClickHandler 실행
-                  isSelected={currentPlace?.id === list.id}
-                />
-              ))}
-          </div>
-          {isMobile && (
-            <button className='sticky bottom-20 left-1/2 transform -translate-x-1/2 bg-white flex items-center justify-center z-10 border-gray-200 border rounded-full py-2 px-4 gap-1 shadow-lg'>
-              <BsFillPinMapFill className='text-gray-700' />
-              <span
-                className='text-sm text-gray-700 font-bold'
-                onClick={() => router.push('/view/map')}
-              >
-                지도보기
-              </span>
-            </button>
-          )}
-        </div>
-        <div
-          ref={mapRef}
-          className={`w-full h-full ${isMobile ? 'hidden' : ''}`}
-        />
-      </div>
-    </>
+    <div className='grid md:grid-cols-[4fr_6fr] w-full h-full'>
+      {renderBeforeList}
+      <div
+        ref={mapRef}
+        className={`w-full h-full ${isMobile ? 'hidden' : ''}`}
+      />
+    </div>
   )
 }

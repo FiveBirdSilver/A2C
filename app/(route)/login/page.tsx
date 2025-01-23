@@ -87,14 +87,14 @@ export default function Page() {
         <div className='flex gap-2 mt-3'>
           <span
             className='underline text-[0.7rem] text-gray-500 cursor-pointer'
-            onClick={() => router.push('/password/find')}
+            onClick={() => router.push('/user/password/find')}
           >
             비밀번호 재설정
           </span>
           <span className='text-[0.7rem] text-gray-500'>|</span>
           <span
             className='underline text-[0.7rem] text-gray-500 cursor-pointer'
-            onClick={() => router.push('/register')}
+            onClick={() => router.push('/user/register')}
           >
             이메일로 회원가입
           </span>

@@ -15,7 +15,7 @@ import Tabs from '@/components/elements/Tabs.tsx'
 import Carousel from '@/components/elements/Carousel.tsx'
 import climbingPartners from '@/constants/climbingPartners.json'
 import useMediaQuery from '@/hooks/common/useMediaQuery.tsx'
-import ErrorTemplate from '@/components/templates/ErrorTemplate.tsx'
+import Error from '@/app/error.tsx'
 import Loading from '@/app/loading.tsx'
 
 interface IBoard {
@@ -65,9 +65,7 @@ const Page = () => {
 
   const renderBoard = useMemo(() => {
     if (isLoading) return <Loading />
-    if (isError)
-      return <ErrorTemplate message={'일시적인 오류가 발생했습니다'} />
-
+    if (isError) return <Error message={'일시적인 오류가 발생했습니다'} />
     if (isSuccess)
       return (
         <>

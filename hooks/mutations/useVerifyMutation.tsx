@@ -10,7 +10,7 @@ interface IVerifySend {
 
 interface IVerifyCheck {
   email: string
-  authNum: string
+  code: string
 }
 
 const useVerifyMutation = () => {
@@ -39,12 +39,10 @@ const useVerifyMutation = () => {
   })
 
   // 인증번호 체크
-  const postCheckCode = useMutation({
+  const postVerifyCheck = useMutation({
     mutationKey: ['checkCode'],
     mutationFn: async (data: IVerifyCheck) => {
-      return await instance.get(
-        `/node/api/user/verifyCheck?email=${data.email}&code=${data.authNum}`
-      )
+      return await instance.post(`/node/api/user/verifyCheck`, data)
     },
     onSuccess: () => {
       alert('인증이 성공적으로 완료되었습니다.')
@@ -63,7 +61,7 @@ const useVerifyMutation = () => {
 
   return {
     postSendCode,
-    postCheckCode,
+    postVerifyCheck,
     isAuthCheck,
     openAuthCodeBox,
     setOpenAuthCodeBox,

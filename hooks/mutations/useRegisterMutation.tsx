@@ -10,7 +10,6 @@ interface IRegister {
   password: string
   confirmPassword?: string
   nickname: string
-  isAuthCheck: boolean
 }
 
 export const useRegisterMutation = () => {
@@ -18,10 +17,6 @@ export const useRegisterMutation = () => {
 
   const postRegister = useMutation({
     mutationFn: async (data: IRegister) => {
-      if (data.isAuthCheck) {
-        notify('이메일 인증이 필요합니다. 인증을 완료해주세요.')
-        return
-      }
       return await instance.post('/node/api/user/signup', data)
     },
     onSuccess: (res) => {

@@ -6,7 +6,7 @@ import { CiLocationArrow1 } from 'react-icons/ci'
 
 import Loading from '@/app/loading.tsx'
 import useAllMap from '@/hooks/common/useAllMap.tsx'
-import ErrorTemplate from '@/components/templates/ErrorTemplate.tsx'
+import Error from '@/app/error.tsx'
 
 export default function Page() {
   const {
@@ -23,7 +23,7 @@ export default function Page() {
     if (loading) return <Loading />
     if (error)
       return (
-        <ErrorTemplate
+        <Error
           message={'현재 위치에서 주변 클라이밍 시설을 불러오지 못했습니다'}
         />
       )
