@@ -1,15 +1,15 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { IoCall } from 'react-icons/io5'
 import { BsFillPinMapFill } from 'react-icons/bs'
 
+import Error from '@/app/error.tsx'
 import Loading from '@/app/loading.tsx'
 import useCurrentLocation from '@/hooks/common/useCurrentLocation'
 import { useQueries } from '@/hooks/queries/useQueries'
-import Error from '@/app/error.tsx'
 import useMediaQuery from '@/hooks/common/useMediaQuery.tsx'
 import useAllMap, { IMapList } from '@/hooks/common/useAllMap.tsx'
 
@@ -72,15 +72,10 @@ export default function Page() {
   const isMobile = useMediaQuery('(max-width: 768px)')
   const [currentPlace, setCurrentPlace] = useState<IMapList>()
 
-  console.log(currentPlace?.lat)
-  const { mapRef, selectPlace, loading, error } = useAllMap({
+  const { mapRef, loading, error } = useAllMap({
     lat: currentPlace?.lat,
     lng: currentPlace?.lng,
   })
-
-  useEffect(() => {
-    setCurrentPlace(selectPlace)
-  }, [selectPlace])
 
   const { isPending, isLoading, isSuccess, isError, data } = useQueries<
     IMapList[]
@@ -90,48 +85,43 @@ export default function Page() {
     enabled: location !== null,
   })
 
-  const renderBeforeList = useMemo(() => {
-    if (isLoading || isPending || loading) return <Loading />
-    if (isError || error)
-      return (
-        <Error
-          message={'현재 위치에서 주변 클라이밍 시설을 불러오지 못했습니다'}
-        />
-      )
-
-    return (
-      <div className='relative overflow-auto'>
-        <div className='flex items-center flex-col w-full'>
-          {isSuccess &&
-            data?.map((list: IMapList, index: number) => (
-              <ListItem
-                key={list.id}
-                list={list}
-                index={index}
-                onClick={() => setCurrentPlace(list)} // 클릭 시 onClickHandler 실행
-                isSelected={currentPlace?.id === list.id}
-              />
-            ))}
-        </div>
-        {isMobile && (
-          <button className='sticky bottom-10 left-1/2 transform -translate-x-1/2 bg-white flex items-center justify-center z-10 border-gray-200 border rounded-full py-2 px-4 gap-1 shadow-lg'>
-            <BsFillPinMapFill className='text-gray-700' />
-            <Link href='/view/map' className='text-sm text-gray-700 font-bold'>
-              지도보기
-            </Link>
-          </button>
-        )}
-      </div>
-    )
-  }, [isPending, isLoading, isSuccess, isError, data, loading, error])
-
   return (
-    <div className='grid md:grid-cols-[4fr_6fr] w-full h-full'>
-      {renderBeforeList}
-      <div
-        ref={mapRef}
-        className={`w-full h-full ${isMobile ? 'hidden' : ''}`}
-      />
-    </div>
+    <>
+      {(isLoading || isPending || loading) && <Loading />}
+      {(isError || error) && (
+        <Error message={'현재 위치에선 클라이밍 정보를 가져올 수 없습니다.'} />
+      )}
+      <div className='grid md:grid-cols-[4fr_6fr] w-full h-full'>
+        <div className='relative overflow-auto'>
+          <div className='flex items-center flex-col w-full'>
+            {isSuccess &&
+              data?.map((list: IMapList, index: number) => (
+                <ListItem
+                  key={list.id}
+                  list={list}
+                  index={index}
+                  onClick={() => setCurrentPlace(list)}
+                  isSelected={currentPlace?.id === list.id}
+                />
+              ))}
+          </div>
+          {isMobile && (
+            <button className='sticky bottom-10 left-1/2 transform -translate-x-1/2 bg-white flex items-center justify-center z-10 border-gray-200 border rounded-full py-2 px-4 gap-1 shadow-lg'>
+              <BsFillPinMapFill className='text-gray-700' />
+              <Link
+                href='/view/map'
+                className='text-sm text-gray-700 font-bold'
+              >
+                지도보기
+              </Link>
+            </button>
+          )}
+        </div>
+        <div
+          ref={mapRef}
+          className={`w-full h-full ${isMobile ? 'hidden' : ''}`}
+        />
+      </div>
+    </>
   )
 }

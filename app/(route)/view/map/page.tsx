@@ -23,9 +23,7 @@ export default function Page() {
     if (loading) return <Loading />
     if (error)
       return (
-        <Error
-          message={'현재 위치에서 주변 클라이밍 시설을 불러오지 못했습니다'}
-        />
+        <Error message={'현재 위치에선 클라이밍 정보를 가져올 수 없습니다.'} />
       )
     if (!loading && !error)
       return (

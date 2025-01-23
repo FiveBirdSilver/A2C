@@ -1,12 +1,16 @@
+'use client'
+
 import { useEffect, useRef } from 'react'
 
-interface IMap {
+const BoardMap = ({
+  name,
+  lng,
+  lat,
+}: {
   name: string
-  lat: number
   lng: number
-}
-
-const useBoardMap = ({ name, lat, lng }: IMap) => {
+  lat: number
+}) => {
   const mapRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -32,7 +36,7 @@ const useBoardMap = ({ name, lat, lng }: IMap) => {
     }
   }, [lat, lng])
 
-  return { mapRef }
+  return <div ref={mapRef} className='w-full h-full rounded-lg border'></div>
 }
 
-export default useBoardMap
+export default BoardMap

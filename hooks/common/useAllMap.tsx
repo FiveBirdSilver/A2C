@@ -173,7 +173,7 @@ const useAllMap = ({ lat, lng }: IMapProps) => {
       if (lat && lng && mapInstanceRef.current) {
         const newCenter = new naver.maps.LatLng(lat, lng)
         mapInstanceRef.current.panTo(newCenter)
-        // mapInstanceRef.current.setZoom(15)
+        // mapInstanceRef.current.setZoom(18)
       }
     }, 200),
     [lat, lng]
