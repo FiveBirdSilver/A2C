@@ -10,17 +10,17 @@ export const useInfiniteQueries = (props: IUseInfiniteQuery) => {
 
   return useInfiniteQuery({
     queryKey: [queryKey],
-    queryFn: async ({ pageParam = 2 }) => {
+    queryFn: async ({ pageParam = 6 }) => {
       const response = await instance.get(`${queryKey}?page=${pageParam}`)
       return response.data.data
     },
-    initialPageParam: 1,
+    initialPageParam: 5,
     getNextPageParam: (lastPage, allPages) => {
       return allPages.length + 1
     },
-    select: (data) => ({
-      pages: data.pages.flatMap((page: any) => page),
-      pageParams: data.pageParams,
-    }),
+    // select: (data) => ({
+    //   pages: data.pages.flatMap((page: any) => page),
+    //   pageParams: data.pageParams,
+    // }),
   })
 }

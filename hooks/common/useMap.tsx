@@ -25,7 +25,7 @@ interface IMapProps {
   lng?: number
 }
 
-const useAllMap = ({ lat, lng }: IMapProps) => {
+const useMap = ({ lat, lng }: IMapProps) => {
   const mapRef = useRef<HTMLDivElement | null>(null)
   // 지도 객체 저장
   const mapInstanceRef = useRef<naver.maps.Map | null>(null)
@@ -234,4 +234,4 @@ const useAllMap = ({ lat, lng }: IMapProps) => {
   }
 }
 
-export default useAllMap
+export default useMap

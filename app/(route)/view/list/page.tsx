@@ -11,7 +11,7 @@ import Loading from '@/app/loading.tsx'
 import useCurrentLocation from '@/hooks/common/useCurrentLocation'
 import { useQueries } from '@/hooks/queries/useQueries'
 import useMediaQuery from '@/hooks/common/useMediaQuery.tsx'
-import useAllMap, { IMapList } from '@/hooks/common/useAllMap.tsx'
+import useMap, { IMapList } from '@/hooks/common/useMap.tsx'
 
 const ListItem = ({
   list,
@@ -72,7 +72,7 @@ export default function Page() {
   const isMobile = useMediaQuery('(max-width: 768px)')
   const [currentPlace, setCurrentPlace] = useState<IMapList>()
 
-  const { mapRef, loading, error } = useAllMap({
+  const { mapRef, loading, error } = useMap({
     lat: currentPlace?.lat,
     lng: currentPlace?.lng,
   })

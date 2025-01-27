@@ -14,7 +14,7 @@ export default function Page() {
   const { data, isLoading, isSuccess, isError } = useQueries<{
     data: IAccount
   }>({
-    queryKey: `getBoardDetail`,
+    queryKey: `myAccount`,
     endpoint: `/node/api/account`,
   })
 

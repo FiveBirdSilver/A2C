@@ -5,7 +5,7 @@ import { HiOutlinePlus, HiOutlineMinus } from 'react-icons/hi2'
 import { CiLocationArrow1 } from 'react-icons/ci'
 
 import Loading from '@/app/loading.tsx'
-import useAllMap from '@/hooks/common/useAllMap.tsx'
+import useMap from '@/hooks/common/useMap.tsx'
 import Error from '@/app/error.tsx'
 
 export default function Page() {
@@ -17,7 +17,7 @@ export default function Page() {
     moveToCurrentLocation,
     zoomIn,
     zoomOut,
-  } = useAllMap({})
+  } = useMap({})
 
   const renderBeforeMap = useMemo(() => {
     if (loading) return <Loading />

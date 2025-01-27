@@ -5,7 +5,7 @@ import { HiPaperAirplane } from 'react-icons/hi'
 import dayjs from 'dayjs'
 
 import Loading from '@/app/loading.tsx'
-import BoardMap from '@/components/common/BoardMap.tsx'
+import BoardDetailMapClient from '@/components/clients/BoardDetailMapClient.tsx'
 
 type Props = {
   params: Promise<{ id: string }>
@@ -109,7 +109,7 @@ export default async function Page({ params, searchParams }: Props) {
 
           <div className='flex-1 flex flex-col gap-3 min-h-60 md:min-h-96'>
             <span className='text-xs'>위치</span>
-            <BoardMap
+            <BoardDetailMapClient
               name={data.data.location.point || ''}
               lat={data.data.location.lat || 0}
               lng={data.data.location.lng || 0}
