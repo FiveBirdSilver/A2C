@@ -36,7 +36,7 @@ export default function GlobalHeader(data: { data: IAccount }) {
               priority
             />
           </Link>
-          <div className='hidden text-gray-700 text-[0.945rem] gap-8 font-bold md:flex'>
+          <div className='hidden text-gray-700 text-[0.945rem] gap-8 md:flex'>
             <Link
               href='/board'
               className='flex flex-col items-center cursor-pointer'

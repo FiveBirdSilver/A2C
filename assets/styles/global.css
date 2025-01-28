@@ -27,8 +27,7 @@ html {
 body {
   height: 100%;
   margin: 0;
-  /*background: #fefefe;*/
-  font-family: PretendardR;
+  font-family: PretendardR sans-serif;
 }
 
 /*토스트 알림*/

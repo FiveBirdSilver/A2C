@@ -79,7 +79,7 @@ const BoardListClient = ({ initialData }: { initialData: IBoard[] }) => {
 
   return (
     <>
-      <div className='flex flex-col items-center md:items-start justify-center'>
+      <div className='flex flex-col items-start justify-center'>
         <Tabs
           items={['전체', '구해요', '같이해요', '궁금해요']}
           value={checkedMenu}
@@ -166,7 +166,7 @@ const BoardListClient = ({ initialData }: { initialData: IBoard[] }) => {
           </div>
         )}
         <Link
-          className='fixed md:hidden bg-green-400 w-12 h-12 rounded-full flex items-center justify-center text-lg text-white z-10 bottom-20 right-4 cursor-pointer'
+          className='fixed md:hidden bg-green-400 w-12 h-12 rounded-full flex items-center justify-center text-lg text-white z-10 bottom-16 right-4 cursor-pointer'
           href={'/board/write'}
         >
           <HiOutlinePencilAlt />
