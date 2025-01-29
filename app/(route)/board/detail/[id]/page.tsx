@@ -47,7 +47,7 @@ async function fetchBoardDetail(
     value: string
   }
 ) {
-  const url = `https://a2climbing.kro.kr/node/api/board/${id}?contentType=${contentType}`
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/node/api/board/${id}?contentType=${contentType}`
   const res = await fetch(url, {
     headers: {
       'Content-Type': 'application/json',

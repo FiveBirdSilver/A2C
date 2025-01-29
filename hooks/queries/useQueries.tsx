@@ -19,7 +19,6 @@ export function useQueries<TData>({
       const response = await instance.get(`${endpoint}`, {
         withCredentials: true,
       })
-      // throw new Error()
       return response.data
     },
     enabled: enabled,

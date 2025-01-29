@@ -74,8 +74,8 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
   }))
 
   return (
-    <div className='py-8 px-4 text-gray-900 bg-white min-h-screen'>
-      <form className='w-full flex flex-col gap-6'>
+    <div className='pt-4 px-4'>
+      <form className='w-full flex flex-col gap-6 '>
         <div>
           <label htmlFor='description' className='block text-sm mb-1'>
             카테고리

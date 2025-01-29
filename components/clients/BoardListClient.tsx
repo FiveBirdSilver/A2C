@@ -100,7 +100,7 @@ const BoardListClient = ({ initialData }: { initialData: IBoard[] }) => {
                 className='cursor-pointer'
               >
                 <div className='text-gray-900 p-4 rounded-lg w-full space-y-4 '>
-                  <h2 className='text-lg font-bold px-2'>{board.title}</h2>
+                  <h5 className='px-2'>{board.title}</h5>
                   <p className='text-gray-400 text-sm px-2 pb-3'>
                     {board.content}
                   </p>
@@ -157,7 +157,7 @@ const BoardListClient = ({ initialData }: { initialData: IBoard[] }) => {
                   </span>
                 </div>
                 <div className={'flex justify-end items-center pt-4'}>
-                  <button className='flex items-center p-1 text-[0.815rem] text-white font-bold bg-green-500 rounded-lg hover:bg-green-600 w-full justify-center '>
+                  <button className='flex items-center p-1 text-[0.815rem] text-white bg-green-500 rounded-lg hover:bg-green-600 w-full justify-center '>
                     <LuPencil className='text-xs mr-2' />글 작성
                   </button>
                 </div>
@@ -166,7 +166,7 @@ const BoardListClient = ({ initialData }: { initialData: IBoard[] }) => {
           </div>
         )}
         <Link
-          className='fixed md:hidden bg-green-400 w-12 h-12 rounded-full flex items-center justify-center text-lg text-white z-10 bottom-16 right-4 cursor-pointer'
+          className='fixed md:hidden bg-green-400 w-12 h-12 rounded-full flex items-center justify-center text-lg text-white z-10 bottom-12 right-4 cursor-pointer'
           href={'/board/write'}
         >
           <HiOutlinePencilAlt />

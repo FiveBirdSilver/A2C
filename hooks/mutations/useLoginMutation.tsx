@@ -38,7 +38,7 @@ export const useLoginMutation = () => {
 
   // 카카오로 로그인하기
   const handleOnKaKaoLogin = () => {
-    location.href = `https://a2climbing.kro.kr/node/kakaoLogin`
+    location.href = `${process.env.NEXT_PUBLIC_API_URL}/node/kakaoLogin`
   }
 
   const handleOnChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {

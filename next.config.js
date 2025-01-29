@@ -11,7 +11,7 @@ module.exports = {
     return [
       {
         source: '/route/:path*',
-        destination: 'https://a2climbing.kro.kr/:path*',
+        destination: 'https://api.a2climbing.com/:path*',
       },
     ]
   },
