@@ -5,7 +5,8 @@
 @font-face {
   font-family: "PretendardR";
   font-style: normal;
-  src: url("../fonts/Pretendard-Regular.subset.woff");
+  font-display: swap;
+  src: url("../fonts/PretendardVariable.woff2");
 }
 
 @font-face {
