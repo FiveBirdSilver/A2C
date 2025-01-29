@@ -72,11 +72,13 @@ export default function GlobalHeader(data: { data: IAccount }) {
                 </button>
               </Link>
             ) : (
-              <FaUserCircle
-                className={
-                  'text-gray-200 font-bold text-[1.575rem] cursor-pointer'
-                }
-              />
+              <Link href='/user/mypage'>
+                <FaUserCircle
+                  className={
+                    'text-gray-200 font-bold text-[1.575rem] cursor-pointer'
+                  }
+                />
+              </Link>
             )}
           </div>
         </div>

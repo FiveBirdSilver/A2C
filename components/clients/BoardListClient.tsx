@@ -100,7 +100,7 @@ const BoardListClient = ({ initialData }: { initialData: IBoard[] }) => {
                 className='cursor-pointer'
               >
                 <div className='text-gray-900 p-4 rounded-lg w-full space-y-4 '>
-                  <h5 className='px-2'>{board.title}</h5>
+                  <h4 className='px-2'>{board.title}</h4>
                   <p className='text-gray-400 text-sm px-2 pb-3'>
                     {board.content}
                   </p>
