@@ -13,7 +13,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
   return (
     <div className='sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg mx-auto h-full'>
       <GlobalHeader data={data} />
-      <div className='h-full mx-auto my-0 sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl '>
+      <div className='h-full mx-auto my-0 py-20 sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl '>
         {children}
       </div>
       <GlobalFooter />

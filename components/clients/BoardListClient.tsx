@@ -3,21 +3,20 @@
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+
 import { useRouter } from 'next/navigation'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useInView } from 'react-intersection-observer'
-import { HiSparkles } from 'react-icons/hi2'
-import { LuPencil } from 'react-icons/lu'
 
 import { MdLocationPin } from 'react-icons/md'
 import { IoChatbubbleOutline, IoHeartOutline } from 'react-icons/io5'
 import { HiOutlinePencilAlt } from 'react-icons/hi'
-
 import Tabs from '@/components/elements/Tabs.tsx'
 import Carousel from '@/components/elements/Carousel.tsx'
 import climbingPartners from '@/constants/climbingPartners.json'
 import useMediaQuery from '@/hooks/common/useMediaQuery.tsx'
 import { instance } from '@/libs/apis/instance.ts'
+import Image from 'next/image'
 
 interface IBoard {
   images: string[]
@@ -86,9 +85,9 @@ const BoardListClient = ({ initialData }: { initialData: IBoard[] }) => {
           setState={setCheckedMenu}
         />
       </div>
-      <div className='grid gap-4 md:grid-cols-3 grid-cols-1'>
+      <div className='grid gap-8 md:grid-cols-3 grid-cols-1'>
         <div className='col-span-1 md:col-span-2'>
-          <div className='flex flex-col w-full'>
+          <div className='flex flex-col w-full gap-5 bg-[#f8f9fa] md:bg-white'>
             {allBoards?.map((board: IBoard) => (
               <div
                 key={board._id}
@@ -97,9 +96,9 @@ const BoardListClient = ({ initialData }: { initialData: IBoard[] }) => {
                     `/board/detail/${board._id}?contentType=${board.contentType}`
                   )
                 }
-                className='cursor-pointer'
+                className='border border-gray-50 bg-white md:rounded-xl shadow-gray-50 md:shadow cursor-pointer'
               >
-                <div className='text-gray-900 p-4 rounded-lg w-full space-y-4 '>
+                <div className='text-gray-900 p-2 md:p-4 rounded-lg w-full space-y-4 '>
                   <h4 className='px-2'>{board.title}</h4>
                   <p className='text-gray-400 text-sm px-2 pb-3'>
                     {board.content}
@@ -119,7 +118,7 @@ const BoardListClient = ({ initialData }: { initialData: IBoard[] }) => {
                       {dayjs(board.createdAt).format('YYYY-MM-DD HH:mm:ss')}
                     </span>
                   </div>
-                  <div className='flex items-center justify-between bg-gray-50 px-4 py-2 rounded-lg gap-1'>
+                  <div className='flex items-center justify-between md:bg-gray-50 px-2 md:px-4 py-2 rounded-lg gap-1'>
                     <span className='text-gray-400 text-xs'>
                       {board.author.nickname}
                     </span>
@@ -131,7 +130,6 @@ const BoardListClient = ({ initialData }: { initialData: IBoard[] }) => {
                     </div>
                   </div>
                 </div>
-                <div className='border-gray-100 border-[0.5px]' />
               </div>
             ))}
             <div ref={ref} className='p-0.5' />
@@ -140,28 +138,39 @@ const BoardListClient = ({ initialData }: { initialData: IBoard[] }) => {
         {!isMobile && (
           <div className='col-span-1'>
             <div className='sticky top-20'>
-              <div className='hidden md:block bg-gray-50 text-white p-4 w-80 rounded-xl mb-4'>
-                <Carousel data={climbingPartners} />
+              <div className={'flex flex-col gap-2'}>
+                <div className='flex items-center gap-2'>
+                  <Image src={'/pin.png'} width={20} height={20} alt={'pin'} />
+                  <span className={'text-gray-700 text-sm'}>
+                    바로 내 근처에 있어요
+                  </span>
+                </div>
+                <div className='hidden md:block bg-gray-50 text-white p-4 w-80 rounded-xl mb-8'>
+                  <Carousel data={climbingPartners} />
+                </div>
               </div>
               {/*<div className='hidden md:block bg-gray-50 text-white p-4 w-80 rounded-xl'>*/}
               {/*  <Calendars />*/}
               {/*</div>*/}
-              <Link
-                href={'/board/write'}
-                className='hidden md:flex flex-col gap-2 bg-gray-50 p-4 w-80 rounded-xl mb-4'
-              >
+              <div className={'flex flex-col gap-2'}>
                 <div className='flex items-center gap-2'>
-                  <HiSparkles className={'text-green-400 text-xl'} />
-                  <span className={'text-gray-400 text-[0.815rem]'}>
+                  {/*<HiSparkles className={'text-green-400 text-xl'} />*/}
+                  <Image
+                    src={'/highfive.png'}
+                    width={20}
+                    height={20}
+                    alt={'highfive'}
+                  />
+                  <span className={'text-gray-700 text-sm'}>
                     클라이밍 궁금증을 나누고 새 파트너를 만나보세요
                   </span>
                 </div>
-                <div className={'flex justify-end items-center pt-4'}>
-                  <button className='flex items-center p-1 text-[0.815rem] text-white bg-green-500 rounded-lg hover:bg-green-600 w-full justify-center '>
-                    <LuPencil className='text-xs mr-2' />글 작성
+                <Link href={'/board/write'}>
+                  <button className='flex items-center py-4 text-sm font-semibold text-green-500 bg-green-100 rounded-xl hover:bg-green-200 w-full justify-center '>
+                    글 작성
                   </button>
-                </div>
-              </Link>
+                </Link>
+              </div>
             </div>
           </div>
         )}
