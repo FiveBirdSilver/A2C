@@ -31,7 +31,18 @@ body {
   font-family: PretendardR, -apple-system, sans-serif !important;
 }
 
+input, textarea {
+  -webkit-appearance: none;
+}
+
 /*토스트 알림*/
 .Toastify__toast {
   font-size: .825rem
+}
+
+/*캐로셀 스와이프*/
+.swiper-slide {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center;
 }

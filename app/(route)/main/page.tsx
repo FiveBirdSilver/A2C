@@ -1,3 +1,5 @@
-export default function page() {
-  return <div className='flex flex-col items-center'></div>
+import MainBannerClient from '@/components/clients/MainBannerClient.tsx'
+
+export default async function Page() {
+  return <MainBannerClient />
 }
