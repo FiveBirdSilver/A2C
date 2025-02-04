@@ -9,7 +9,7 @@ export default function NotFound() {
 
   return (
     <div className='h-full text-center flex flex-col gap-4 items-center justify-center'>
-      <Image src={`/icons/404.png`} alt={'error'} width={120} height={50} />
+      <Image src={`/icons/404.webp`} alt={'error'} width={120} height={50} />
       <h6 className='text-xl font-semibold text-gray-700'>
         페이지를 찾을 수 없습니다
       </h6>

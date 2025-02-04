@@ -1,16 +1,23 @@
 [
   {
     "id": 0,
-    "img" : "climbing_wall.png",
+    "img" : "climbingwall.webp",
     "title": "클라이밍짐을 쉽고 빠르게 찾아보세요",
     "subTitle" : "내 주변 클라이밍 스팟을 한눈에 확인하고,\n원하는 곳에서 자유롭게 즐겨보세요!",
     "bgColor" : "#e9e2df"
   },
   {
     "id": 1,
-    "img" : "community.png",
+    "img" : "community.webp",
     "title": "새 클라이밍 크루를 찾아보세요",
     "subTitle" : "처음이라도 걱정하지 마세요!\n함께 오르고, 즐기고, 성장하는 A2C와 함께해요",
     "bgColor" : "#fee0bc"
+  },
+  {
+    "id": 2,
+    "img" : "open.webp",
+    "title": "새로운 클라이밍의 시작, A2C",
+    "subTitle" : "A Climbing Community,\n클라이머들의 새로운 연결고리",
+    "bgColor" : "#e5b7b5"
   }
 ]

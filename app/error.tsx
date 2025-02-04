@@ -9,7 +9,7 @@ export default function Error({ message }: { message: string }) {
 
   return (
     <div className='h-full text-center flex flex-col gap-4 items-center justify-center'>
-      <Image src={`/icons/error.png`} alt={'error'} width={120} height={50} />
+      <Image src={`/icons/error.webp`} alt={'error'} width={120} height={50} />
       <h6 className='text-xl font-semibold text-gray-700'>
         문제가 발생했습니다
       </h6>
