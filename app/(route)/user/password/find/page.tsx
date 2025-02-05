@@ -39,11 +39,13 @@ export default function Page() {
             }
             placeholder='가입한 이메일 주소를 입력해주세요'
           />
-          <Button
-            variant={'primary'}
-            onClick={() => {}}
-            text='이메일로 인증코드 받기'
-          />
+          <div className={'grid text-sm h-10'}>
+            <Button
+              variant={'primary'}
+              onClick={() => {}}
+              text='이메일로 인증코드 받기'
+            />
+          </div>
         </form>
       </div>
     </div>

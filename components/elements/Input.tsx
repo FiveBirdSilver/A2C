@@ -7,6 +7,7 @@ interface InputType extends React.InputHTMLAttributes<HTMLInputElement> {
   message?: string
   direction: 'row' | 'column'
   variant?: 'default' | 'primary' | 'warning'
+  disabled?: boolean
   children?: React.ReactNode
 }
 
@@ -19,6 +20,7 @@ const Input = forwardRef<HTMLInputElement, InputType>(
       direction,
       children,
       message,
+      disabled,
       variant = 'default',
       placeholder,
       ...rest
@@ -53,6 +55,7 @@ const Input = forwardRef<HTMLInputElement, InputType>(
           data-cy={id}
           type={type}
           placeholder={placeholder}
+          disabled={disabled}
           autoComplete='off'
           className={cn(
             borderVariants[variant],

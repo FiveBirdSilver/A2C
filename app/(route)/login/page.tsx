@@ -32,13 +32,13 @@ export default function Page() {
       <div className='flex flex-col items-center justify-center gap-4  w-full max-w-96'>
         <Image
           src={'/logo.png'}
-          width={100}
-          height={30}
+          width={180}
+          height={45}
           alt='logo'
           className='mb-5'
         />
         <form
-          className='w-full flex flex-col gap-6'
+          className='w-full flex flex-col gap-6 text-sm'
           onSubmit={(e) => handleOnSubmit(e)}
         >
           <>
@@ -63,11 +63,13 @@ export default function Page() {
               placeholder='비밀번호를 입력해주세요'
             />
           </>
-          <Button
-            variant='primary'
-            onClick={() => handleOnSubmit}
-            text='로그인'
-          />
+          <div className={'grid h-10'}>
+            <Button
+              variant='primary'
+              onClick={() => handleOnSubmit}
+              text='로그인'
+            />
+          </div>
         </form>
         <div className='relative w-full mt-5 border-t border-gray-200 pt-9'>
           <p

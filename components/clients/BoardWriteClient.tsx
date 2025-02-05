@@ -55,6 +55,7 @@ const customStyles: StylesConfig = {
   }),
 }
 const Select = dynamic(() => import('react-select'), { ssr: false })
+
 const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
   const [title, setTitle] = useState<string>('')
   const [contents, setContents] = useState<string>('')

@@ -11,7 +11,8 @@ module.exports = {
     return [
       {
         source: '/route/:path*',
-        destination: 'https://api.a2climbing.com/:path*',
+        // destination: 'https://api.a2climbing.com/:path*',
+        destination: 'https://vm.a2climbing.com/:path*',
       },
     ]
   },
@@ -20,6 +21,11 @@ module.exports = {
       {
         source: '/',
         destination: '/main',
+        permanent: true,
+      },
+      {
+        source: '/user/mypage',
+        destination: '/user/mypage/profile',
         permanent: true,
       },
     ]

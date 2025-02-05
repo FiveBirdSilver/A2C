@@ -24,6 +24,10 @@ export const useLoginMutation = () => {
   const postLogin = useMutation({
     mutationFn: async () => {
       return await instance.post('/node/api/user/login', { email, password })
+      // return await axios.post('https://vm.a2climbing.com/node/api/user/login', {
+      //   email,
+      //   password,
+      // })
     },
     onSuccess: () => {
       router.push('/')

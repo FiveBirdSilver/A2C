@@ -85,12 +85,14 @@ export default function Page() {
     enabled: location !== null,
   })
 
+  if (isError || error)
+    return (
+      <Error message={'현재 위치에선 클라이밍 정보를 가져올 수 없습니다.'} />
+    )
+
   return (
     <>
       {(isLoading || isPending || loading) && <Loading />}
-      {(isError || error) && (
-        <Error message={'현재 위치에선 클라이밍 정보를 가져올 수 없습니다.'} />
-      )}
       <div className='grid md:grid-cols-[4fr_6fr] w-full h-full'>
         <div className='relative overflow-auto'>
           <div className='flex items-center flex-col w-full'>

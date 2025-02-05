@@ -74,12 +74,14 @@ export default function Page() {
                 {...register('email')}
               />
             </div>
-            <Button
-              onClick={(e) => handleOnSendCode(e, 'start')}
-              variant={watch('email') ? 'outline' : 'disabled'}
-              disabled={!watch('email')}
-              text='이메일 인증하기'
-            />
+            <div className={'grid text-sm h-8'}>
+              <Button
+                onClick={(e) => handleOnSendCode(e, 'start')}
+                variant={watch('email') ? 'outline' : 'disabled'}
+                disabled={!watch('email')}
+                text='이메일 인증하기'
+              />
+            </div>
           </div>
           {openAuthCodeBox && (
             <div className='flex flex-col gap-1 bg-gray-50 px-2.5 py-3.5'>
@@ -161,12 +163,14 @@ export default function Page() {
               {...register('nickname')}
             />
           </div>
-          <Button
-            variant='primary'
-            onClick={handleSubmit(() => handleOnRegister())}
-            // disabled={!(email !== "" && password !== "")}
-            text='회원가입'
-          />
+          <div className='grid h-10 text-sm'>
+            <Button
+              variant='primary'
+              onClick={handleSubmit(() => handleOnRegister())}
+              // disabled={!(email !== "" && password !== "")}
+              text='회원가입'
+            />
+          </div>
         </form>
       </div>
     </div>
