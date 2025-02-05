@@ -42,12 +42,13 @@ const MainBannerClient = () => {
             {/*이미지 부분*/}
             <div className='absolute right-0 top-0 opacity-50 md:relative md:opacity-100 w-40 md:w-52 h-48'>
               <Image
-                src={`/${item.img}`}
+                src={`/banner/${item.img}`}
                 alt={'banner'}
                 sizes='100%'
                 fill={true}
                 style={{ objectFit: 'cover' }}
                 className='rounded-xl'
+                priority
               />
             </div>
           </div>
