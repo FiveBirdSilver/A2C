@@ -47,7 +47,7 @@ const ListItem = ({
       )}
       <div className='flex flex-col justify-between w-full'>
         <div className='flex flex-col gap-1'>
-          <p className='text-base font-bold'>{list.name}</p>
+          <p className='text-base'>{list.name}</p>
           <span className='text-sm text-gray-600'>{list.addr}</span>
         </div>
         <div className='flex justify-between'>
@@ -110,10 +110,7 @@ export default function Page() {
           {isMobile && (
             <button className='sticky bottom-10 left-1/2 transform -translate-x-1/2 bg-white flex items-center justify-center z-10 border-gray-200 border rounded-full py-2 px-4 gap-1 shadow-lg'>
               <BsFillPinMapFill className='text-gray-700' />
-              <Link
-                href='/view/map'
-                className='text-sm text-gray-700 font-bold'
-              >
+              <Link href='/view/map' className='text-sm text-gray-700'>
                 지도보기
               </Link>
             </button>

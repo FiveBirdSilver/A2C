@@ -2,20 +2,16 @@
 
 import Image from 'next/image'
 import dayjs from 'dayjs'
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Swiper as SwiperCore } from 'swiper'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Autoplay, Pagination } from 'swiper/modules'
+import { SwiperSlide } from 'swiper/react'
 import { IoChatbubbleOutline, IoHeartOutline } from 'react-icons/io5'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
+import Carousel from '@/components/elements/Carousel.tsx'
+import Skeleton from '@/components/elements/Skeleton.tsx'
+import Link from 'next/link'
 
 interface IBoard {
-  images: string[]
-  location: {
-    point: string
-    lat: number
-    lng: number
-  }
   _id: string
   title: string
   type: string
@@ -36,6 +32,13 @@ interface IBoard {
 
 const MainListClient = (data: { data: IBoard[] }) => {
   const swiperRef = useRef<SwiperCore | null>(null)
+  const [mount, setMount] = useState<boolean>(false)
+  const emptyArray = Array(4).fill(undefined)
+
+  // 브라우저 뷰포트 크기 알 수 없어 카드 1개만 나오는 오류
+  useEffect(() => {
+    setMount(true)
+  }, [])
 
   return (
     <div className={'flex flex-col space-y-4 w-full'}>
@@ -59,50 +62,66 @@ const MainListClient = (data: { data: IBoard[] }) => {
           </button>
         </div>
       </div>
-      <div className={'flex  justify-center'}>
-        <Swiper
-          modules={[Autoplay, Pagination]}
-          spaceBetween={20}
-          slidesPerView={4}
-          navigation
-          // autoplay={{ delay: 5000, disableOnInteraction: false }}
-          loop={true}
-          speed={1500}
-          scrollbar={{ draggable: true }}
-          onSwiper={(swiper) => (swiperRef.current = swiper)}
-        >
-          {data.data?.map((board) => (
-            <SwiperSlide key={board._id}>
-              <div
-                key={board._id}
-                className='my-1 border border-gray-50 bg-white rounded-xl shadow cursor-pointer h-full'
-              >
-                <div className='text-gray-900 p-2 md:p-4 rounded-lg w-full space-y-4 '>
-                  <h4 className='px-2 min-h-12'>{board.title}</h4>
-                  <p className='text-gray-400 text-sm px-2 pb-3 min-h-20'>
-                    {board.content}
-                  </p>
-                  <div className='flex items-center text-xs justify-between px-2'>
-                    <div className='flex items-center gap-3'>
-                      <div className='flex items-center gap-1 text-xs text-gray-400'>
-                        <IoHeartOutline />
-                        <span>{board.heartCount}</span>
-                      </div>
-                      <div className='flex items-center gap-1 text-xs text-gray-400'>
-                        <IoChatbubbleOutline />
-                        <span>{board.chatCount}</span>
+      {mount ? (
+        <div className='flex justify-center overflow-x-auto'>
+          <Carousel
+            breakpoints={{
+              1024: { slidesPerView: 4 },
+            }}
+            slidesPerView={2}
+            style={{ padding: 2 }}
+            onSwiper={(swiper) => (swiperRef.current = swiper)}
+          >
+            {data.data?.map((board) => (
+              <SwiperSlide key={board._id}>
+                <div
+                  key={board._id}
+                  className='border border-gray-50 bg-white rounded-xl shadow cursor-pointer h-full'
+                >
+                  <Link
+                    href={`/board/detail/${board._id}?contentType=${board.contentType}`}
+                  >
+                    <div className='text-gray-900 p-2 md:p-4 rounded-lg w-full space-y-1 md:space-y-4'>
+                      <h4 className='px-2 min-h-12'>{board.title}</h4>
+                      <p className='text-gray-400 text-sm px-2 pb-3 min-h-12'>
+                        {board.content}
+                      </p>
+                      <div className='flex items-center text-xs justify-end md:justify-between px-2'>
+                        <div className='flex items-center gap-3'>
+                          <div className='flex items-center gap-1 text-xs text-gray-400'>
+                            <IoHeartOutline />
+                            <span>{board.heartCount}</span>
+                          </div>
+                          <div className='flex items-center gap-1 text-xs text-gray-400'>
+                            <IoChatbubbleOutline />
+                            <span>{board.chatCount}</span>
+                          </div>
+                        </div>
+                        <span className='hidden md:flex text-gray-400 text-xs'>
+                          {dayjs(board.createdAt).format('YYYY-MM-DD')}
+                        </span>
                       </div>
                     </div>
-                    <span className='text-gray-400 text-xs'>
-                      {dayjs(board.createdAt).format('YYYY-MM-DD')}
-                    </span>
-                  </div>
+                  </Link>
                 </div>
+              </SwiperSlide>
+            ))}
+          </Carousel>
+        </div>
+      ) : (
+        <div className='w-full overflow-x-hidden'>
+          <div className='flex md:grid md:grid-cols-4 gap-4 p-2 md:min-h-44'>
+            {emptyArray.map((_, index) => (
+              <div
+                key={index}
+                className='w-44 md:w-full flex-shrink-0 border border-gray-50 bg-white rounded-xl shadow cursor-pointer h-full'
+              >
+                <Skeleton />
               </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

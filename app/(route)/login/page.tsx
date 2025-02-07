@@ -31,7 +31,7 @@ export default function Page() {
     <div className='flex justify-center w-full h-full px-[1rem]'>
       <div className='flex flex-col items-center justify-center gap-4  w-full max-w-96'>
         <Image
-          src={'/logo.png'}
+          src={'/logo/logo.png'}
           width={180}
           height={45}
           alt='logo'

@@ -43,7 +43,6 @@ interface IBoard {
 // 초기데이터만 SSR 이후부터 CSR => 초기 렌더링 속도 및 SEO를 위함
 async function fetchBoard(sessionId?: { name: string; value: string }) {
   const url = `${process.env.NEXT_PUBLIC_API_URL}/node/api/board?page=1`
-  console.log('url', url)
   const res = await fetch(url, {
     headers: {
       'Content-Type': 'application/json',

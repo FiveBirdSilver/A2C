@@ -32,7 +32,7 @@ export default function GlobalHeader(data: { data: IAccount }) {
           {/*로고 => 클릭시 메인 페이지로 이동*/}
           <Link href={'/'} className='flex items-center gap-1'>
             <Image
-              src={'/logo_mobile.png'}
+              src={'/logo/logo_mobile.png'}
               width={45}
               height={20}
               alt='logo'
@@ -40,7 +40,7 @@ export default function GlobalHeader(data: { data: IAccount }) {
               className='md:hidden'
             />
             <Image
-              src={'/logo.png'}
+              src={'/logo/logo.png'}
               width={100}
               height={55}
               alt='logo'

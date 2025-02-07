@@ -15,7 +15,12 @@ interface IBanner {
 
 const MainBannerClient = () => {
   return (
-    <Carousel>
+    <Carousel
+      breakpoints={{
+        1024: { slidesPerView: 1 },
+      }}
+      slidesPerView={100}
+    >
       {bannerData.map((item: IBanner, index: number) => (
         <SwiperSlide key={item.id}>
           <div

@@ -39,10 +39,3 @@ input, textarea {
 .Toastify__toast {
   font-size: .825rem
 }
-
-/*캐로셀 스와이프*/
-.swiper-slide {
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center;
-}
