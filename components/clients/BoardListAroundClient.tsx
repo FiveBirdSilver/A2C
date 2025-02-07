@@ -9,7 +9,7 @@ import climbingPartners from '@/constants/climbingPartners.json'
 const BoardListAroundClient = () => {
   return (
     <div className='hidden md:block bg-gray-50 text-white p-4 w-80 rounded-xl mb-8'>
-      <Carousel>
+      <Carousel slidesPerView={1} autoplay={5000}>
         {climbingPartners?.map((v) => (
           <SwiperSlide key={v.id}>
             <div className='flex items-center gap-4'>

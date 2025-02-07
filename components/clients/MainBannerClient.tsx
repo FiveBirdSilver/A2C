@@ -19,7 +19,8 @@ const MainBannerClient = () => {
       breakpoints={{
         1024: { slidesPerView: 1 },
       }}
-      slidesPerView={100}
+      slidesPerView={1}
+      autoplay={5000}
     >
       {bannerData.map((item: IBanner, index: number) => (
         <SwiperSlide key={item.id}>
