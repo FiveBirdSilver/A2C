@@ -7,8 +7,6 @@ import Link from 'next/link'
 // API로부터 게시판 데이터를 가져오는 비동기 함수
 async function fetchBoard() {
   const url = `${process.env.NEXT_PUBLIC_API_URL}/node/api/board?page=1`
-  console.log(url)
-
   const res = await fetch(url, {
     headers: {
       'Content-Type': 'application/json',
