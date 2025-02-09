@@ -7,7 +7,7 @@ import Link from 'next/link'
 // API로부터 게시판 데이터를 가져오는 비동기 함수
 async function fetchBoard() {
   const url = `${process.env.NEXT_PUBLIC_API_URL}/node/api/board?page=1`
-
+  console.log(url)
   // fetch를 사용하여 API 요청을 보냄
   const res = await fetch(url, {
     headers: {
@@ -46,9 +46,7 @@ const Card = ({
             priority // 우선적으로 로드되는 이미지로 설정
           />
           {/* 카드 제목 */}
-          <p className={'text-gray-800 text-base font-semibold min-w-60'}>
-            {title}
-          </p>
+          <p className={'text-gray-800 text-base min-w-60'}>{title}</p>
         </div>
 
         {/* 오른쪽 화살표 아이콘 */}

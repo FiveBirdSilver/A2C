@@ -40,6 +40,7 @@ const MainListClient = (data: { data: IBoard[] }) => {
     setMount(true)
   }, [])
 
+  console.log(data.data)
   return (
     <div className={'flex flex-col space-y-4 w-full'}>
       <div className={'flex items-center justify-between w-full px-2'}>
