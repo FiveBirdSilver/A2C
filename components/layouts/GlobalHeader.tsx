@@ -5,26 +5,26 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { LuMenu } from 'react-icons/lu'
-// import { IoIosSearch } from 'react-icons/io'
 import { FaUserCircle } from 'react-icons/fa'
 import { IoCloseOutline } from 'react-icons/io5'
 
 import Button from '@/components/elements/Button.tsx'
 
 interface IAccount {
-  result: {
+  result: string
+  data: {
+    _id: string
     email: string
     nickname: string
   }
-  message: string
 }
-
 export default function GlobalHeader(data: { data: IAccount }) {
   const router = useRouter()
   const pathname = usePathname()
   const currentPage = pathname.split('/')[1]
   const [openMenu, setOpenMenu] = useState(false)
 
+  console.log(data.data)
   return (
     <div className='flex fixed top-0 w-full border-b border-gray-100 left-0 z-10 '>
       <div className='flex items-center bg-white mx-auto justify-between px-4 md:px-0 my-0 h-14 w-full sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg'>
@@ -92,7 +92,7 @@ export default function GlobalHeader(data: { data: IAccount }) {
 
           {/*로그인 여부에 따른 다른 UI*/}
           <div className={'hidden md:flex text-xs font-semibold'}>
-            {data.data === null ? (
+            {data.data.result !== 'success' ? (
               <Button
                 text={'회원가입/로그인'}
                 variant={'outline'}
@@ -112,25 +112,27 @@ export default function GlobalHeader(data: { data: IAccount }) {
 
         {/*모바일 버전 => 열린 메뉴*/}
         {openMenu && (
-          <div className={'fixed left-0 p-6 top-16 w-full h-full bg-white'}>
-            <ul>
-              <li className={'py-4'}>
-                <Link href={'/board?type=all'} className={'text-base'}>
-                  운동생활
-                </Link>
-              </li>
-              <li className={'pt-4 pb-6 border-b border-gray-100'}>
-                <Link href={'/view/list'} className={'text-base'}>
-                  내 주변 찾기
-                </Link>
-              </li>
-              <li className={'py-6'}>
-                <Link href={'/user/mypage'} className={'text-base'}>
-                  MY AC2
-                </Link>
-              </li>
-            </ul>
-          </div>
+          <ul
+            className={
+              'fixed left-0 py-6 top-16 w-full h-full bg-white space-y-6'
+            }
+          >
+            <li className={'px-6'}>
+              <Link href={'/board?type=all'} className={'text-base'}>
+                운동생활
+              </Link>
+            </li>
+            <li className={'border-b border-gray-100 pb-6 px-6'}>
+              <Link href={'/view/list'} className={'text-base'}>
+                내 주변 찾기
+              </Link>
+            </li>
+            <li className={'px-6'}>
+              <Link href={'/user/mypage'} className={'text-base'}>
+                MY AC2
+              </Link>
+            </li>
+          </ul>
         )}
       </div>
     </div>
