@@ -36,6 +36,19 @@ export const useLoginMutation = () => {
     },
   })
 
+  const postLogOut = useMutation({
+    mutationFn: async () => {
+      return await instance.get('/node/api/user/logout')
+    },
+    onSuccess: () => {
+      router.push('/')
+    },
+    onError: (error: AxiosError) => {
+      console.error(error)
+      notify('일시적인 오류입니다. 다시 시도해주세요.')
+    },
+  })
+
   // 카카오로 로그인하기
   const handleOnKaKaoLogin = () => {
     location.href = `${process.env.NEXT_PUBLIC_API_URL}/node/kakaoLogin`
@@ -67,6 +80,7 @@ export const useLoginMutation = () => {
 
   return {
     postLogin,
+    postLogOut,
     handleOnChange,
     validateForm,
     warning,

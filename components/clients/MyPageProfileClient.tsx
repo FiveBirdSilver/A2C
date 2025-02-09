@@ -2,8 +2,21 @@
 
 import Input from '@/components/elements/Input.tsx'
 import Button from '@/components/elements/Button.tsx'
+import { useState } from 'react'
 
-const MyPageProfileClient = () => {
+interface IAccount {
+  result: string
+  data: {
+    _id: string
+    email: string
+    nickname: string
+  }
+}
+const MyPageProfileClient = (data: { data: IAccount }) => {
+  const [nickname, setNickname] = useState<string>(
+    data.data?.data?.nickname || ''
+  )
+
   return (
     <main className='flex-1'>
       {/* 프로필 사진 */}
@@ -25,7 +38,7 @@ const MyPageProfileClient = () => {
 
       {/* 기본 정보 */}
       <section className='mt-6 pt-6 border-t border-gray-100'>
-        <h2 className='text-base font-semibold text-gray-900'>기본 정보</h2>
+        <h2 className='text-base s text-gray-900'>기본 정보</h2>
         <div className='mt-4 space-y-4'>
           <Input
             label='이메일'
@@ -35,8 +48,7 @@ const MyPageProfileClient = () => {
             variant={'default'}
             placeholder='이메일을 입력해주세요'
             disabled={true}
-            value={'seo@goldenplanet.co.kr'}
-            // onChange={(e) => handleOnChange(e)}
+            value={data.data?.data?.email || ''}
           />
           <Input
             label='닉네임'
@@ -45,8 +57,8 @@ const MyPageProfileClient = () => {
             direction={'column'}
             variant={'default'}
             placeholder='닉네임을 입력해주세요'
-            // value={email}
-            // onChange={(e) => handleOnChange(e)}
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
           />
           <Input
             label='클라이밍 활동 기간'

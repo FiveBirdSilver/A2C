@@ -3,19 +3,16 @@
 import { ReactNode } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useLoginMutation } from '@/hooks/mutations/useLoginMutation'
 
 export default function Layout({ children }: { children: ReactNode }) {
   const pathname = usePathname()
   const currentPage = pathname.split('/')[3]
+  const { postLogOut } = useLoginMutation()
 
   return (
     <div className='flex flex-col min-h-screen md:flex-row'>
       <aside className='w-full relative md:w-64 p-4 rounded-lg order-1 md:order-2'>
-        {/*사용자 닉네임*/}
-        <div className='flex flex-col gap-2 md:items-center pl-2 md:pl-0'>
-          <h2 className='text-base font-semibold text-gray-900'>버드실버</h2>
-        </div>
-
         {/*사이드 네비게이션*/}
         <nav className='grid justify-center items-center grid-cols-2 md:flex md:flex-col flex-1 mt-6 text-sm'>
           <Link
@@ -39,12 +36,12 @@ export default function Layout({ children }: { children: ReactNode }) {
             내 작성 글
           </Link>
           <div className='absolute right-4 bottom-12 md:static md:flex md:w-full md:border-t border-gray-100 px-3 py-4 my-4'>
-            <a
-              href='#'
+            <button
+              onClick={() => postLogOut.mutate()}
               className='text-xs underline md:no-underline md:text-sm text-gray-400'
             >
               로그아웃
-            </a>
+            </button>
           </div>
         </nav>
       </aside>
