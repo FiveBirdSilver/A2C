@@ -10,8 +10,11 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: '/route/:path*',
-        // destination: 'https://api.a2climbing.com/:path*',
+        source: '/node/:path*',
+        destination: 'https://vm.a2climbing.com/:path*',
+      },
+      {
+        source: '/python/:path*',
         destination: 'https://vm.a2climbing.com/:path*',
       },
     ]

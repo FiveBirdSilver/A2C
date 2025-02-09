@@ -8,15 +8,14 @@ import Link from 'next/link'
 async function fetchBoard() {
   const url = `${process.env.NEXT_PUBLIC_API_URL}/node/api/board?page=1`
   console.log(url)
-  // fetch를 사용하여 API 요청을 보냄
+
   const res = await fetch(url, {
     headers: {
-      'Content-Type': 'application/json', // 요청 헤더에 콘텐츠 타입 설정
+      'Content-Type': 'application/json',
     },
-    credentials: 'include', // 쿠키 포함 설정 (세션 관리 등)
+    credentials: 'include',
   })
 
-  // 응답 받은 데이터를 JSON으로 변환하여 반환
   return res.json()
 }
 
