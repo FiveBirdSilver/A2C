@@ -79,40 +79,38 @@ export default async function Page({ searchParams }: Props) {
             <BoardListClient initialData={data.data} />
           </div>
         </main>
-        <aside className='hidden md:flex md:col-span-1'>
-          <div className='sticky top-20'>
-            <div className={'flex flex-col gap-2'}>
-              <div className='flex items-center gap-2'>
-                <Image
-                  src={'/icons/pin.webp'}
-                  width={20}
-                  height={20}
-                  alt={'pin'}
-                />
-                <span className={'text-gray-700 text-sm'}>
-                  바로 내 근처에 있어요
-                </span>
-              </div>
-              <BoardListAroundClient />
+        <aside className='hidden md:flex flex-col md:col-span-1 h-screen sticky top-20 overflow-visible'>
+          <div className={'flex flex-col gap-2'}>
+            <div className='flex items-center gap-2'>
+              <Image
+                src={'/icons/pin.webp'}
+                width={20}
+                height={20}
+                alt={'pin'}
+              />
+              <span className={'text-gray-700 text-sm'}>
+                바로 내 근처에 있어요
+              </span>
             </div>
-            <div className={'flex flex-col gap-2'}>
-              <div className='flex items-center gap-2'>
-                <Image
-                  src={'/icons/highfive.webp'}
-                  width={20}
-                  height={20}
-                  alt={'highfive'}
-                />
-                <span className={'text-gray-700 text-sm'}>
-                  클라이밍 궁금증을 나누고 새 파트너를 만나보세요
-                </span>
-              </div>
-              <Link href={'/board/write'}>
-                <button className='flex items-center py-4 text-sm font-semibold text-green-500 bg-green-100 rounded-xl hover:bg-green-200 w-full justify-center '>
-                  글 작성
-                </button>
-              </Link>
+            <BoardListAroundClient />
+          </div>
+          <div className={'flex flex-col gap-2'}>
+            <div className='flex items-center gap-2'>
+              <Image
+                src={'/icons/highfive.webp'}
+                width={20}
+                height={20}
+                alt={'highfive'}
+              />
+              <span className={'text-gray-700 text-sm'}>
+                클라이밍 궁금증을 나누고 새 파트너를 만나보세요
+              </span>
             </div>
+            <Link href={'/board/write'}>
+              <button className='flex items-center py-4 text-sm font-semibold text-green-500 bg-green-100 rounded-xl hover:bg-green-200 w-full justify-center '>
+                글 작성
+              </button>
+            </Link>
           </div>
         </aside>
         <Link

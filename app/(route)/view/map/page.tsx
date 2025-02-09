@@ -76,7 +76,7 @@ export default function Page() {
           </div>
           <div className={'flex flex-col justify-between'}>
             <div className={'max-w-52 md:max-w-lg lg:max-w-3xl'}>
-              <p className={'font-bold'}>{selectPlace.name}</p>
+              <p>{selectPlace.name}</p>
               <p className='text-sm overflow-hidden whitespace-nowrap text-ellipsis break-all text-gray-400'>
                 {selectPlace.road_addr}
               </p>

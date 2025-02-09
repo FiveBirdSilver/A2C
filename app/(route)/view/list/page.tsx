@@ -56,7 +56,7 @@ const ListItem = ({
             {list.tel ? list.tel : '제공하지 않는 업체'}
           </button>
           <div className='bg-green-50 py-1 px-2 rounded-md flex items-center justify-center'>
-            <span className='text-xs text-green-500 font-bold'>
+            <span className='text-xs text-green-500'>
               {list.diff?.toFixed(2)}km
             </span>
           </div>

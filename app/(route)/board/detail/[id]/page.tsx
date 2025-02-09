@@ -72,19 +72,15 @@ export default async function Page({ params, searchParams }: Props) {
 
   return (
     <Suspense fallback={<Loading />}>
-      <div className='grid w-full'>
-        <div className='border-b border-gray-200'>
-          <div className='px-4 py-2'>
-            <h1 className='text-2xl text-gray-800 font-bold'>
-              {data?.data?.title}
-            </h1>
-            <div className='flex items-center justify-between gap-2 mt-4 text-sm text-gray-400'>
-              <p className='font-medium text-xs'>구해요</p>
-              <div className='flex items-center gap-2 text-xs'>
-                <span>{data?.data?.author.nickname}</span>
-                <span>|</span>
-                <span>{dayjs(data?.data?.createdAt).format('YYYY-MM-DD')}</span>
-              </div>
+      <div className='grid w-full py-4'>
+        <div className='border-b border-gray-200 px-4 py-2'>
+          <h1 className='text-2xl text-gray-800'>{data?.data?.title}</h1>
+          <div className='flex items-center justify-between gap-2 mt-4 text-sm text-gray-400'>
+            <p className='font-medium text-xs'>구해요</p>
+            <div className='flex items-center gap-2 text-xs'>
+              <span>{data?.data?.author.nickname}</span>
+              <span>|</span>
+              <span>{dayjs(data?.data?.createdAt).format('YYYY-MM-DD')}</span>
             </div>
           </div>
         </div>
@@ -96,7 +92,7 @@ export default async function Page({ params, searchParams }: Props) {
             </div>
             <button
               className='
-          flex items-center px-4 py-2 text-sm text-white font-bold bg-green-500
+          flex items-center px-4 py-2 text-sm text-white min-h-10 bg-green-500
           rounded-none hover:bg-green-600 w-full justify-center h-14
           md:relative md:mt-4 md:rounded-lg md:h-auto
           fixed bottom-[-1px] left-0 z-[1000]
