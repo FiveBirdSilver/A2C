@@ -8,7 +8,7 @@ interface IBoard {
   price: string | number
 }
 
-export const useBoardMutation = () => {
+export const useBoardWriteMutation = () => {
   const postBoard = useMutation({
     mutationFn: async (data: IBoard) => {
       return await instance.post('/node/api/board', data)
