@@ -9,6 +9,7 @@ import { MdLocationPin } from 'react-icons/md'
 import { IoChatbubbleOutline, IoHeartOutline } from 'react-icons/io5'
 
 import { instance } from '@/libs/apis/instance.ts'
+import timeAgo from '@/libs/utils/timeAgo.ts'
 
 interface IBoard {
   images: string[]
@@ -87,11 +88,11 @@ const BoardListClient = ({ initialData }: { initialData: IBoard[] }) => {
                 </div>
                 <div className='flex items-center gap-1 text-xs text-gray-400'>
                   <IoChatbubbleOutline />
-                  <span>{board.chatCount}</span>
+                  <span>{board.viewCount}</span>
                 </div>
               </div>
               <span className='text-gray-400 text-xs'>
-                {dayjs(board.createdAt).format('YYYY-MM-DD HH:mm:ss')}
+                {timeAgo(dayjs(board.createdAt).format('YYYY-MM-DD HH:mm:ss'))}
               </span>
             </div>
             <div className='flex items-center justify-between md:bg-gray-50 px-2 md:px-4 py-2 rounded-lg gap-1'>

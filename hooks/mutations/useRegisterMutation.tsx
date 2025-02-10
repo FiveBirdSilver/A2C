@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation'
 import { AxiosError } from 'axios'
 
 import { instance } from '@/libs/apis/instance.ts'
-import { notify } from '@/libs/utils/notify.ts'
+import toast from 'react-hot-toast'
 
 interface IRegister {
   email: string
@@ -20,12 +20,16 @@ export const useRegisterMutation = () => {
       return await instance.post('/node/api/user/signup', data)
     },
     onSuccess: (res) => {
-      if (res?.data.result === 'fail_email') notify('이미 존재하는 계정입니다.')
-      else router.push('/')
+      if (res?.data.result === 'fail_email')
+        toast.error('이미 존재하는 계정입니다.')
+      else {
+        toast.success('회원가입 되었습니다. 로그인 후 이용해주세요.')
+        router.push('/login ')
+      }
     },
     onError: (err: AxiosError) => {
       console.error(err)
-      notify('일시적인 오류입니다. 다시 시도해주세요.')
+      toast.error('일시적인 오류입니다. 다시 시도해주세요.')
     },
   })
 

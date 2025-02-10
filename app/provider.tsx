@@ -3,8 +3,7 @@
 import React, { useMemo } from 'react'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import { Toaster } from 'react-hot-toast'
 
 type Props = {
   children: React.ReactNode
@@ -30,7 +29,27 @@ function Providers({ children }: Props) {
       {process.env.NODE_ENV === 'development' && (
         <ReactQueryDevtools initialIsOpen={false} />
       )}
-      <ToastContainer />
+      <Toaster
+        position='bottom-center'
+        reverseOrder={false}
+        gutter={16}
+        containerStyle={{ bottom: '50px' }}
+        toastOptions={{
+          // Define default options
+          className: 'text-sm',
+          duration: 5000,
+          removeDelay: 10000,
+
+          // Default options for specific types
+          success: {
+            duration: 3000,
+            iconTheme: {
+              primary: '#5bac73',
+              secondary: 'white',
+            },
+          },
+        }}
+      />
     </QueryClientProvider>
   )
 }

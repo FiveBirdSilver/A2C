@@ -1,6 +1,7 @@
 'use client'
 import { MouseEvent } from 'react'
 import { CiCircleInfo } from 'react-icons/ci'
+import toast from 'react-hot-toast'
 
 import Button from '@/components/elements/Button.tsx'
 import Input from '@/components/elements/Input.tsx'
@@ -9,7 +10,6 @@ import useTimer from '@/hooks/common/useTimer.tsx'
 import useVerifyMutation from '@/hooks/mutations/useVerifyMutation.tsx'
 import { useRegisterMutation } from '@/hooks/mutations/useRegisterMutation.tsx'
 import useField from '@/hooks/common/useForm.tsx'
-import { notify } from '@/libs/utils/notify.ts'
 
 export default function Page() {
   const { register, handleSubmit, watch, errors } = useField()
@@ -50,7 +50,8 @@ export default function Page() {
 
   const handleOnRegister = () => {
     if (!isAuthCheck) {
-      notify('이메일 인증이 필요합니다. 인증을 완료해주세요.')
+      toast.dismiss()
+      toast.error('이메일 인증이 필요합니다. 인증을 완료해주세요.')
       return
     }
     postRegister.mutate({ ...watch() })
