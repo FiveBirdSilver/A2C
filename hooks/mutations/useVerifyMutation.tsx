@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from 'react'
 import { AxiosError } from 'axios'
 import { useMutation } from '@tanstack/react-query'
 
-import { instance } from '@/libs/apis/instance.ts'
+import { apiClient } from '@/libs/apis/instance.ts'
 
 interface IVerifySend {
   email: string
@@ -27,7 +27,7 @@ const useVerifyMutation = () => {
   const postSendCode = useMutation({
     mutationKey: ['sendCode'],
     mutationFn: async (data: IVerifySend) => {
-      return await instance.post('/node/api/user/verifySend', data)
+      return await apiClient.post('/node/api/user/verifySend', data)
     },
     onSuccess: () => {
       alert('인증번호가 발송되었습니다.')
@@ -42,7 +42,7 @@ const useVerifyMutation = () => {
   const postVerifyCheck = useMutation({
     mutationKey: ['checkCode'],
     mutationFn: async (data: IVerifyCheck) => {
-      return await instance.post(`/node/api/user/verifyCheck`, data)
+      return await apiClient.post(`/node/api/user/verifyCheck`, data)
     },
     onSuccess: () => {
       alert('인증이 성공적으로 완료되었습니다.')

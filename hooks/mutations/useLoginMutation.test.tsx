@@ -4,7 +4,7 @@ import { renderHook, act } from '@testing-library/react-hooks'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import { useLoginMutation } from '@/hooks/mutations/useLoginMutation'
-import { instance } from '@/libs/apis/instance'
+import { apiClient } from '@/libs/apis/instance'
 
 // instance 모킹
 jest.mock('@libs/apis/instance', () => ({
@@ -52,7 +52,7 @@ describe('useLoginMutation', () => {
   it('로그인 API 호출에 성공하면 홈으로 이동한다', async () => {
     const mockedPush = jest.fn()
     ;(useRouter as jest.Mock).mockReturnValue({ push: mockedPush })
-    ;(instance.post as jest.Mock).mockResolvedValueOnce({})
+    ;(apiClient.post as jest.Mock).mockResolvedValueOnce({})
     const { result } = renderHook(() => useLoginMutation(), { wrapper })
 
     await act(async () => {

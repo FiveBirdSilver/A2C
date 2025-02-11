@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
-import { instance } from '@/libs/apis/instance.ts'
+import { apiClient } from '@/libs/apis/instance.ts'
 
 interface IBoard {
   title: string
@@ -11,7 +11,7 @@ interface IBoard {
 export const useBoardWriteMutation = () => {
   const postBoard = useMutation({
     mutationFn: async (data: IBoard) => {
-      return await instance.post('/node/api/board', data)
+      return await apiClient.post('/node/api/board', data)
     },
     onSuccess: () => {},
     onError: () => {},

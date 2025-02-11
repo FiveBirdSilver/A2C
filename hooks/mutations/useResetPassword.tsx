@@ -1,6 +1,6 @@
 import { useRouter } from 'next/navigation'
 import { useMutation } from '@tanstack/react-query'
-import { instance } from '@/libs/apis/instance.ts'
+import { apiClient } from '@/libs/apis/instance.ts'
 
 interface IFindAccount {
   email: string
@@ -11,7 +11,7 @@ export const useResetPassword = () => {
 
   const postSendEmail = useMutation({
     mutationFn: async (data: IFindAccount) => {
-      return await instance.post('/node/api/user/forget', data)
+      return await apiClient.post('/node/api/user/forget', data)
     },
     onSuccess: () => {
       alert('비밀번호 변경이 가능한 링크가 이메일로 전송되었습니다.')

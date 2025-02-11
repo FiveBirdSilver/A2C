@@ -2,14 +2,14 @@ import { AxiosError } from 'axios'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import { useMutation } from '@tanstack/react-query'
-import { instance } from '@/libs/apis/instance.ts'
+import { apiClient } from '@/libs/apis/instance.ts'
 
 export const useBoardSocialMutation = () => {
   const router = useRouter()
   // 게시글 좋아요 API
   const postBoardLike = useMutation({
     mutationFn: async (board: { id: string; isLiked: boolean }) => {
-      return await instance.post('/node/api/board/like', {
+      return await apiClient.post('/node/api/board/like', {
         isLiked: board.isLiked,
         boardId: board.id,
       })

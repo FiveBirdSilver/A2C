@@ -4,7 +4,7 @@ import { useEffect, useRef, useCallback, useState } from 'react'
 import debounce from 'lodash/debounce'
 
 import useCurrentLocation from '@/hooks/common/useCurrentLocation.tsx'
-import { instance } from '@/libs/apis/instance.ts'
+import axios from 'axios'
 
 export interface IMapList {
   addr: string
@@ -46,8 +46,8 @@ const useMap = ({ lat, lng }: IMapProps) => {
   const getMapList = useCallback(
     async (northEast: naver.maps.LatLng, southWest: naver.maps.LatLng) => {
       try {
-        const response = await instance.get<IMapList[]>(
-          `/python/api/map/GetClimbPlace?northEast=${northEast.lng()},${northEast.lat()}&southWest=${southWest.lng()},${southWest.lat()}`,
+        const response = await axios.get<IMapList[]>(
+          `/backend/python/api/map/GetClimbPlace?northEast=${northEast.lng()},${northEast.lat()}&southWest=${southWest.lng()},${southWest.lat()}`,
           {
             withCredentials: true,
           }
@@ -57,7 +57,6 @@ const useMap = ({ lat, lng }: IMapProps) => {
       } catch (error) {
         setError(true)
         setLoading(false)
-
         return []
       }
     },

@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { AxiosError } from 'axios'
 
-import { instance } from '@/libs/apis/instance.ts'
+import { apiClient } from '@/libs/apis/instance.ts'
 import toast from 'react-hot-toast'
 
 interface IWarning {
@@ -23,7 +23,7 @@ export const useLoginMutation = () => {
   // 로그인
   const postLogin = useMutation({
     mutationFn: async () => {
-      return await instance.post('/node/api/user/login', { email, password })
+      return await apiClient.post('/node/api/user/login', { email, password })
     },
     onSuccess: () => {
       router.push('/')
@@ -39,7 +39,7 @@ export const useLoginMutation = () => {
 
   const postLogOut = useMutation({
     mutationFn: async () => {
-      return await instance.get('/node/api/user/logout')
+      return await apiClient.get('/node/api/user/logout')
     },
     onSuccess: () => {
       router.push('/')
