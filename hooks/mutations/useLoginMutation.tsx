@@ -19,6 +19,7 @@ export const useLoginMutation = () => {
     email: false,
     password: false,
   })
+  // const queryClient = useQueryClient()
 
   // 로그인
   const postLogin = useMutation({
@@ -41,8 +42,10 @@ export const useLoginMutation = () => {
     mutationFn: async () => {
       return await apiClient.get('/node/api/user/logout')
     },
-    onSuccess: () => {
+    onSuccess: async () => {
+      // await queryClient.invalidateQueries({ queryKey: ['getLoggedIn'] })
       router.push('/')
+      router.refresh()
     },
     onError: (error: AxiosError) => {
       console.error(error)
