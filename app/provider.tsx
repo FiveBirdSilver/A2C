@@ -35,12 +35,9 @@ function Providers({ children }: Props) {
         gutter={16}
         containerStyle={{ bottom: '50px' }}
         toastOptions={{
-          // Define default options
-          className: 'text-sm',
+          className: 'text-xs',
           duration: 5000,
           removeDelay: 10000,
-
-          // Default options for specific types
           success: {
             duration: 3000,
             iconTheme: {
