@@ -8,10 +8,10 @@ export const useBoardSocialMutation = () => {
   const router = useRouter()
   // 게시글 좋아요 API
   const postBoardLike = useMutation({
-    mutationFn: async (boardId: { id: string }) => {
+    mutationFn: async (board: { id: string; isLiked: boolean }) => {
       return await instance.post('/node/api/board/like', {
-        isLiked: true,
-        boardId: boardId.id,
+        isLiked: board.isLiked,
+        boardId: board.id,
       })
     },
     onSuccess: () => {

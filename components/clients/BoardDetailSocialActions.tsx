@@ -1,7 +1,7 @@
 'use client'
 
 import { IoMdHeartEmpty } from 'react-icons/io'
-import { IoChatbubblesOutline, IoShareSocial } from 'react-icons/io5'
+import { IoChatbubblesOutline, IoShareSocial, IoHeart } from 'react-icons/io5'
 import { usePathname } from 'next/navigation'
 import toast from 'react-hot-toast'
 
@@ -26,45 +26,54 @@ const CopyURL = () => {
 const BoardDetailSocialActions = ({
   heartCount,
   chatCount,
+  isLiked,
 }: {
   heartCount: number
   chatCount: number
+  isLiked: boolean
 }) => {
   const { postBoardLike } = useBoardSocialMutation()
   const pathName = usePathname()
 
   return (
-    <aside className='hidden md:block md:col-span-1 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto py-6'>
-      <div className='flex flex-col items-center space-y-6'>
-        <div className='flex flex-col space-y-2 items-center justify-center'>
+    <div className='contents md:block md:col-span-1 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto py-6'>
+      <div className='fixed px-12 md:px-0 md:relative bottom-0 flex flex-row md:flex-col items-baseline w-full justify-between md:items-center md:space-y-6 bg-white min-h-9'>
+        <div className='flex flex-row md:flex-col md:space-y-2 items-center justify-center'>
           <button
             onClick={() =>
-              postBoardLike.mutate({ id: pathName.split('detail/')[1] })
+              postBoardLike.mutate({
+                id: pathName.split('detail/')[1],
+                isLiked: isLiked,
+              })
             }
-            className='rounded-full border border-gray-200 shadow-[0_2px_14px_rgba(0,0,0,0.12)] w-12 h-12 flex items-center justify-center text-lg text-gray-700'
+            className='rounded-full md:border md:border-gray-200 md:shadow-[0_2px_14px_rgba(0,0,0,0.12)] w-8 md:w-12 h-12 flex items-center justify-center text-lg text-gray-700'
           >
-            <IoMdHeartEmpty />
+            {isLiked ? (
+              <IoHeart className={'text-green-400'} />
+            ) : (
+              <IoMdHeartEmpty />
+            )}
           </button>
-          <span className='text-gray-700 text-xs'>
+          <p
+            className={`${isLiked ? 'text-green-400' : 'text-gray-700'} text-xs`}
+          >
             {heartCount.toLocaleString()}
-          </span>
+          </p>
         </div>
-        <div className='flex flex-col space-y-2 items-center justify-center'>
-          <button className='rounded-full border border-gray-200 shadow-[0_2px_14px_rgba(0,0,0,0.12)] w-12 h-12 flex items-center justify-center text-lg text-gray-700'>
+        <div className='flex flex-row md:flex-col md:space-y-2 items-center justify-center'>
+          <button className='rounded-full md:border md:border-gray-200 md:shadow-[0_2px_14px_rgba(0,0,0,0.12)] w-8 md:w-12 h-12 flex items-center justify-center text-lg text-gray-700'>
             <IoChatbubblesOutline />
           </button>
-          <span className='text-gray-700 text-xs'>
-            {chatCount.toLocaleString()}
-          </span>
+          <p className='text-gray-700 text-xs'>{chatCount.toLocaleString()}</p>
         </div>
         <button
           onClick={() => CopyURL()}
-          className='rounded-full border border-gray-200 shadow-[0_2px_14px_rgba(0,0,0,0.12)] w-12 h-12 flex items-center justify-center text-lg text-gray-700'
+          className='rounded-full md:border md:border-gray-200 md:shadow-[0_2px_14px_rgba(0,0,0,0.12)] md:w-12 h-12 flex items-center justify-center text-lg text-gray-700'
         >
           <IoShareSocial />
         </button>
       </div>
-    </aside>
+    </div>
   )
 }
 export default BoardDetailSocialActions
