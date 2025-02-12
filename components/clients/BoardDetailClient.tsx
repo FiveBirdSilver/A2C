@@ -2,8 +2,15 @@
 
 import { useEffect, useRef } from 'react'
 import dayjs from 'dayjs'
+
 import Input from '@/components/elements/Input.tsx'
 import { setCookie } from '@/app/actions.ts'
+
+// 카테고리 타입 정의
+interface TypeItem {
+  text: string
+  value: string
+}
 
 const BoardDetailClient = ({
   cookie,
@@ -16,8 +23,10 @@ const BoardDetailClient = ({
   content,
   viewCount,
   heartCount,
+  contentType,
 }: {
   cookie: string | null
+  contentType: string
   point: string
   lng: number
   lat: number
@@ -69,13 +78,21 @@ const BoardDetailClient = ({
     }
   }, [lat, lng])
 
+  const typeItems: TypeItem[] = [
+    { text: '구해요', value: 'find' },
+    { text: '같이해요', value: 'together' },
+    { text: '궁금해요', value: 'community' },
+  ]
+
   return (
     <div className='col-span-1 md:col-span-5'>
       {/*작성자 및 작성시각*/}
       <div className='border-b border-gray-200 px-4 py-2'>
         <h1 className='text-2xl text-gray-800'>{title}</h1>
         <div className='flex items-center justify-between gap-2 mt-4 text-sm text-gray-400'>
-          <p className='font-medium text-xs'>구해요</p>
+          <p className='font-medium text-xs'>
+            {typeItems.find((v) => v.value === contentType)?.text}
+          </p>
           <div className='flex items-center gap-2 text-xs'>
             <span>{nickname}</span>
             <span>|</span>

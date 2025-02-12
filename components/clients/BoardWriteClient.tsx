@@ -17,7 +17,7 @@ interface TypeItem {
   value: string
 }
 
-// 카테고리 타입 정의
+// 셀렉트 박스 타입 정의
 interface SelectOption {
   label: string
   value: string

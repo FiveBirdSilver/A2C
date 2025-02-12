@@ -84,11 +84,9 @@ export default async function Page({ params, searchParams }: Props) {
 
   const sessionId = cookieStore.get('connect.sid')
   const viewBoardId = cookieStore.get('v_boards')
-
   const { data, cookie }: { data: IBoardDetail; cookie: string | null } =
     await fetchBoardDetail(id, contentType, sessionId, viewBoardId)
 
-  console.log(data)
   if (data.result === 'fail') {
     redirect('/login')
   }
@@ -102,6 +100,7 @@ export default async function Page({ params, searchParams }: Props) {
           lat={data.data.location?.lat || 0}
           lng={data.data.location?.lng || 0}
           title={data.data.title}
+          contentType={data.data.contentType}
           content={data.data.content}
           nickname={data.data.author.nickname}
           createdAt={dayjs(data.data.createdAt).format('YYYY-MM-DD HH:mm:ss')}
