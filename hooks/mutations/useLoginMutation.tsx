@@ -1,5 +1,5 @@
 import { useCallback, useState, ChangeEvent } from 'react'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { AxiosError } from 'axios'
 
@@ -13,7 +13,6 @@ interface IWarning {
 
 export const useLoginMutation = () => {
   const router = useRouter()
-  const queryClient = useQueryClient()
 
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -29,7 +28,7 @@ export const useLoginMutation = () => {
     },
     onSuccess: async () => {
       router.push('/')
-      await queryClient.invalidateQueries({ queryKey: ['isLogged'] })
+      router.refresh()
     },
     onError: (error: AxiosError) => {
       const status = error.response?.status
@@ -47,7 +46,7 @@ export const useLoginMutation = () => {
     },
     onSuccess: async () => {
       router.push('/')
-      await queryClient.invalidateQueries({ queryKey: ['isLogged'] })
+      router.refresh()
     },
     onError: (error: AxiosError) => {
       console.error(error)

@@ -9,7 +9,6 @@ import { FaUserCircle } from 'react-icons/fa'
 import { IoCloseOutline } from 'react-icons/io5'
 
 import Button from '@/components/elements/Button.tsx'
-import { useQueries } from '@/hooks/queries/useQueries.tsx'
 
 interface IAccount {
   result: string
@@ -19,21 +18,14 @@ interface IAccount {
     nickname: string
   }
 }
-export default function GlobalHeader() {
+export default function GlobalHeader(data: { data: IAccount }) {
   const router = useRouter()
   const pathname = usePathname()
   const currentPage = pathname.split('/')[1]
   const [openMenu, setOpenMenu] = useState(false)
 
-  // 로그인 상태에 따른 UI 제어
-  const { data } = useQueries<IAccount>({
-    endpoint: '/node/api/account',
-    queryKey: 'isLogged',
-    gcTime: 1000 * 60 * 60,
-  })
-
   return (
-    <div className='flex fixed top-0 w-full border-b border-gray-100 left-0 z-[9999] '>
+    <div className='flex fixed top-0 w-full border-b border-gray-100 left-0 z-10 '>
       <div className='flex items-center bg-white mx-auto justify-between px-4 md:px-0 my-0 h-14 w-full sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg'>
         <div className={'flex items-center gap-4'}>
           {/*로고 => 클릭시 메인 페이지로 이동*/}
@@ -99,7 +91,7 @@ export default function GlobalHeader() {
 
           {/*로그인 여부에 따른 다른 UI*/}
           <div className={'hidden md:flex text-xs font-semibold'}>
-            {!data ? (
+            {!data.data ? (
               <Button
                 text={'회원가입/로그인'}
                 variant={'outline'}
@@ -121,7 +113,7 @@ export default function GlobalHeader() {
         {openMenu && (
           <ul
             className={
-              'fixed left-0 py-6 top-14 w-full h-full bg-white space-y-6'
+              'fixed left-0 py-6 top-16 w-full h-full bg-white space-y-6'
             }
           >
             <li className={'px-6'}>
