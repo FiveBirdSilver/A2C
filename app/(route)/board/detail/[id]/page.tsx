@@ -56,8 +56,7 @@ async function fetchBoardDetail(
 
   // 쿠키 값 조합
   const cookies = [
-    // `${sessionId?.name}=${sessionId?.value}`,
-    `${'connect.sid'}=${'s%3AYJF0QGEQYebLdkxAKUA1dWQN-YXhkERn.LYgYeuORCf2BJ2XBTL9lGWHUk8WTx7z3WVU1EFwm77M'}`,
+    `${sessionId?.name}=${sessionId?.value}`,
     `${viewBoardId?.name}=${viewBoardId?.value}`,
   ]
     .filter(Boolean)
@@ -89,6 +88,7 @@ export default async function Page({ params, searchParams }: Props) {
   const { data, cookie }: { data: IBoardDetail; cookie: string | null } =
     await fetchBoardDetail(id, contentType, sessionId, viewBoardId)
 
+  console.log(data)
   if (data.result === 'fail') {
     redirect('/login')
   }
