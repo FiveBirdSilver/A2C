@@ -15,7 +15,7 @@ export const useBoardSocialMutation = () => {
       })
     },
     onSuccess: () => {
-      console.log('success')
+      router.refresh()
     },
     onError: (error: AxiosError) => {
       const status = error.response?.status

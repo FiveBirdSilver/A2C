@@ -107,7 +107,7 @@ const BoardListClient = ({ initialData }: { initialData: IBoard[] }) => {
               <div className={'flex items-center gap-1'}>
                 <MdLocationPin className='text-green-400' />
                 <span className='text-green-400 text-xs font-semibold'>
-                  {board.location.point}
+                  {board.location?.point ?? '위치 정보 없음'}
                 </span>
               </div>
             </div>

@@ -16,7 +16,7 @@ const Tabs = (props: ITabs) => {
   const router = useRouter()
 
   return (
-    <div className={'flex gap-2 px-6 py-4 md:px-0 md:py-6'}>
+    <div className={'flex gap-2 px-4 py-4 md:px-0 md:py-6'}>
       {items.map(({ label, value }) => (
         <button
           key={label}

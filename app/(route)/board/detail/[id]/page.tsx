@@ -98,9 +98,9 @@ export default async function Page({ params, searchParams }: Props) {
       <div className='grid grid-cols-1 gap-8 py-4 md:px-20 md:grid-cols-6'>
         <BoardDetailClient
           cookie={cookie}
-          name={data.data.location.point || ''}
-          lat={data.data.location.lat || 0}
-          lng={data.data.location.lng || 0}
+          point={data.data.location?.point || ''}
+          lat={data.data.location?.lat || 0}
+          lng={data.data.location?.lng || 0}
           title={data.data.title}
           content={data.data.content}
           nickname={data.data.author.nickname}

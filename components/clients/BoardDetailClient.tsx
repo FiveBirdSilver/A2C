@@ -7,7 +7,7 @@ import { setCookie } from '@/app/actions.ts'
 
 const BoardDetailClient = ({
   cookie,
-  name,
+  point,
   lng,
   lat,
   title,
@@ -17,9 +17,8 @@ const BoardDetailClient = ({
   viewCount,
   heartCount,
 }: {
-  endpoint?: string
   cookie: string | null
-  name: string
+  point: string
   lng: number
   lat: number
   title: string
@@ -54,7 +53,7 @@ const BoardDetailClient = ({
       new naver.maps.Marker({
         position: center,
         map: map,
-        title: name,
+        title: point,
         icon: {
           content: `
             <div style="width: 30px; height: 30px; display: flex; justify-content: center; align-items: center;">
@@ -73,7 +72,7 @@ const BoardDetailClient = ({
   return (
     <div className='col-span-1 md:col-span-5'>
       {/*작성자 및 작성시각*/}
-      <div className='border-b border-gray-200 p-4'>
+      <div className='border-b border-gray-200 px-4 py-2'>
         <h1 className='text-2xl text-gray-800'>{title}</h1>
         <div className='flex items-center justify-between gap-2 mt-4 text-sm text-gray-400'>
           <p className='font-medium text-xs'>구해요</p>
@@ -87,17 +86,19 @@ const BoardDetailClient = ({
 
       {/*내용 및 이미지*/}
       <div className='flex flex-col gap-4 p-4 w-full'>
-        <div className='min-h-40'>
+        <div className='min-h-32'>
           <span className='text-sm'>{content}</span>
         </div>
 
         {/*위치 (지도) */}
-        <div className='flex flex-col gap-3'>
-          <span className='text-xs'>위치</span>
-          <div className='w-full h-48'>
-            <div ref={mapRef} className='w-full h-full rounded-lg border' />
+        {point && (
+          <div className='flex flex-col gap-3'>
+            <span className='text-xs'>위치</span>
+            <div className='w-full h-48'>
+              <div ref={mapRef} className='w-full h-full rounded-lg border' />
+            </div>
           </div>
-        </div>
+        )}
 
         {/*조회수 및 좋아요수 */}
         <dl className='flex justify-end border-b border-gray-200 px-4 py-2 gap-2 mt-4 text-xs text-gray-400'>
