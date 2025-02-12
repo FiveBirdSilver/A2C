@@ -5,6 +5,7 @@ import { SwiperSlide } from 'swiper/react'
 import { IoChatbubbleOutline, IoHeartOutline } from 'react-icons/io5'
 import Carousel from '@/components/elements/Carousel.tsx'
 import climbingPartners from '@/constants/climbingPartners.json'
+import { AiOutlineEye } from 'react-icons/ai'
 
 const BoardListAroundClient = () => {
   return (
@@ -37,17 +38,22 @@ const BoardListAroundClient = () => {
               <p className={'text-gray-600 text-xs'}>{v.content}</p>
             </div>
             <div className='mt-8 flex justify-between items-center w-full'>
+              <p className={'text-gray-400 text-xs'}>{v.createdAt}</p>
+
               <div className='flex items-center gap-2 text-xs text-gray-400'>
-                <div className='flex items-center gap-1'>
+                <div className='flex items-center space-x-1'>
+                  <AiOutlineEye />
+                  <span>{v.viewCount}</span>
+                </div>
+                <div className='flex items-center space-x-1'>
                   <IoHeartOutline />
                   <span>{v.heartCount}</span>
                 </div>
-                <div className='flex items-center gap-1'>
+                <div className='flex items-center space-x-1'>
                   <IoChatbubbleOutline />
                   <span>{v.chatCount}</span>
                 </div>
               </div>
-              <p className={'text-gray-400 text-xs'}>{v.createdAt}</p>
             </div>
           </SwiperSlide>
         ))}

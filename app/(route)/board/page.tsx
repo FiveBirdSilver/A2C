@@ -59,7 +59,6 @@ export default async function Page({ searchParams }: Props) {
   const sessionId = cookieStore.get('connect.sid')
   const type = (await searchParams).type
   const data: IBoard = await fetchBoard(sessionId)
-
   return (
     <Suspense fallback={<Loading />}>
       <div className='flex flex-col items-start justify-center'>

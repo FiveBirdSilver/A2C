@@ -24,6 +24,7 @@ const BoardDetailClient = ({
   viewCount,
   heartCount,
   contentType,
+  comments,
 }: {
   cookie: string | null
   contentType: string
@@ -130,7 +131,7 @@ const BoardDetailClient = ({
         <div className={'flex space-x-2 items-center text-base pl-2'}>
           <span className={'text-gray-700'}>댓글</span>
           <span className={'text-green-400 md:font-semibold'}>
-            {/*{data.data?.comments?.length || 0}*/}
+            {comments?.length || 0}
           </span>
         </div>
         <Input
