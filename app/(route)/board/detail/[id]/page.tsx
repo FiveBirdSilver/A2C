@@ -56,11 +56,12 @@ async function fetchBoardDetail(
 
   // 쿠키 값 조합
   const cookies = [
-    sessionId ? `${sessionId.name}=${sessionId.value}` : '',
+    // `${sessionId?.name}=${sessionId?.value}`,
+    `${'connect.sid'}=${'s%3AYJF0QGEQYebLdkxAKUA1dWQN-YXhkERn.LYgYeuORCf2BJ2XBTL9lGWHUk8WTx7z3WVU1EFwm77M'}`,
     `${viewBoardId?.name}=${viewBoardId?.value}`,
   ]
     .filter(Boolean)
-    .join('; ') // 빈 문자열 제거 후 `; `로 연결
+    .join('; ')
 
   const res = await fetch(url, {
     headers: {
@@ -79,7 +80,6 @@ async function fetchBoardDetail(
 export default async function Page({ params, searchParams }: Props) {
   const id = (await params).id
 
-  console.log(id)
   const contentType = (await searchParams).contentType
   const cookieStore = await cookies()
 

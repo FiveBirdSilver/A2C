@@ -1,9 +1,9 @@
 import { useCallback, useState, ChangeEvent } from 'react'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { AxiosError } from 'axios'
 
-import { apiClient } from '@/libs/apis/instance.ts'
+import { instance } from '@/libs/apis/instance.ts'
 import toast from 'react-hot-toast'
 
 interface IWarning {
@@ -13,6 +13,8 @@ interface IWarning {
 
 export const useLoginMutation = () => {
   const router = useRouter()
+  const queryClient = useQueryClient()
+
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [warning, setWarning] = useState<IWarning>({
@@ -23,11 +25,11 @@ export const useLoginMutation = () => {
   // 로그인
   const postLogin = useMutation({
     mutationFn: async () => {
-      return await apiClient.post('/node/api/user/login', { email, password })
+      return await instance.post('/node/api/user/login', { email, password })
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       router.push('/')
-      router.refresh()
+      await queryClient.invalidateQueries({ queryKey: ['isLogged'] })
     },
     onError: (error: AxiosError) => {
       const status = error.response?.status
@@ -41,10 +43,11 @@ export const useLoginMutation = () => {
   // 로그아웃
   const postLogOut = useMutation({
     mutationFn: async () => {
-      return await apiClient.get('/node/api/user/logout')
+      return await instance.get('/node/api/user/logout')
     },
     onSuccess: async () => {
       router.push('/')
+      await queryClient.invalidateQueries({ queryKey: ['isLogged'] })
     },
     onError: (error: AxiosError) => {
       console.error(error)
