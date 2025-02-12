@@ -79,7 +79,7 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
   const [place, setPlace] = useState<{ label: string; value: string } | null>()
 
   // 이미지
-  const [images, _setImages] = useState<string[]>([])
+  // const [images, setImages] = useState<string[]>([])
 
   const { postBoard } = useBoardWriteMutation()
 
@@ -113,7 +113,7 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
     postBoard.mutate({
       title,
       content,
-      images,
+      images: [],
       type: 'climbing',
       location: place
         ? {
