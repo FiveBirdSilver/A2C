@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { AxiosError } from 'axios'
 
-import { apiClient } from '@/libs/apis/instance.ts'
+import { instance } from '@/libs/apis/instance.ts'
 import toast from 'react-hot-toast'
 
 interface IRegister {
@@ -17,7 +17,7 @@ export const useRegisterMutation = () => {
 
   const postRegister = useMutation({
     mutationFn: async (data: IRegister) => {
-      return await apiClient.post('/node/api/user/signup', data)
+      return await instance.post('/node/api/user/signup', data)
     },
     onSuccess: (res) => {
       if (res?.data.result === 'fail_email')

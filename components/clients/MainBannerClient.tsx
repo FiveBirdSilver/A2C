@@ -32,7 +32,7 @@ const MainBannerClient = () => {
             {/*텍스트 부분*/}
             <div className='flex flex-col z-10 gap-4 justify-between w-full md:w-1/2 py-4 md:py-6'>
               <div className='flex flex-col gap-1 md:gap-4'>
-                <h3 className='text-sm md:text-[1.375rem] font-semibold'>
+                <h3 className='text-base md:text-[1.375rem] md:font-semibold'>
                   {item.title}
                 </h3>
                 <p className=' text-xs md:text-sm whitespace-pre-wrap'>

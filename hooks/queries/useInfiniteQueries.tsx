@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
-import { apiFetcher } from '@/libs/apis/instance.ts'
+import axios from 'axios'
 
 interface IUseInfiniteQuery {
   queryKey: string
@@ -11,7 +11,12 @@ export const useInfiniteQueries = (props: IUseInfiniteQuery) => {
   return useInfiniteQuery({
     queryKey: [queryKey],
     queryFn: async ({ pageParam = 6 }) => {
-      const response = await apiFetcher.get(`${queryKey}?page=${pageParam}`)
+      const response = await axios.get(
+        `/backend${queryKey}?page=${pageParam}`,
+        {
+          withCredentials: true,
+        }
+      )
       return response.data.data
     },
     initialPageParam: 5,

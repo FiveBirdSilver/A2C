@@ -47,7 +47,7 @@ const BoardDetailClient = ({
       const center = new naver.maps.LatLng(lat, lng)
       const map = new naver.maps.Map(mapRef.current, {
         center: center,
-        zoom: 15,
+        zoom: 10,
       })
 
       // 마커 생성
@@ -73,7 +73,7 @@ const BoardDetailClient = ({
   return (
     <div className='col-span-1 md:col-span-5'>
       {/*작성자 및 작성시각*/}
-      <div className='border-b border-gray-200 px-4 py-2'>
+      <div className='border-b border-gray-200 p-4'>
         <h1 className='text-2xl text-gray-800'>{title}</h1>
         <div className='flex items-center justify-between gap-2 mt-4 text-sm text-gray-400'>
           <p className='font-medium text-xs'>구해요</p>
@@ -94,7 +94,7 @@ const BoardDetailClient = ({
         {/*위치 (지도) */}
         <div className='flex flex-col gap-3'>
           <span className='text-xs'>위치</span>
-          <div className='w-full h-60 md:h-48'>
+          <div className='w-full h-48'>
             <div ref={mapRef} className='w-full h-full rounded-lg border' />
           </div>
         </div>
@@ -108,7 +108,7 @@ const BoardDetailClient = ({
       </div>
 
       {/*댓글*/}
-      <div className='w-full px-4 space-y-4'>
+      <div className='w-full px-4 mb-16 space-y-4'>
         <div className={'flex space-x-2 items-center text-base pl-2'}>
           <span className={'text-gray-700'}>댓글</span>
           <span className={'text-green-400 md:font-semibold'}>

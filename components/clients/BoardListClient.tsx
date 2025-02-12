@@ -8,8 +8,8 @@ import { useInView } from 'react-intersection-observer'
 import { MdLocationPin } from 'react-icons/md'
 import { IoChatbubbleOutline, IoHeartOutline } from 'react-icons/io5'
 
-import { apiFetcher } from '@/libs/apis/instance.ts'
 import timeAgo from '@/libs/utils/timeAgo.ts'
+import axios from 'axios'
 
 interface IBoard {
   images: string[]
@@ -46,7 +46,12 @@ const BoardListClient = ({ initialData }: { initialData: IBoard[] }) => {
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
     queryKey: ['getBoard'],
     queryFn: async ({ pageParam = 32 }) => {
-      const response = await apiFetcher.get(`/node/api/board?page=${pageParam}`)
+      const response = await axios.get(
+        `/backend/node/api/board?page=${pageParam}`,
+        {
+          withCredentials: true,
+        }
+      )
       return response.data.data
     },
     initialPageParam: 2,

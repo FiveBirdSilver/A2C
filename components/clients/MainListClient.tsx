@@ -83,10 +83,10 @@ const MainListClient = (data: { data: IBoard[] }) => {
                     href={`/board/detail/${board._id}?contentType=${board.contentType}`}
                   >
                     <div className='text-gray-900 p-2 md:p-4 rounded-lg w-full space-y-1 md:space-y-4'>
-                      <h4 className='px-2 min-h-6 overflow-hidden whitespace-nowrap overflow-ellipsis break-all'>
+                      <h4 className='text-sm md:text-base px-2 min-h-6 overflow-hidden whitespace-nowrap overflow-ellipsis break-all'>
                         {board.title}
                       </h4>
-                      <p className='text-gray-400 text-sm px-2 pb-3 min-h-12 overflow-hidden whitespace-nowrap overflow-ellipsis break-all'>
+                      <p className='text-gray-400 text-xs md:text-sm px-2 pb-3 min-h-12 overflow-hidden whitespace-nowrap overflow-ellipsis break-all'>
                         {board.content}
                       </p>
                       <div className='flex items-center text-xs justify-end md:justify-between px-2'>

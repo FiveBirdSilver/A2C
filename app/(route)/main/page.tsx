@@ -43,7 +43,9 @@ const Card = ({
             priority // 우선적으로 로드되는 이미지로 설정
           />
           {/* 카드 제목 */}
-          <p className={'text-gray-800 text-base min-w-60'}>{title}</p>
+          <p className={'text-gray-800 text-sm md:text-base min-w-60'}>
+            {title}
+          </p>
         </div>
 
         {/* 오른쪽 화살표 아이콘 */}
