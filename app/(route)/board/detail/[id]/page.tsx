@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 
 import Loading from '@/app/loading.tsx'
 import BoardDetailClient from '@/components/clients/BoardDetailClient.tsx'
-import BoardDetailSocialActions from '@/components/clients/BoardDetailSocialActions.tsx'
+import BoardDetailSocialClient from '@/components/clients/BoardDetailSocialClient.tsx'
 
 type Props = {
   params: Promise<{ id: string }>
@@ -36,7 +36,15 @@ interface IBoardDetail {
     }
     createdAt: string
     updatedAt: string
-    comments: string[]
+    comments: {
+      _id: string
+      content: string
+      board: string
+      parentCommentId: string
+      createdAt: string
+      updatedAt: string
+      __v: string
+    }[]
   }
 }
 
@@ -108,7 +116,7 @@ export default async function Page({ params, searchParams }: Props) {
           viewCount={data.data.viewCount}
           comments={data.data.comments}
         />
-        <BoardDetailSocialActions
+        <BoardDetailSocialClient
           isLiked={data.isLiked}
           heartCount={data.data.heartCount}
           chatCount={data.data.chatCount}

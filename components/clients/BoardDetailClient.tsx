@@ -1,15 +1,35 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { KeyboardEvent, useEffect, useRef } from 'react'
 import dayjs from 'dayjs'
 
+import { setBoardCookieAction } from '@/app/actions/setBoardCookieAction.ts'
 import Input from '@/components/elements/Input.tsx'
-import { setCookie } from '@/app/actions.ts'
+import typeItems from '@/constants/boardTypeItems.json'
+import { useBoardCommentMutation } from '@/hooks/mutations/useBoardCommentMutation.tsx'
+import { usePathname } from 'next/navigation'
 
-// 카테고리 타입 정의
-interface TypeItem {
-  text: string
-  value: string
+export interface IBoardDetail {
+  cookie: string | null
+  contentType: string
+  point: string
+  lng: number
+  lat: number
+  title: string
+  nickname: string
+  createdAt: string
+  content: string
+  viewCount: number
+  heartCount: number
+  comments: {
+    _id: string
+    content: string
+    board: string
+    parentCommentId: string
+    createdAt: string
+    updatedAt: string
+    __v: string
+  }[]
 }
 
 const BoardDetailClient = ({
@@ -25,31 +45,36 @@ const BoardDetailClient = ({
   heartCount,
   contentType,
   comments,
-}: {
-  cookie: string | null
-  contentType: string
-  point: string
-  lng: number
-  lat: number
-  title: string
-  nickname: string
-  createdAt: string
-  content: string
-  viewCount: number
-  heartCount: number
-  comments: string[]
-}) => {
+}: IBoardDetail) => {
   const mapRef = useRef<HTMLDivElement | null>(null)
+  const pathName = usePathname()
+  const { postBoardComment, comment, handleOnChange } =
+    useBoardCommentMutation()
+
+  // 로그인 폼 제출
+  const handleOnCommentSubmit = async (
+    event: KeyboardEvent<HTMLInputElement>
+  ) => {
+    event.preventDefault()
+    const boardId = pathName.split('/detail/')
+
+    postBoardComment.mutate({
+      content: comment,
+      boardId: boardId[1],
+      parentCommentId: null,
+    })
+  }
 
   // 계속된 조회수 증가를 막기 위한 쿠키 저장
   useEffect(() => {
     const viewCookie = async () => {
-      if (cookie) await setCookie(cookie)
+      if (cookie) await setBoardCookieAction(cookie)
     }
 
     viewCookie()
   }, [cookie])
 
+  // 지도 렌더링
   useEffect(() => {
     const { naver } = window
     if (mapRef.current && naver) {
@@ -79,12 +104,7 @@ const BoardDetailClient = ({
     }
   }, [lat, lng])
 
-  const typeItems: TypeItem[] = [
-    { text: '구해요', value: 'find' },
-    { text: '같이해요', value: 'together' },
-    { text: '궁금해요', value: 'community' },
-  ]
-
+  console.log(comments)
   return (
     <div className='col-span-1 md:col-span-5'>
       {/*작성자 및 작성시각*/}
@@ -134,12 +154,32 @@ const BoardDetailClient = ({
             {comments?.length || 0}
           </span>
         </div>
-        <Input
-          id={'comments'}
-          label={''}
-          direction={'row'}
-          placeholder={'댓글을 입력해주세요.'}
-        />
+
+        {/*댓글 입력*/}
+        <div className={'relative'}>
+          <Input
+            id={'comments'}
+            label={''}
+            direction={'row'}
+            placeholder={'댓글을 입력해주세요.'}
+            value={comment}
+            onChange={(e) => handleOnChange(e)}
+            onKeyDown={(e) =>
+              e.code === 'Enter' ? handleOnCommentSubmit(e) : null
+            }
+          />
+          <span
+            className={'text-gray-400 absolute right-5 top-[0.6rem] text-sm'}
+          >
+            입력
+          </span>
+        </div>
+
+        {/*댓글 리스트*/}
+        <ul>
+          {comments?.length > 0 &&
+            comments?.map((v) => <li key={v._id}>{v.content}</li>)}
+        </ul>
       </div>
     </div>
   )

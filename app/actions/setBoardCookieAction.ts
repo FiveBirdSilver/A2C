@@ -2,7 +2,7 @@
 
 import { cookies } from 'next/headers'
 
-export async function setCookie(cookie: string) {
+export async function setBoardCookieAction(cookie: string) {
   const cookieStore = await cookies()
   const name = cookie.split(';')[0].split('=')[0] || ''
   const value = cookie.split(';')[0].split('=')[1] || ''

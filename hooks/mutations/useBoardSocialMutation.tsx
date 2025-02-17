@@ -3,6 +3,7 @@ import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import { useMutation } from '@tanstack/react-query'
 import { instance } from '@/libs/apis/instance.ts'
+import { toastError } from '@/libs/utils/toast.ts'
 
 export const useBoardSocialMutation = () => {
   const router = useRouter()
@@ -19,9 +20,8 @@ export const useBoardSocialMutation = () => {
     },
     onError: (error: AxiosError) => {
       const status = error.response?.status
-      toast.dismiss()
       if (status === 401) router.push('/login')
-      else toast.error('일시적인 오류입니다. 다시 시도해주세요.')
+      else toastError('일시적인 오류입니다. 다시 시도해주세요.')
     },
   })
 

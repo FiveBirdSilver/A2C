@@ -3,9 +3,9 @@
 import { IoMdHeartEmpty } from 'react-icons/io'
 import { IoChatbubblesOutline, IoShareSocial, IoHeart } from 'react-icons/io5'
 import { usePathname } from 'next/navigation'
-import toast from 'react-hot-toast'
 
 import { useBoardSocialMutation } from '@/hooks/mutations/useBoardSocialMutation.tsx'
+import { toastError, toastSuccess } from '@/libs/utils/toast.ts'
 
 // 공유하기 버튼 이벤트 => 도메인 복사
 const CopyURL = () => {
@@ -15,15 +15,14 @@ const CopyURL = () => {
   navigator.clipboard
     .writeText(url)
     .then(() => {
-      toast.dismiss()
-      toast.success('클립보드에 복사되었습니다.')
+      toastSuccess('클립보드에 복사되었습니다.')
     })
     .catch(() => {
-      toast.error('잠시 후 다시 시도해주세요.')
+      toastError('잠시 후 다시 시도해주세요.')
     })
 }
 
-const BoardDetailSocialActions = ({
+const BoardDetailSocialClient = ({
   heartCount,
   chatCount,
   isLiked,
@@ -80,4 +79,4 @@ const BoardDetailSocialActions = ({
     </div>
   )
 }
-export default BoardDetailSocialActions
+export default BoardDetailSocialClient

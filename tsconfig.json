@@ -8,6 +8,7 @@
     ],
     "types": ["jest", "jest-dom"],
     "allowJs": true,
+    "downlevelIteration" : true,
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,

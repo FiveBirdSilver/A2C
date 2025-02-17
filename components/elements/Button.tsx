@@ -5,11 +5,12 @@ interface IButton {
   text: string
   variant: 'primary' | 'outline' | 'disabled'
   disabled?: boolean
+  className?: string
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 export default function Button(props: IButton) {
-  const { variant, text, disabled, onClick } = props
+  const { variant, text, disabled, className, onClick, ...rest } = props
 
   const colorVariants = {
     primary: 'bg-green-400 text-white hover:bg-green-500',
@@ -22,7 +23,12 @@ export default function Button(props: IButton) {
     <button
       disabled={disabled}
       onClick={onClick}
-      className={cn(colorVariants[variant], 'h-full rounded-md px-2 py-1')}
+      className={cn(
+        colorVariants[variant],
+        'h-full rounded-md px-2 py-1',
+        className
+      )}
+      {...rest}
     >
       {text}
     </button>

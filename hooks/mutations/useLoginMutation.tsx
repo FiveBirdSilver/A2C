@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { AxiosError } from 'axios'
 
 import { instance } from '@/libs/apis/instance.ts'
-import toast from 'react-hot-toast'
+import { toastError } from '@/libs/utils/toast.ts'
 
 interface IWarning {
   email: boolean
@@ -32,10 +32,9 @@ export const useLoginMutation = () => {
     },
     onError: (error: AxiosError) => {
       const status = error.response?.status
-      toast.dismiss()
       if (status === 400 || status === 401)
-        toast.error('아이디나 비밀번호가 일치하지 않습니다. 다시 시도해주세요.')
-      else toast.error('일시적인 오류입니다. 다시 시도해주세요.')
+        toastError('아이디나 비밀번호가 일치하지 않습니다. 다시 시도해주세요.')
+      else toastError('일시적인 오류입니다. 다시 시도해주세요.')
     },
   })
 
@@ -49,8 +48,8 @@ export const useLoginMutation = () => {
       router.refresh()
     },
     onError: (error: AxiosError) => {
-      console.error(error)
-      toast.error('일시적인 오류입니다. 다시 시도해주세요.')
+      console.log(error)
+      toastError('일시적인 오류입니다. 다시 시도해주세요.')
     },
   })
 
