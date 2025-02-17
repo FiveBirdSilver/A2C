@@ -1,69 +1,23 @@
 'use client'
-
+import Dropzone from 'react-dropzone'
 import { ChangeEvent, useEffect, useState } from 'react'
-import dynamic from 'next/dynamic'
-import toast from 'react-hot-toast'
-import { StylesConfig } from 'react-select'
 import { IoCamera } from 'react-icons/io5'
 
 import Input from '@/components/elements/Input'
 import Label from '@/components/elements/Label'
 import { IMapList } from '@/hooks/common/useMap'
 import { useBoardWriteMutation } from '@/hooks/mutations/useBoardWriteMutation.tsx'
-
-// 카테고리 타입 정의
-interface TypeItem {
-  text: string
-  value: string
-}
+import Button from '@/components/elements/Button.tsx'
+import useFileDragAndDrop from '@/hooks/common/useFileDragAndDrop.tsx'
+import Select from '@/components/elements/Select.tsx'
+import { toastError } from '@/libs/utils/toast.ts'
+import typeItems from '@/constants/boardTypeItems.json'
 
 // 셀렉트 박스 타입 정의
 interface SelectOption {
   label: string
   value: string
 }
-
-// 셀렉트박스 스타일 커스텀
-const customStyles: StylesConfig = {
-  control: (provided) => ({
-    ...provided,
-    borderRadius: '0.375rem',
-    borderColor: '#dcdcdc',
-    fontSize: '0.875rem',
-    boxShadow: 'none !important',
-    '&:hover': {
-      boxShadow: 'none !important', // hover 시 outline 변경
-    },
-  }),
-  menu: (provided) => ({
-    ...provided,
-    backgroundColor: 'white',
-    fontSize: '0.875rem',
-    boxShadow: '0px 4px 10px rgba(0,0,0,0.1)',
-  }),
-  option: (styles, { isDisabled, isFocused, isSelected }) => ({
-    ...styles,
-    backgroundColor: isDisabled
-      ? undefined
-      : isSelected
-        ? '#bae0c2'
-        : isFocused
-          ? '#f0f9f2'
-          : undefined,
-    color: '#525252',
-    cursor: isDisabled ? 'not-allowed' : 'default',
-
-    ':active': {
-      ...styles[':active'],
-      backgroundColor: !isDisabled
-        ? isSelected
-          ? '#bae0c2' // 클릭 시 선택된 상태의 색상
-          : '#f0f9f2' // 비선택 상태의 클릭 색상
-        : undefined,
-    },
-  }),
-}
-const Select = dynamic(() => import('react-select'), { ssr: false })
 
 const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
   // 제목
@@ -81,14 +35,11 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
   // 이미지
   // const [images, setImages] = useState<string[]>([])
 
+  const { imagesPreview, dragFile } = useFileDragAndDrop()
+
   const { postBoard } = useBoardWriteMutation()
 
-  const typeItems: TypeItem[] = [
-    { text: '구해요', value: 'find' },
-    { text: '같이해요', value: 'together' },
-    { text: '궁금해요', value: 'community' },
-  ]
-
+  // 클라이밍 ㄱㄴㄷ 순으로 재 정렬
   const sortedPlaces = data.sort((a, b) => a.name.localeCompare(b.name))
 
   const places = sortedPlaces.map((place) => ({
@@ -96,6 +47,7 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
     label: place.name,
   }))
 
+  // 게시글 생성 이벤트
   const handleOnInsertBoard = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -103,9 +55,7 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
 
     // 유효성 검사
     if (!title || !content || (category !== 'community' && !place)) {
-      toast.dismiss()
-      toast.error('모든 항목을 입력해주세요')
-
+      toastError('모든 항목을 입력해주세요')
       return
     }
 
@@ -182,10 +132,54 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
 
         {/*이미지 업로드*/}
         <div className='flex items-center space-x-4'>
-          <div className='w-16 h-16 bg-white border-gray-200 border rounded flex items-center justify-center text-gray-500'>
-            <IoCamera />
+          <Dropzone
+            onDrop={(acceptedFiles) =>
+              dragFile(
+                acceptedFiles,
+                'board/upload',
+                category === 'community' ? 'community' : 'deal'
+              )
+            }
+          >
+            {({ getRootProps, getInputProps }) => (
+              <div
+                {...getRootProps()}
+                className='min-w-20 h-20 md:w-36 md:h-36 bg-white border-gray-200 border rounded flex items-center justify-center text-gray-500 text-xs flex-col gap-3 cursor-pointer'
+              >
+                <input {...getInputProps()} accept={'image/*'} />
+                <IoCamera className={'text-2xl'} />
+                <span className={'hidden text-xs md:flex'}>
+                  사진을 끌어다 놓으세요
+                </span>
+                <div className={'hidden mt-2 md:flex'}>
+                  <Button
+                    variant={'outline'}
+                    onClick={() => {}}
+                    text={'PC에서 불러오기'}
+                    key={'set_image'}
+                  />
+                </div>
+              </div>
+            )}
+          </Dropzone>
+
+          {/*이미지 업로드 개수*/}
+          <div className='flex items-start justify-center flex-col gap-1'>
+            <p className='text-gray-400 pl-1 text-xs'>
+              {imagesPreview?.length ?? 0} / 5
+            </p>
+            {/* 미리보기 이미지 */}
+            <div className='overflow-x-auto gap-2 flex'>
+              {imagesPreview.map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  alt={`preview-${index}`}
+                  className='w-16 h-16 md:w-24 md:h-24 object-cover rounded-lg'
+                />
+              ))}
+            </div>
           </div>
-          <p className='text-gray-400'>0/10</p>
         </div>
 
         {/*클라이밍장 위치 등록*/}
@@ -195,15 +189,13 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
               <label className='text-sm'>클라이밍장 위치 등록</label>
               <button className='text-gray-500 text-xs'>삭제</button>
             </div>
-
             <Select
               options={places}
-              styles={customStyles}
-              placeholder={'장소를 선택해주세요.'}
               onChange={(newValue) => {
                 if (!newValue) return
                 setPlace(newValue as SelectOption)
               }}
+              placeholder={'장소를 선택해주세요.'}
             />
           </div>
         )}

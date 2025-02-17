@@ -1,11 +1,10 @@
 import { AxiosError, AxiosResponse } from 'axios'
-import { router } from 'next/client'
 import { useState } from 'react'
 
 import { instance } from '@/libs/apis/instance.ts'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
-import toast from 'react-hot-toast'
+import { toastError } from '@/libs/utils/toast.ts'
 
 interface IBoard {
   title: string
@@ -37,8 +36,7 @@ export const useBoardWriteMutation = () => {
     },
     onError: (error: AxiosError) => {
       console.error(error)
-      toast.dismiss()
-      toast.error('일시적인 오류입니다. 다시 시도해주세요.')
+      toastError('일시적인 오류입니다. 다시 시도해주세요.')
     },
   })
 
