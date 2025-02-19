@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { MouseEvent, useCallback, useState } from 'react'
 import dayjs from 'dayjs'
 
 import { toastError } from '@/libs/utils/toast.ts'
@@ -32,8 +32,13 @@ const uploadStorage = async (files: IFiles[], endPoint: string) => {
 }
 
 const useFileDragAndDrop = () => {
+  // 원본 이미지 상태
   const [uploadOriginImages, setUploadOriginImages] = useState<File[]>()
+
+  // 이미지 이름 상태 => 스토리지 주소를 얻기 위함
   const [uploadImageName, setUploadImageName] = useState<IFiles[]>([])
+
+  // 이미지 프리뷰
   const [imagesPreview, setImagesPreview] = useState<string[]>([])
 
   const formData = new FormData()
@@ -42,6 +47,12 @@ const useFileDragAndDrop = () => {
   const dragFile = useCallback(
     async (files: FileList | File[], endPoint: string, where: string) => {
       if (!files) return
+
+      // 현재 업로드된 이미지 개수 확인
+      if (imagesPreview.length + files.length > 5) {
+        toastError('최대 5장의 이미지만 업로드할 수 있습니다')
+        return
+      }
 
       const newFilesForStorage: IFiles[] = []
       const newFiles = []
@@ -81,7 +92,7 @@ const useFileDragAndDrop = () => {
   const startUpload = async () => {}
 
   // 업로드 취소
-  const abortUpload = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+  const abortUpload = (e: MouseEvent<HTMLElement, MouseEvent>) => {
     e.stopPropagation()
   }
 

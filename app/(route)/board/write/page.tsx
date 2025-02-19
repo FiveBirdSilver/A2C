@@ -16,11 +16,10 @@ async function fetchList() {
   return res.json()
 }
 export default async function Page() {
-  const data: IMapList[] = await fetchList()
-
+  const lists: IMapList[] = await fetchList()
   return (
     <Suspense fallback={<Loading />}>
-      <BoardWriteClient data={data} />
+      <BoardWriteClient data={lists} />
     </Suspense>
   )
 }

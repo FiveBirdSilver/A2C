@@ -119,7 +119,7 @@ export default async function Page({ params, searchParams }: Props) {
         <BoardDetailSocialClient
           isLiked={data.isLiked}
           heartCount={data.data.heartCount}
-          chatCount={data.data.chatCount}
+          chatCount={data.data.comments?.length ?? 0}
         />
       </div>
     </Suspense>

@@ -16,9 +16,11 @@ export const useBoardCommentMutation = () => {
       boardId: string
       parentCommentId: string | null
     }) => {
+      if (!board.content) return
       return await instance.post('/node/api/comment', board)
     },
     onSuccess: () => {
+      setComment('')
       router.refresh()
     },
     onError: (error: AxiosError) => {

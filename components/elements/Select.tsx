@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { MouseEvent, Dispatch, SetStateAction, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { StylesConfig } from 'react-select'
 import { IoIosArrowDown, IoIosClose } from 'react-icons/io'
@@ -7,13 +7,15 @@ import useMediaQuery from '@/hooks/common/useMediaQuery.tsx'
 
 const ReactSelect = dynamic(() => import('react-select'), { ssr: false })
 
-interface Props {
-  options: {
-    value: string
-    label: string
-  }[]
+interface IOptions {
+  value: string
+  label: string
+}
+
+interface ISelect {
+  options: IOptions[]
   placeholder: string
-  onChange: (value: unknown) => void
+  setState: Dispatch<SetStateAction<IOptions | undefined>>
 }
 
 // 셀렉트 박스 스타일 커스텀
@@ -57,12 +59,14 @@ const customStyles: StylesConfig = {
   }),
 }
 
-const Select = ({ options, placeholder, onChange }: Props) => {
+const Select = ({ options, placeholder, setState }: ISelect) => {
   const isMobile = useMediaQuery('(max-width: 768px)')
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
+  const [mobileSelectItem, setMobileSelectItem] = useState<string>('')
+
   // 모바일 환경에서의 모달 오픈
-  const handleOpenModal = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleOpenModal = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     setIsModalOpen(true)
   }
@@ -76,7 +80,9 @@ const Select = ({ options, placeholder, onChange }: Props) => {
             className='border p-2 rounded text-gray-600 text-sm flex px-3 justify-between items-center'
             onClick={(e) => handleOpenModal(e)}
           >
-            <span>장소를 선택해주세요</span>
+            <span>
+              {mobileSelectItem ? mobileSelectItem : '장소를 선택해주세요'}
+            </span>
             <IoIosArrowDown />
           </button>
 
@@ -110,8 +116,14 @@ const Select = ({ options, placeholder, onChange }: Props) => {
                     <button
                       key={`${opt.value}-${index}`}
                       className='block w-full text-left p-2 text-sm'
-                      onClick={() => {
-                        onChange?.(opt.value)
+                      onClick={(e) => {
+                        e.preventDefault()
+
+                        // 부모 컴포넌트를 위한 set
+                        setState(opt)
+
+                        // 모바일에서 선택된 옵션을 화면에 보여주기 위함
+                        setMobileSelectItem(opt.label)
                         setIsModalOpen(false)
                       }}
                     >
@@ -127,7 +139,10 @@ const Select = ({ options, placeholder, onChange }: Props) => {
         <ReactSelect
           options={options}
           placeholder={placeholder}
-          onChange={onChange}
+          onChange={(newValue) => {
+            if (!newValue) return
+            setState(newValue as IOptions)
+          }}
           styles={customStyles}
         />
       )}

@@ -1,6 +1,6 @@
 'use client'
 import Dropzone from 'react-dropzone'
-import { ChangeEvent, useEffect, useState } from 'react'
+import { MouseEvent, ChangeEvent, useEffect, useState } from 'react'
 import { IoCamera } from 'react-icons/io5'
 
 import Input from '@/components/elements/Input'
@@ -13,12 +13,6 @@ import Select from '@/components/elements/Select.tsx'
 import { toastError } from '@/libs/utils/toast.ts'
 import typeItems from '@/constants/boardTypeItems.json'
 
-// 셀렉트 박스 타입 정의
-interface SelectOption {
-  label: string
-  value: string
-}
-
 const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
   // 제목
   const [title, setTitle] = useState<string>('')
@@ -30,7 +24,7 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
   const [category, setCategory] = useState<string>('find')
 
   // 장소
-  const [place, setPlace] = useState<{ label: string; value: string } | null>()
+  const [place, setPlace] = useState<{ label: string; value: string }>()
 
   // 이미지
   // const [images, setImages] = useState<string[]>([])
@@ -48,9 +42,7 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
   }))
 
   // 게시글 생성 이벤트
-  const handleOnInsertBoard = async (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
+  const handleOnInsertBoard = async (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
 
     // 유효성 검사
@@ -80,7 +72,7 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
 
   // 카테고리 => '궁금해요'일 경우 위치 초기화
   useEffect(() => {
-    if (category === 'community') setPlace(null)
+    if (category === 'community') setPlace({ label: '', value: '' })
   }, [category])
 
   return (
@@ -144,7 +136,7 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
             {({ getRootProps, getInputProps }) => (
               <div
                 {...getRootProps()}
-                className='min-w-20 h-20 md:w-36 md:h-36 bg-white border-gray-200 border rounded flex items-center justify-center text-gray-500 text-xs flex-col gap-3 cursor-pointer'
+                className='min-w-20 h-20 md:w-32 md:h-32 bg-white border-gray-200 border rounded flex items-center justify-center text-gray-500 text-xs flex-col gap-3 cursor-pointer'
               >
                 <input {...getInputProps()} accept={'image/*'} />
                 <IoCamera className={'text-2xl'} />
@@ -164,7 +156,7 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
           </Dropzone>
 
           {/*이미지 업로드 개수*/}
-          <div className='flex items-start justify-center flex-col gap-1'>
+          <div className='flex items-start justify-center flex-col gap-2'>
             <p className='text-gray-400 pl-1 text-xs'>
               {imagesPreview?.length ?? 0} / 5
             </p>
@@ -191,10 +183,7 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
             </div>
             <Select
               options={places}
-              onChange={(newValue) => {
-                if (!newValue) return
-                setPlace(newValue as SelectOption)
-              }}
+              setState={setPlace}
               placeholder={'장소를 선택해주세요.'}
             />
           </div>

@@ -8,6 +8,8 @@ import Input from '@/components/elements/Input.tsx'
 import typeItems from '@/constants/boardTypeItems.json'
 import { useBoardCommentMutation } from '@/hooks/mutations/useBoardCommentMutation.tsx'
 import { usePathname } from 'next/navigation'
+import timeAgo from '@/libs/utils/timeAgo.ts'
+import debounce from 'lodash/debounce'
 
 export interface IBoardDetail {
   cookie: string | null
@@ -48,21 +50,28 @@ const BoardDetailClient = ({
 }: IBoardDetail) => {
   const mapRef = useRef<HTMLDivElement | null>(null)
   const pathName = usePathname()
+
+  // 댓글 생성 hooks
   const { postBoardComment, comment, handleOnChange } =
     useBoardCommentMutation()
 
-  // 로그인 폼 제출
-  const handleOnCommentSubmit = async (
-    event: KeyboardEvent<HTMLInputElement>
-  ) => {
-    event.preventDefault()
-    const boardId = pathName.split('/detail/')
+  const handleOnCommentSubmit = useRef(
+    debounce(async (comment: string, boardId: string) => {
+      postBoardComment.mutate({
+        content: comment,
+        boardId: boardId,
+        parentCommentId: null,
+      })
+    }, 300)
+  ).current
 
-    postBoardComment.mutate({
-      content: comment,
-      boardId: boardId[1],
-      parentCommentId: null,
-    })
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault()
+      const boardId = pathName.split('/detail/')[1]
+
+      handleOnCommentSubmit(comment, boardId)
+    }
   }
 
   // 계속된 조회수 증가를 막기 위한 쿠키 저장
@@ -104,7 +113,6 @@ const BoardDetailClient = ({
     }
   }, [lat, lng])
 
-  console.log(comments)
   return (
     <div className='col-span-1 md:col-span-5'>
       {/*작성자 및 작성시각*/}
@@ -117,7 +125,9 @@ const BoardDetailClient = ({
           <div className='flex items-center gap-2 text-xs'>
             <span>{nickname}</span>
             <span>|</span>
-            <span>{dayjs(createdAt).format('YYYY-MM-DD')}</span>
+            <span>
+              {timeAgo(dayjs(createdAt).format('YYYY-MM-DD HH:mm:ss'))}
+            </span>
           </div>
         </div>
       </div>
@@ -164,9 +174,7 @@ const BoardDetailClient = ({
             placeholder={'댓글을 입력해주세요.'}
             value={comment}
             onChange={(e) => handleOnChange(e)}
-            onKeyDown={(e) =>
-              e.code === 'Enter' ? handleOnCommentSubmit(e) : null
-            }
+            onKeyDown={(e) => (e.code === 'Enter' ? handleKeyDown(e) : null)}
           />
           <span
             className={'text-gray-400 absolute right-5 top-[0.6rem] text-sm'}
@@ -176,10 +184,24 @@ const BoardDetailClient = ({
         </div>
 
         {/*댓글 리스트*/}
-        <ul>
+        <div className={'flex flex-col space-y-6 pl-2'}>
           {comments?.length > 0 &&
-            comments?.map((v) => <li key={v._id}>{v.content}</li>)}
-        </ul>
+            comments?.map((v) => (
+              <div key={v._id} className={'flex flex-col space-y-1'}>
+                <span className={'text-xs text-gray-500'}>센</span>
+                <span className={'text-gray-800 text-sm'}>{v.content}</span>
+                <div
+                  className={'flex items-center gap-1 text-xs text-gray-500'}
+                >
+                  <span>
+                    {timeAgo(dayjs(v.createdAt).format('YYYY-MM-DD HH:mm:ss'))}
+                  </span>
+                  <span>ᐧ</span>
+                  <button>답글 달기</button>
+                </div>
+              </div>
+            ))}
+        </div>
       </div>
     </div>
   )
