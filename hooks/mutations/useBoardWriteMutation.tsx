@@ -1,4 +1,4 @@
-import { AxiosError, AxiosResponse } from 'axios'
+import axios, { AxiosError, AxiosResponse } from 'axios'
 import { useState } from 'react'
 
 import { instance } from '@/libs/apis/instance.ts'
@@ -25,6 +25,29 @@ export const useBoardWriteMutation = () => {
   const router = useRouter()
   const [contentType, setContentType] = useState<string | null>(null)
 
+  const postUploadImage = useMutation({
+    mutationFn: async (data: { url: string; file: File | null }[]) => {
+      const uploadPromises = data
+        .filter((v) => v.file !== null)
+        .map((v) =>
+          axios.put(v.url, v.file, {
+            withCredentials: true,
+            headers: {
+              'Content-Type': v.file?.type, // 파일의 Content-Type 설정
+            },
+          })
+        )
+      const res = await Promise.all(uploadPromises) // 모든 업로드 완료 대기
+      console.log(res) // 응답 결과 확인
+      return res[0]
+    },
+    onError: (error: AxiosError) => {
+      // 오류 처리
+      console.error(error)
+      toastError('일시적인 오류입니다. 다시 시도해주세요.')
+    },
+  })
+
   const postBoard = useMutation({
     mutationFn: async (data: IBoard) => {
       setContentType(data.contentType)
@@ -40,5 +63,5 @@ export const useBoardWriteMutation = () => {
     },
   })
 
-  return { postBoard }
+  return { postUploadImage, postBoard }
 }

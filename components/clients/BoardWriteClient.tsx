@@ -26,12 +26,12 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
   // 장소
   const [place, setPlace] = useState<{ label: string; value: string }>()
 
-  // 이미지
-  // const [images, setImages] = useState<string[]>([])
+  // 이미지 드래그드랍 훅
+  const { uploadOriginImages, imageStorageUrl, imagesPreview, dragFile } =
+    useFileDragAndDrop()
 
-  const { imagesPreview, dragFile } = useFileDragAndDrop()
-
-  const { postBoard } = useBoardWriteMutation()
+  // 게시글 생성 훅
+  const { postUploadImage, postBoard } = useBoardWriteMutation()
 
   // 클라이밍 ㄱㄴㄷ 순으로 재 정렬
   const sortedPlaces = data.sort((a, b) => a.name.localeCompare(b.name))
@@ -44,30 +44,40 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
   // 게시글 생성 이벤트
   const handleOnInsertBoard = async (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
-
     // 유효성 검사
     if (!title || !content || (category !== 'community' && !place)) {
       toastError('모든 항목을 입력해주세요')
       return
     }
 
-    // 게시글 생성 hook
-    postBoard.mutate({
-      title,
-      content,
-      images: [],
-      type: 'climbing',
-      location: place
-        ? {
-            point: place?.label,
-            lat: Number(place?.value.split(',')[0]),
-            lng: Number(place?.value.split(',')[1]),
-          }
-        : null,
-      contentType: category === 'community' ? 'community' : 'deal',
-      price: 0,
-      priceType: category !== 'community' ? category : '',
-    })
+    // 이미지 Req 변환
+    const req = imageStorageUrl.map((url, index) => ({
+      url: url,
+      file: uploadOriginImages ? uploadOriginImages[index] : null,
+    }))
+
+    const { mutate, isSuccess } = postUploadImage
+    mutate(req)
+
+    if (isSuccess) {
+      // 게시글 생성 hook
+      postBoard.mutate({
+        title,
+        content,
+        images: [],
+        type: 'climbing',
+        location: place
+          ? {
+              point: place?.label,
+              lat: Number(place?.value.split(',')[0]),
+              lng: Number(place?.value.split(',')[1]),
+            }
+          : null,
+        contentType: category === 'community' ? 'community' : 'deal',
+        price: 0,
+        priceType: category !== 'community' ? category : '',
+      })
+    }
   }
 
   // 카테고리 => '궁금해요'일 경우 위치 초기화
@@ -144,9 +154,12 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
                   사진을 끌어다 놓으세요
                 </span>
                 <div className={'hidden mt-2 md:flex'}>
+                  <span></span>
                   <Button
                     variant={'outline'}
-                    onClick={() => {}}
+                    onClick={(e) => {
+                      e.preventDefault()
+                    }}
                     text={'PC에서 불러오기'}
                     key={'set_image'}
                   />
@@ -154,9 +167,8 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
               </div>
             )}
           </Dropzone>
-
           {/*이미지 업로드 개수*/}
-          <div className='flex items-start justify-center flex-col gap-2'>
+          <div className='flex items-start justify-center flex-col gap-1 md:gap-2'>
             <p className='text-gray-400 pl-1 text-xs'>
               {imagesPreview?.length ?? 0} / 5
             </p>
