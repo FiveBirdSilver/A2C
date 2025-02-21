@@ -27,11 +27,17 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
   const [place, setPlace] = useState<{ label: string; value: string }>()
 
   // 이미지 드래그드랍 훅
-  const { uploadOriginImages, imageStorageUrl, imagesPreview, dragFile } =
-    useFileDragAndDrop()
+  const {
+    uploadOriginImages,
+    imageForGCSCheck,
+    imageStorageUrl,
+    imagesForPreview,
+    dragFile,
+  } = useFileDragAndDrop()
 
   // 게시글 생성 훅
-  const { postUploadImage, postBoard } = useBoardWriteMutation()
+  const { postGcsUploadImage, postBoard, completeImages } =
+    useBoardWriteMutation()
 
   // 클라이밍 ㄱㄴㄷ 순으로 재 정렬
   const sortedPlaces = data.sort((a, b) => a.name.localeCompare(b.name))
@@ -41,7 +47,27 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
     label: place.name,
   }))
 
-  // 게시글 생성 이벤트
+  // 게시글 생성 훅 실행
+  const handleOnPostBoardAction = () => {
+    postBoard.mutate({
+      title,
+      content,
+      images: completeImages ?? [],
+      type: 'climbing',
+      location: place
+        ? {
+            point: place?.label,
+            lat: Number(place?.value.split(',')[0]),
+            lng: Number(place?.value.split(',')[1]),
+          }
+        : null,
+      contentType: category === 'community' ? 'community' : 'deal',
+      price: 0,
+      priceType: category !== 'community' ? category : '',
+    })
+  }
+
+  // 작성 완료 클릭 이벤트
   const handleOnInsertBoard = async (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     // 유효성 검사
@@ -50,34 +76,22 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
       return
     }
 
-    // 이미지 Req 변환
-    const req = imageStorageUrl.map((url, index) => ({
-      url: url,
-      file: uploadOriginImages ? uploadOriginImages[index] : null,
-    }))
+    if (imagesForPreview) {
+      // 이미지 Req 변환
+      const req = imageStorageUrl.map((url, index) => ({
+        url: url,
+        file: uploadOriginImages ? uploadOriginImages[index] : null,
+      }))
 
-    const { mutate, isSuccess } = postUploadImage
-    mutate(req)
+      if (imageForGCSCheck) {
+        postGcsUploadImage.mutate({
+          originalData: req,
+          checkData: imageForGCSCheck,
+        })
+      }
 
-    if (isSuccess) {
-      // 게시글 생성 hook
-      postBoard.mutate({
-        title,
-        content,
-        images: [],
-        type: 'climbing',
-        location: place
-          ? {
-              point: place?.label,
-              lat: Number(place?.value.split(',')[0]),
-              lng: Number(place?.value.split(',')[1]),
-            }
-          : null,
-        contentType: category === 'community' ? 'community' : 'deal',
-        price: 0,
-        priceType: category !== 'community' ? category : '',
-      })
-    }
+      handleOnPostBoardAction()
+    } else handleOnPostBoardAction()
   }
 
   // 카테고리 => '궁금해요'일 경우 위치 초기화
@@ -170,11 +184,11 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
           {/*이미지 업로드 개수*/}
           <div className='flex items-start justify-center flex-col gap-1 md:gap-2'>
             <p className='text-gray-400 pl-1 text-xs'>
-              {imagesPreview?.length ?? 0} / 5
+              {imagesForPreview?.length ?? 0} / 5
             </p>
             {/* 미리보기 이미지 */}
             <div className='overflow-x-auto gap-2 flex'>
-              {imagesPreview.map((image, index) => (
+              {imagesForPreview.map((image, index) => (
                 <img
                   key={index}
                   src={image}

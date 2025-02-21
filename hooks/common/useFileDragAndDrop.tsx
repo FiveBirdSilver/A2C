@@ -1,4 +1,4 @@
-import { MouseEvent, useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 import dayjs from 'dayjs'
 
 import { toastError } from '@/libs/utils/toast.ts'
@@ -11,6 +11,12 @@ interface IFiles {
   filetype: string
 }
 
+export interface IGCSCheck {
+  where: string
+  date: string
+  filename: string[]
+}
+
 const useFileDragAndDrop = () => {
   // 원본 이미지 상태
   const [uploadOriginImages, setUploadOriginImages] = useState<File[]>()
@@ -18,12 +24,13 @@ const useFileDragAndDrop = () => {
   // 이미지 스토리지 주소
   const [imageStorageUrl, setImageStorageUrl] = useState<string[]>([])
 
+  // GCS 검증을 위함
+  const [imageForGCSCheck, setImageForGCSCheck] = useState<IGCSCheck>()
+
   // 이미지 프리뷰
-  const [imagesPreview, setImagesPreview] = useState<string[]>([])
+  const [imagesForPreview, setImagesForPreview] = useState<string[]>([])
 
-  let imageCount = 0
-
-  const formData = new FormData()
+  const now = dayjs()
 
   // 게시글 생성 전 이미지 업로드의 스토리지 주소를 Response 받기 위함
   const uploadStorage = async (files: IFiles[], endPoint: string) => {
@@ -41,7 +48,7 @@ const useFileDragAndDrop = () => {
       })
     } catch (error) {
       toastError('업로드에 실패했습니다')
-      setImagesPreview([])
+      setImagesForPreview([])
       console.error(error)
     }
   }
@@ -50,19 +57,22 @@ const useFileDragAndDrop = () => {
   const dragFile = useCallback(
     async (files: FileList | File[], endPoint: string, where: string) => {
       if (!files) return
-      imageCount += files.length
 
-      // 현재 업로드된 이미지 개수 확인
-      if (imageCount > 5) {
+      // 현재 업로드된 이미지 개수와 새로 추가하려는 파일 개수를 합산해 제한 확인
+      const currentImageCount = imagesForPreview.length // 기존 프리뷰 이미지 개수 사용
+      const newImageCount = currentImageCount + files.length
+
+      if (newImageCount > 5) {
         toastError('최대 5장의 이미지만 업로드할 수 있습니다')
         return
       }
 
+      const newFiles: File[] = []
       const newFilesForStorage: IFiles[] = []
-      const newFiles = []
+      const newFilesForGCSCheck = []
 
       for (const file of files) {
-        //  파일 확장자 추출 후 검사
+        // 파일 확장자 추출 후 검사
         const extension = file.name.split('.').pop()?.toLowerCase()
         const allowedExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif']
 
@@ -71,42 +81,42 @@ const useFileDragAndDrop = () => {
           return
         }
 
+        // storageURL을 받기 위한 REQ
         const fileData: IFiles = {
           filename: file.name,
           filetype: file.type,
-          date: dayjs(file.lastModified).format('YYYYMMDD'),
+          date: now.format('YYYYMMDD'),
           where: `board_${where}`,
         }
 
         newFiles.push(file)
         newFilesForStorage.push(fileData)
-        setImagesPreview((prev) => [...prev, URL.createObjectURL(file)])
+        newFilesForGCSCheck.push(file.name)
+
+        setImagesForPreview((prev) => [...prev, URL.createObjectURL(file)])
       }
 
       if (newFilesForStorage.length > 0) {
-        setUploadOriginImages(newFiles)
+        setUploadOriginImages((prev) =>
+          prev ? [...prev, ...newFiles] : newFiles
+        )
+        setImageForGCSCheck({
+          where: `board_${where}`,
+          date: now.format('YYYYMMDD'),
+          filename: newFilesForGCSCheck,
+        })
         await uploadStorage(newFilesForStorage, endPoint)
       }
     },
-    []
+    [imagesForPreview, now]
   )
-
-  // 업로드 시작
-  const startUpload = async () => {}
-
-  // 업로드 취소
-  const abortUpload = (e: MouseEvent<HTMLElement, MouseEvent>) => {
-    e.stopPropagation()
-  }
 
   return {
     imageStorageUrl,
     uploadOriginImages,
-    imagesPreview,
+    imageForGCSCheck,
+    imagesForPreview,
     dragFile,
-    formData,
-    startUpload,
-    abortUpload,
   }
 }
 

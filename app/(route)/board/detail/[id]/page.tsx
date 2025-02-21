@@ -1,7 +1,6 @@
 import { Suspense } from 'react'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import dayjs from 'dayjs'
 
 import Loading from '@/app/loading.tsx'
 import BoardDetailClient from '@/components/clients/BoardDetailClient.tsx'
@@ -111,7 +110,7 @@ export default async function Page({ params, searchParams }: Props) {
           contentType={data.data.contentType}
           content={data.data.content}
           nickname={data.data.author.nickname}
-          createdAt={dayjs(data.data.createdAt).format('YYYY-MM-DD HH:mm:ss')}
+          createdAt={data.data.createdAt}
           heartCount={data.data.heartCount}
           viewCount={data.data.viewCount}
           comments={data.data.comments}
