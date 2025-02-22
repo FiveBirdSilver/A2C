@@ -27,6 +27,7 @@ export default function GlobalHeader(data: { data: IAccount }) {
     router.push(url)
     setOpenMenu(false)
   }
+
   return (
     <div className='flex fixed top-0 w-full border-b border-gray-100 left-0 z-10 '>
       <div className='flex items-center bg-white mx-auto justify-between px-4 md:px-0 my-0 h-14 w-full sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg'>

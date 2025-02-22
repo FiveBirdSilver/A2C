@@ -2,13 +2,18 @@
 
 import { ReactNode } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { useLoginMutation } from '@/hooks/mutations/useLoginMutation'
+import { usePathname, useRouter } from 'next/navigation'
+import { deleteCookie } from '@/app/actions/deleteCookieAction.ts'
 
 export default function Layout({ children }: { children: ReactNode }) {
   const pathname = usePathname()
+  const router = useRouter()
   const currentPage = pathname.split('/')[3]
-  const { postLogOut } = useLoginMutation()
+
+  const handleOnLogOut = async () => {
+    await deleteCookie()
+    router.push('/')
+  }
 
   return (
     <div className='flex flex-col min-h-screen md:flex-row'>
@@ -37,7 +42,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           </Link>
           <div className='absolute right-4 bottom-12 md:static md:flex md:w-full md:border-t border-gray-100 px-3 py-4 my-4'>
             <button
-              onClick={() => postLogOut.mutate()}
+              onClick={() => handleOnLogOut()}
               className='text-xs underline md:no-underline md:text-sm text-gray-400'
             >
               로그아웃

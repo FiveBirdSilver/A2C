@@ -1,6 +1,7 @@
 import { Suspense } from 'react'
 import { cookies } from 'next/headers'
 import Loading from '@/app/loading.tsx'
+import { redirect } from 'next/navigation'
 import MyPageProfileClient from '@/components/clients/MyPageProfileClient.tsx'
 
 async function fetchMyPage(sessionId?: { name: string; value: string }) {
@@ -20,9 +21,9 @@ export default async function Page() {
   const cookieStore = await cookies()
   const sessionId = cookieStore.get('connect.sid')
   const data = await fetchMyPage(sessionId)
-  // if (data.result === 'fail') {
-  //   redirect('/login')
-  // }
+  if (data.result === 'fail') {
+    redirect('/login')
+  }
 
   return (
     <Suspense fallback={<Loading />}>
