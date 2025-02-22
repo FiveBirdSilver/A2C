@@ -36,7 +36,7 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
   } = useFileDragAndDrop()
 
   // 게시글 생성 훅
-  const { postGcsUploadImage, postBoard, completeImages } =
+  const { postGcsUploadImage, postGcsCheck, postBoard } =
     useBoardWriteMutation()
 
   // 클라이밍 ㄱㄴㄷ 순으로 재 정렬
@@ -48,11 +48,11 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
   }))
 
   // 게시글 생성 훅 실행
-  const handleOnPostBoardAction = () => {
+  const handleOnPostBoardAction = (images: { images: string[] | null }) => {
     postBoard.mutate({
       title,
       content,
-      images: completeImages ?? [],
+      images: images.images ?? [],
       type: 'climbing',
       location: place
         ? {
@@ -77,21 +77,24 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
     }
 
     if (imagesForPreview) {
-      // 이미지 Req 변환
-      const req = imageStorageUrl.map((url, index) => ({
+      const uploadData = imageStorageUrl.map((url, index) => ({
         url: url,
         file: uploadOriginImages ? uploadOriginImages[index] : null,
       }))
 
-      if (imageForGCSCheck) {
-        postGcsUploadImage.mutate({
-          originalData: req,
-          checkData: imageForGCSCheck,
-        })
-      }
-
-      handleOnPostBoardAction()
-    } else handleOnPostBoardAction()
+      postGcsUploadImage.mutate(
+        { data: uploadData },
+        {
+          onSuccess: () => {
+            postGcsCheck.mutate(imageForGCSCheck!, {
+              onSuccess: (res) => {
+                handleOnPostBoardAction({ images: Object.values(res.exists) })
+              },
+            })
+          },
+        }
+      )
+    } else handleOnPostBoardAction({ images: null })
   }
 
   // 카테고리 => '궁금해요'일 경우 위치 초기화

@@ -74,7 +74,7 @@ export default async function Page() {
           <Card
             title={'A2C에 합류하기'}
             source={'hands'}
-            link={'/board?type=all'}
+            link={'/board?type='}
           />
         </div>
         {/* 게시판 리스트 컴포넌트 - API에서 받아온 데이터를 전달 */}

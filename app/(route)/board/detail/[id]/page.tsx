@@ -112,6 +112,7 @@ export default async function Page({ params, searchParams }: Props) {
           nickname={data.data.author.nickname}
           createdAt={data.data.createdAt}
           heartCount={data.data.heartCount}
+          images={data.data.images}
           viewCount={data.data.viewCount}
           comments={data.data.comments}
         />

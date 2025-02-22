@@ -2,6 +2,8 @@
 
 import { KeyboardEvent, useEffect, useRef } from 'react'
 import dayjs from 'dayjs'
+import debounce from 'lodash/debounce'
+import Image from 'next/image'
 
 import { setBoardCookieAction } from '@/app/actions/setBoardCookieAction.ts'
 import Input from '@/components/elements/Input.tsx'
@@ -9,7 +11,6 @@ import typeItems from '@/constants/boardTypeItems.json'
 import { useBoardCommentMutation } from '@/hooks/mutations/useBoardCommentMutation.tsx'
 import { usePathname } from 'next/navigation'
 import timeAgo from '@/libs/utils/timeAgo.ts'
-import debounce from 'lodash/debounce'
 
 export interface IBoardDetail {
   cookie: string | null
@@ -17,6 +18,7 @@ export interface IBoardDetail {
   point: string
   lng: number
   lat: number
+  images: string[]
   title: string
   nickname: string
   createdAt: string
@@ -37,6 +39,7 @@ export interface IBoardDetail {
 const BoardDetailClient = ({
   cookie,
   point,
+  images,
   lng,
   lat,
   title,
@@ -134,8 +137,23 @@ const BoardDetailClient = ({
 
       {/*내용 및 이미지*/}
       <div className='flex flex-col gap-4 p-4 w-full'>
-        <div className='min-h-32'>
+        <div className='flex flex-col gap-4 min-h-32'>
           <span className='text-sm'>{content}</span>
+          <div className='w-full h-52 md:h-96 object-cover relative'>
+            {images.length > 0 &&
+              images.map((image, index) => (
+                <Image
+                  key={index}
+                  src={image}
+                  alt={'image'}
+                  priority
+                  fill
+                  objectFit='contains'
+                  placeholder={'blur'}
+                  blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg=='
+                />
+              ))}
+          </div>
         </div>
 
         {/*위치 (지도) */}

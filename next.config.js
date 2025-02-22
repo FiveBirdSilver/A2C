@@ -5,6 +5,7 @@ module.exports = {
       'encrypted-tbn0.gstatic.com',
       'ldb-phinf.pstatic.net',
       'naverbooking-phinf.pstatic.net',
+      'storage.googleapis.com',
     ],
   },
   async rewrites() {
