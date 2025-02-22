@@ -4,13 +4,17 @@ import { ReactNode } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { deleteCookie } from '@/app/actions/deleteCookieAction.ts'
+import { useLoginMutation } from '@/hooks/mutations/useLoginMutation.tsx'
 
 export default function Layout({ children }: { children: ReactNode }) {
   const pathname = usePathname()
   const router = useRouter()
+  const { postLogOut } = useLoginMutation()
+
   const currentPage = pathname.split('/')[3]
 
   const handleOnLogOut = async () => {
+    postLogOut.mutate()
     await deleteCookie()
     router.push('/')
   }

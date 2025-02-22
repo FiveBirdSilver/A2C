@@ -5,6 +5,9 @@ const withPWA = withPWAInit({
 })
 
 const nextConfig = {
+  experimental: {
+    scrollRestoration: true,
+  },
   images: {
     domains: [
       'postfiles.pstatic.net',

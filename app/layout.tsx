@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import { Metadata, Viewport } from 'next'
 import Script from 'next/script'
 import dynamic from 'next/dynamic'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -6,7 +7,6 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import Providers from './provider'
 import '@/assets/styles/global.css'
 import Spinner from '@/components/elements/Spinner.tsx'
-import { Metadata, Viewport } from 'next'
 
 const Wrapper = dynamic(() => import('@/components/layouts/Wrapper'), {
   loading: () => <Spinner />,

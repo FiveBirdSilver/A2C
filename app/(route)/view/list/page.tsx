@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { IoCall } from 'react-icons/io5'
@@ -72,6 +72,9 @@ export default function Page() {
   const isMobile = useMediaQuery('(max-width: 768px)')
   const [currentPlace, setCurrentPlace] = useState<IMapList>()
 
+  // 스크롤 위치 상태
+  const listRef = useRef<HTMLDivElement>(null)
+
   const { mapRef, loading, error } = useMap({
     lat: currentPlace?.lat,
     lng: currentPlace?.lng,
@@ -85,6 +88,29 @@ export default function Page() {
     enabled: location !== null,
   })
 
+  // 스크롤 위치 저장
+  useEffect(() => {
+    const handleScroll = () => {
+      if (listRef.current) {
+        sessionStorage.setItem(
+          'scroll-list',
+          listRef.current.scrollTop.toString()
+        )
+      }
+    }
+
+    listRef.current?.addEventListener('scroll', handleScroll)
+    return () => listRef.current?.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // 스크롤 위치 복원
+  useEffect(() => {
+    const savedPosition = sessionStorage.getItem('scroll-list')
+    if (savedPosition && listRef.current) {
+      listRef.current.scrollTop = parseInt(savedPosition, 10)
+    }
+  }, [isSuccess]) // 데이터가 성공적으로 로드된 후 실행
+
   if (isError || error)
     return (
       <Error message={'현재 위치에선 클라이밍 정보를 가져올 수 없습니다.'} />
@@ -94,7 +120,7 @@ export default function Page() {
     <>
       {(isLoading || isPending || loading) && <Loading />}
       <div className='grid md:grid-cols-[4fr_6fr] w-full h-full'>
-        <div className='relative overflow-auto'>
+        <div className='relative overflow-auto' ref={listRef}>
           <div className='flex items-center flex-col w-full'>
             {isSuccess &&
               data?.map((list: IMapList, index: number) => (

@@ -66,7 +66,6 @@ export default async function Page({ searchParams }: Props) {
   const type = (await searchParams).type
   const data: IBoard = await fetchBoard({ sessionId, type })
 
-  console.log(data)
   return (
     <Suspense fallback={<Loading />}>
       <div className='flex flex-col items-start justify-center'>
@@ -123,7 +122,7 @@ export default async function Page({ searchParams }: Props) {
           </div>
         </aside>
         <Link
-          className='fixed md:hidden bg-green-400 w-12 h-12 rounded-full flex items-center justify-center text-lg text-white z-10 bottom-12 right-4 cursor-pointer'
+          className='fixed md:hidden bg-green-400 w-12 h-12 rounded-full flex items-center justify-center text-lg text-white bottom-12 right-4 cursor-pointer'
           href={'/board/write'}
         >
           <HiOutlinePencilAlt />

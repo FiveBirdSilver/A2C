@@ -90,7 +90,8 @@ const BoardListClient = ({
             key={board._id}
             onClick={() =>
               router.push(
-                `/board/detail/${board._id}?contentType=${board.contentType}`
+                `/board/detail/${board._id}?contentType=${board.contentType}`,
+                { scroll: false }
               )
             }
             className='border border-gray-50 bg-white md:rounded-xl shadow-gray-50 md:shadow cursor-pointer h-full'

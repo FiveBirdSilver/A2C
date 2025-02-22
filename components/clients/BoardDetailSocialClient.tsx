@@ -37,6 +37,7 @@ const BoardDetailSocialClient = ({
   return (
     <div className='contents md:block md:col-span-1 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto py-6'>
       <div className='fixed px-8 md:px-0 md:relative bottom-0 flex flex-row md:flex-col items-baseline w-full justify-between md:items-center md:space-y-6 bg-white min-h-12'>
+        {/*좋아요 수*/}
         <div className='flex flex-row md:flex-col md:space-y-2 items-center justify-center'>
           <button
             onClick={() =>
@@ -59,6 +60,8 @@ const BoardDetailSocialClient = ({
             {heartCount.toLocaleString()}
           </p>
         </div>
+
+        {/*댓글 수*/}
         <div className='flex flex-row md:flex-col md:space-y-2 items-center justify-center'>
           <button className='rounded-full md:border md:border-gray-200 md:shadow-[0_2px_14px_rgba(0,0,0,0.12)] w-8 md:w-12 h-12 flex items-center justify-center text-lg text-gray-700'>
             <IoChatbubblesOutline />
@@ -66,6 +69,7 @@ const BoardDetailSocialClient = ({
           <p className='text-gray-700 text-xs'>{chatCount.toLocaleString()}</p>
         </div>
 
+        {/*공유하기*/}
         <div className='flex flex-row md:flex-col md:space-y-2 items-center justify-center'>
           <button
             onClick={() => CopyURL()}
