@@ -76,25 +76,28 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
       return
     }
 
-    if (imagesForPreview) {
-      const uploadData = imageStorageUrl.map((url, index) => ({
-        url: url,
-        file: uploadOriginImages ? uploadOriginImages[index] : null,
-      }))
+    if (imagesForPreview.length === 0) {
+      handleOnPostBoardAction({ images: null })
+      return
+    }
 
-      postGcsUploadImage.mutate(
-        { data: uploadData },
-        {
-          onSuccess: () => {
-            postGcsCheck.mutate(imageForGCSCheck!, {
-              onSuccess: (res) => {
-                handleOnPostBoardAction({ images: Object.values(res.exists) })
-              },
-            })
-          },
-        }
-      )
-    } else handleOnPostBoardAction({ images: null })
+    const uploadData = imageStorageUrl.map((url, index) => ({
+      url: url,
+      file: uploadOriginImages ? uploadOriginImages[index] : null,
+    }))
+
+    postGcsUploadImage.mutate(
+      { data: uploadData },
+      {
+        onSuccess: () => {
+          postGcsCheck.mutate(imageForGCSCheck!, {
+            onSuccess: (res) => {
+              handleOnPostBoardAction({ images: Object.values(res.exists) })
+            },
+          })
+        },
+      }
+    )
   }
 
   // 카테고리 => '궁금해요'일 경우 위치 초기화

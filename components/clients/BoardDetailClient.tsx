@@ -139,11 +139,13 @@ const BoardDetailClient = ({
       <div className='flex flex-col gap-4 p-4 w-full'>
         <div className='flex flex-col gap-4 min-h-32'>
           <span className='text-sm'>{content}</span>
-          <div className='w-full h-52 md:h-96 object-cover relative'>
-            {images.length > 0 &&
-              images.map((image, index) => (
+          {images.length > 0 &&
+            images.map((image, index) => (
+              <div
+                className='w-full h-52 md:h-96 object-cover relative'
+                key={index}
+              >
                 <Image
-                  key={index}
                   src={image}
                   alt={'image'}
                   priority
@@ -152,8 +154,8 @@ const BoardDetailClient = ({
                   placeholder={'blur'}
                   blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg=='
                 />
-              ))}
-          </div>
+              </div>
+            ))}
         </div>
 
         {/*위치 (지도) */}
