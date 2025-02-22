@@ -1,6 +1,5 @@
 import { Suspense } from 'react'
 import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
 import Loading from '@/app/loading.tsx'
 import MyPageProfileClient from '@/components/clients/MyPageProfileClient.tsx'
 

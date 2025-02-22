@@ -1,4 +1,10 @@
-module.exports = {
+import withPWAInit from 'next-pwa'
+
+const withPWA = withPWAInit({
+  dest: 'public',
+})
+
+const nextConfig = {
   images: {
     domains: [
       'postfiles.pstatic.net',
@@ -32,3 +38,4 @@ module.exports = {
   },
   reactStrictMode: false,
 }
+module.exports = withPWA(nextConfig)

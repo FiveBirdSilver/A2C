@@ -5,7 +5,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { LuMenu } from 'react-icons/lu'
-import { FaUserCircle } from 'react-icons/fa'
 import { IoCloseOutline } from 'react-icons/io5'
 
 import Button from '@/components/elements/Button.tsx'
@@ -24,6 +23,10 @@ export default function GlobalHeader(data: { data: IAccount }) {
   const currentPage = pathname.split('/')[1]
   const [openMenu, setOpenMenu] = useState(false)
 
+  const MovOnMenu = (url: string) => {
+    router.push(url)
+    setOpenMenu(false)
+  }
   return (
     <div className='flex fixed top-0 w-full border-b border-gray-100 left-0 z-10 '>
       <div className='flex items-center bg-white mx-auto justify-between px-4 md:px-0 my-0 h-14 w-full sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg'>
@@ -118,20 +121,25 @@ export default function GlobalHeader(data: { data: IAccount }) {
               'fixed left-0 py-6 top-16 w-full h-full bg-white space-y-6'
             }
           >
-            <li className={'px-6'}>
-              <Link href={'/board?type='} className={'text-base'}>
-                운동생활
-              </Link>
+            <li
+              className={'px-6 text-base cursor-pointer'}
+              onClick={() => MovOnMenu('/board?type=')}
+            >
+              운동생활
             </li>
-            <li className={'border-b border-gray-100 pb-6 px-6'}>
-              <Link href={'/view/list'} className={'text-base'}>
-                내 주변 찾기
-              </Link>
+            <li
+              className={
+                'border-b border-gray-100 pb-6 px-6 text-base cursor-pointer'
+              }
+              onClick={() => MovOnMenu('/view/list')}
+            >
+              내 주변 찾기
             </li>
-            <li className={'px-6'}>
-              <Link href={'/user/mypage'} className={'text-base'}>
-                MY AC2
-              </Link>
+            <li
+              className={'px-6 text-base'}
+              onClick={() => MovOnMenu('/user/mypage')}
+            >
+              MY AC2
             </li>
           </ul>
         )}
