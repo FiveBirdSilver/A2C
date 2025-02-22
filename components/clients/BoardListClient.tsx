@@ -36,31 +36,25 @@ interface IBoard {
   __v: string
 }
 
-const BoardListClient = ({ initialData }: { initialData: IBoard[] }) => {
+const BoardListClient = ({ type }: { type: string }) => {
   const router = useRouter()
-
-  // 게시글 무한 스크롤 마지막 시점
-  const { ref, inView } = useInView({ threshold: 0 })
+  const { ref, inView } = useInView({ threshold: 0.5 }) // 좀 더 안정적인 감지값
 
   // 게시글 무한 스크롤 조회
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
-    queryKey: ['getBoard'],
-    queryFn: async ({ pageParam = 32 }) => {
+    queryKey: ['getBoard', type], // type별로 캐싱되도록 설정
+    queryFn: async ({ pageParam = 1 }) => {
       const response = await axios.get(
-        `/backend/node/api/board?page=${pageParam}`,
+        `/backend/node/api/board?page=${pageParam}&contentType=${type === 'community' ? 'community' : 'deal'}`,
         {
           withCredentials: true,
         }
       )
-      return response.data.data
+      return response.data
     },
-    initialPageParam: 2,
+    initialPageParam: 1, // 1페이지부터 시작
     getNextPageParam: (lastPage, allPages) => {
-      return allPages.length + 1
-    },
-    initialData: {
-      pages: [initialData],
-      pageParams: [1],
+      return lastPage?.data?.length > 0 ? allPages.length + 1 : undefined
     },
   })
 
@@ -68,11 +62,11 @@ const BoardListClient = ({ initialData }: { initialData: IBoard[] }) => {
     if (inView && hasNextPage) fetchNextPage()
   }, [inView, fetchNextPage, hasNextPage])
 
-  const allBoards = data ? data.pages.flat() : []
+  const allBoards = data?.pages.flatMap((page) => page.data) ?? []
 
   return (
     <>
-      {allBoards?.map((board: IBoard) => (
+      {allBoards.map((board: IBoard) => (
         <div
           key={board._id}
           onClick={() =>
@@ -130,8 +124,10 @@ const BoardListClient = ({ initialData }: { initialData: IBoard[] }) => {
           </div>
         </div>
       ))}
+      {/* 감지되는 div */}
       <div ref={ref} className='p-0.5' />
     </>
   )
 }
+
 export default BoardListClient

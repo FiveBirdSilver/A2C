@@ -1,7 +1,6 @@
 import { Suspense } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { cookies } from 'next/headers'
 import { HiOutlinePencilAlt } from 'react-icons/hi'
 
 import Loading from '@/app/loading.tsx'
@@ -13,52 +12,9 @@ type Props = {
   searchParams: Promise<{ type: string }>
 }
 
-interface IBoard {
-  data: {
-    images: string[]
-    location: {
-      point: string
-      lat: number
-      lng: number
-    }
-    _id: string
-    title: string
-    type: string
-    content: string
-    contentType: string
-    chatCount: number
-    viewCount: number
-    heartCount: number
-    priceType: string
-    price: string
-    author: {
-      nickname: string
-    }
-    createdAt: string
-    updatedAt: string
-    __v: string
-  }[]
-}
-
-// 초기데이터만 SSR 이후부터 CSR => 초기 렌더링 속도 및 SEO를 위함
-async function fetchBoard(sessionId?: { name: string; value: string }) {
-  const url = `${process.env.NEXT_PUBLIC_API_URL}/node/api/board?page=1`
-  const res = await fetch(url, {
-    headers: {
-      'Content-Type': 'application/json',
-      Cookie: `${sessionId?.name}=${sessionId?.value}`,
-    },
-    credentials: 'include',
-  })
-
-  return res.json()
-}
-
 export default async function Page({ searchParams }: Props) {
-  const cookieStore = await cookies()
-  const sessionId = cookieStore.get('connect.sid')
   const type = (await searchParams).type
-  const data: IBoard = await fetchBoard(sessionId)
+
   return (
     <Suspense fallback={<Loading />}>
       <div className='flex flex-col items-start justify-center'>
@@ -75,7 +31,7 @@ export default async function Page({ searchParams }: Props) {
       <div className='grid gap-8 md:grid-cols-3 grid-cols-1'>
         <main className='col-span-1 md:col-span-2'>
           <div className='flex flex-col w-full gap-5 bg-[#f8f9fa] md:bg-white'>
-            <BoardListClient initialData={data.data} />
+            <BoardListClient type={type} />
           </div>
         </main>
         <aside className='hidden md:flex flex-col md:col-span-1 h-screen sticky top-20 overflow-visible'>
