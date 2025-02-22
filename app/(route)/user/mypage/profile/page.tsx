@@ -21,9 +21,9 @@ export default async function Page() {
   const cookieStore = await cookies()
   const sessionId = cookieStore.get('connect.sid')
   const data = await fetchMyPage(sessionId)
-  if (data.result === 'fail') {
-    redirect('/login')
-  }
+  // if (data.result === 'fail') {
+  //   redirect('/login')
+  // }
 
   return (
     <Suspense fallback={<Loading />}>

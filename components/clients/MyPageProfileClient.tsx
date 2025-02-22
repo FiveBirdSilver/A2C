@@ -1,8 +1,11 @@
 'use client'
 
+import { useState } from 'react'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+
 import Input from '@/components/elements/Input.tsx'
 import Button from '@/components/elements/Button.tsx'
-import { useState } from 'react'
 
 interface IAccount {
   result: string
@@ -13,6 +16,7 @@ interface IAccount {
   }
 }
 const MyPageProfileClient = (data: { data: IAccount }) => {
+  const router = useRouter()
   const [nickname, setNickname] = useState<string>(
     data.data?.data?.nickname || ''
   )
@@ -21,18 +25,17 @@ const MyPageProfileClient = (data: { data: IAccount }) => {
     <main className='flex-1'>
       {/* 프로필 사진 */}
       <section className=''>
-        <h2 className='text-base font-semibold text-gray-900'>프로필 사진</h2>
+        <h2 className='text-base text-gray-900'>프로필 사진</h2>
         <div className='mt-3 flex items-center space-x-2'>
-          <div className='flex space-x-2'>
-            {['green', 'orange', 'blue', 'purple', 'red'].map(
-              (color, index) => (
-                <div
-                  key={index}
-                  className={`w-10 h-10 rounded-full bg-${color}-500 cursor-pointer`}
-                />
-              )
-            )}
-          </div>
+          <Image
+            src={'/icons/user.webp'}
+            alt={'profile'}
+            priority
+            width={40}
+            height={40}
+            onClick={() => router.push('/user/mypage/profile')}
+            className='cursor-pointer'
+          />
         </div>
       </section>
 
