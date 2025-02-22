@@ -3,6 +3,7 @@ import { AxiosError } from 'axios'
 import { useMutation } from '@tanstack/react-query'
 
 import { instance } from '@/libs/apis/instance.ts'
+import { toastError, toastSuccess } from '@/libs/utils/toast.ts'
 
 interface IVerifySend {
   email: string
@@ -30,11 +31,11 @@ const useVerifyMutation = () => {
       return await instance.post('/node/api/user/verifySend', data)
     },
     onSuccess: () => {
-      alert('인증번호가 발송되었습니다.')
+      toastSuccess('인증번호가 발송되었습니다.')
     },
     onError: (error: AxiosError) => {
       console.error(error)
-      alert('일시적인 오류입니다. 다시 시도해주세요.')
+      toastError('일시적인 오류입니다. 다시 시도해주세요.')
     },
   })
 
@@ -45,13 +46,13 @@ const useVerifyMutation = () => {
       return await instance.post(`/node/api/user/verifyCheck`, data)
     },
     onSuccess: () => {
-      alert('인증이 성공적으로 완료되었습니다.')
+      toastSuccess('인증이 성공적으로 완료되었습니다.')
       setIsAuthCheck(true)
       setOpenAuthCodeBox(false)
     },
     onError: (error: AxiosError) => {
       console.error(error)
-      alert('인증에 실패했습니다. 다시 시도해주세요.')
+      toastError('인증에 실패했습니다. 다시 시도해주세요.')
     },
   })
 
