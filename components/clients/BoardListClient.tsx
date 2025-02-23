@@ -98,11 +98,11 @@ const BoardListClient = ({
           >
             <div className='text-gray-900 rounded-lg w-full md:p-4 md:space-y-4'>
               {/*제목 내용*/}
-              <div className='p-4 md:px-2 md:p-0 space-y-3'>
+              <div className='p-4 md:px-2 md:p-0 space-y-4'>
                 <div className='flex justify-between min-h-20 gap-2'>
                   <div className={'flex flex-col space-y-2'}>
                     <h4>{board.title}</h4>
-                    <p className='w-full text-gray-400 text-sm pb-3'>
+                    <p className='w-full text-gray-400 text-sm  line-clamp-2'>
                       {board.content}
                     </p>
                   </div>

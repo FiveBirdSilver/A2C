@@ -138,7 +138,7 @@ const BoardDetailClient = ({
       {/*내용 및 이미지*/}
       <div className='flex flex-col gap-4 p-4 w-full'>
         <div className='flex flex-col gap-4 min-h-32'>
-          <span className='text-sm'>{content}</span>
+          <span className='text-sm whitespace-pre-wrap'>{content}</span>
           {images.length > 0 &&
             images.map((image, index) => (
               <div

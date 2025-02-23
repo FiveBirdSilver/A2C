@@ -50,5 +50,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')], // 애니메이션 플러그인
+  plugins: [require('tailwindcss-animate'), require('@tailwindcss/line-clamp')], // 애니메이션 플러그인
 }

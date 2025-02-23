@@ -36,7 +36,7 @@ const BoardDetailSocialClient = ({
 
   return (
     <div className='contents md:block md:col-span-1 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto py-6'>
-      <div className='fixed px-8 md:px-0 md:relative bottom-0 flex flex-row md:flex-col items-baseline w-full justify-between md:items-center md:space-y-6 bg-white min-h-12'>
+      <div className='fixed px-8 pb-2 md:pb-0 md:px-0 md:relative bottom-0 flex flex-row md:flex-col items-baseline w-full justify-between md:items-center md:space-y-6 bg-white z-[100] min-h-12'>
         {/*좋아요 수*/}
         <div className='flex flex-row md:flex-col md:space-y-2 items-center justify-center'>
           <button
@@ -55,7 +55,7 @@ const BoardDetailSocialClient = ({
             )}
           </button>
           <p
-            className={`${isLiked ? 'text-green-400' : 'text-gray-700'} text-xs`}
+            className={`${isLiked ? 'text-green-400' : 'text-gray-700'} text-sm`}
           >
             {heartCount.toLocaleString()}
           </p>
@@ -66,7 +66,7 @@ const BoardDetailSocialClient = ({
           <button className='rounded-full md:border md:border-gray-200 md:shadow-[0_2px_14px_rgba(0,0,0,0.12)] w-8 md:w-12 h-12 flex items-center justify-center text-lg text-gray-700'>
             <IoChatbubblesOutline />
           </button>
-          <p className='text-gray-700 text-xs'>{chatCount.toLocaleString()}</p>
+          <p className='text-gray-700 text-sm'>{chatCount.toLocaleString()}</p>
         </div>
 
         {/*공유하기*/}
@@ -77,7 +77,7 @@ const BoardDetailSocialClient = ({
           >
             <IoShareSocial />
           </button>
-          <p className='text-gray-700 text-xs min-w-3'> </p>
+          <p className='text-gray-700 text-sm min-w-3 text-start'></p>
         </div>
       </div>
     </div>
