@@ -13,16 +13,63 @@ const Wrapper = dynamic(() => import('@/components/layouts/Wrapper'), {
   ssr: true,
 })
 
+export const metadata: Metadata = {
+  title: 'A2C - All About Climbing',
+  description:
+    'A2C는 클라이머들을 위한 커뮤니티 플랫폼입니다. 주변 클라이밍 짐을 찾고, 클라이밍 크루를 만들고, 다양한 정보를 교류하세요!',
+  keywords: [
+    '클라이밍',
+    '클라이밍 짐',
+    '암벽 등반',
+    '실내 암벽',
+    '클라이밍 커뮤니티',
+    'A2C',
+  ],
+  manifest: '/manifest.ts',
+  icons: {
+    icon: '/logo/logo_mobile.png',
+    shortcut: '/logo/logo_mobile.png',
+    apple: '/logo/logo_mobile.png',
+  },
+  robots: 'index, follow',
+  openGraph: {
+    type: 'website',
+    title: 'A2C - All About Climbing',
+    description:
+      'A2C는 클라이머들을 위한 커뮤니티 플랫폼입니다. 주변 클라이밍 짐을 찾고, 클라이밍 크루를 만들고, 다양한 정보를 교류하세요!',
+    url: 'https://www.a2climbing.com',
+    images: [
+      {
+        url: 'https://www.a2climbing.com/logo/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'A2C - All About Climbing',
+      },
+    ],
+    siteName: 'A2C',
+    locale: 'ko_KR',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'A2C - All About Climbing',
+    description:
+      '클라이머들을 위한 커뮤니티! 클라이밍 짐 찾기, 크루 모집, 정보 공유까지.',
+    images: ['https://www.a2climbing.com/logo/og-image.png'],
+  },
+}
+
+export const viewport: Viewport = {
+  themeColor: 'black',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: 'cover',
+}
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html suppressHydrationWarning>
-      <head>
-        <meta
-          name='viewport'
-          content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
-        />
-        <title>A2C</title>
-      </head>
       <body>
         <Providers>
           <Wrapper>{children}</Wrapper>
@@ -35,28 +82,4 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </body>
     </html>
   )
-}
-
-export const viewport: Viewport = {
-  themeColor: 'black',
-  width: 'device-width',
-  initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
-  viewportFit: 'cover',
-}
-
-export const metadata: Metadata = {
-  title: 'A2C',
-  description: 'All About Climbing, 클라이머들의 새로운 연결고리',
-  manifest: '/manifest.ts',
-  icons: {
-    icon: '/logo/logo_mobile.png',
-    shortcut: '/logo/logo_mobile.png',
-    apple: '/logo/logo_mobile.png',
-    other: {
-      rel: 'apple-touch-icon-precomposed',
-      url: '/logo/logo_mobile.png',
-    },
-  },
 }
