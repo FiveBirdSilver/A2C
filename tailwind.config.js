@@ -1,11 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: ['class'], // Dark mode 지원
+  // darkMode: ['class'], // Dark mode 지원
   content: [
-    './pages/**/*.{ts,tsx}', // Tailwind 클래스 탐색 경로
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+    './app/**/*.{js,ts,jsx,tsx}',
+    './src/**/*.{js,ts,jsx,tsx}',
   ],
   prefix: '', // 클래스 앞에 추가 프리픽스 (필요 시 사용)
   theme: {
@@ -50,5 +50,9 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate'), require('@tailwindcss/line-clamp')], // 애니메이션 플러그인
+  plugins: [
+    require('tailwindcss-animate'),
+    require('@tailwindcss/line-clamp'),
+    require('tailwind-scrollbar-hide'),
+  ], // 애니메이션 플러그인
 }

@@ -39,3 +39,16 @@ input, textarea {
 .Toastify__toast {
   font-size: .825rem
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  width: 8px; /* 스크롤바의 너비 조절 */
+}
+
+.scrollbar-hide::-webkit-scrollbar-track {
+  background: transparent; /* 스크롤바 트랙(배경) 숨기기 */
+}
+
+.scrollbar-hide::-webkit-scrollbar-thumb {
+  background: #ccc; /* 스크롤바 손잡이 색상 */
+  border-radius: 4px;
+}
