@@ -1,3 +1,8 @@
+/**
+ * 권한인증을 위한 체크 로직
+ * @param sessionId
+ */
+
 export async function getCheckAuth(sessionId?: {
   name: string
   value: string
