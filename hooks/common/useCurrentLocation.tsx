@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react'
 
+/**
+ * 내 위치와 프레임 사각형을 반환하는 훅
+ */
 const useCurrentLocation = () => {
   // 현재 내 위치
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(

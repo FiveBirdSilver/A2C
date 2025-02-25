@@ -1,5 +1,11 @@
 /// <reference types="navermaps" />
 
+/**
+ * 네이버 지도 렌더링 하는 훅
+ * @param lat - 위도
+ * @param lng - 경도
+ */
+
 import { useEffect, useRef, useCallback, useState } from 'react'
 import debounce from 'lodash/debounce'
 

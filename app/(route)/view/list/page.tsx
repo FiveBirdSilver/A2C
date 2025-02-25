@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { IoCall } from 'react-icons/io5'
@@ -12,6 +12,7 @@ import useCurrentLocation from '@/hooks/common/useCurrentLocation'
 import { useQueries } from '@/hooks/queries/useQueries'
 import useMediaQuery from '@/hooks/common/useMediaQuery.tsx'
 import useMap, { IMapList } from '@/hooks/common/useMap.tsx'
+import { useElementScrollRestoration } from '@/hooks/common/useScrollRestoration.tsx'
 
 const ListItem = ({
   list,
@@ -72,9 +73,6 @@ export default function Page() {
   const isMobile = useMediaQuery('(max-width: 768px)')
   const [currentPlace, setCurrentPlace] = useState<IMapList>()
 
-  // 스크롤 위치 상태
-  const listRef = useRef<HTMLDivElement>(null)
-
   const { mapRef, loading, error } = useMap({
     lat: currentPlace?.lat,
     lng: currentPlace?.lng,
@@ -88,28 +86,9 @@ export default function Page() {
     enabled: location !== null,
   })
 
-  // 스크롤 위치 저장
-  useEffect(() => {
-    const handleScroll = () => {
-      if (listRef.current) {
-        sessionStorage.setItem(
-          'scroll-list',
-          listRef.current.scrollTop.toString()
-        )
-      }
-    }
-
-    listRef.current?.addEventListener('scroll', handleScroll)
-    return () => listRef.current?.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  // 스크롤 위치 복원
-  useEffect(() => {
-    const savedPosition = sessionStorage.getItem('scroll-list')
-    if (savedPosition && listRef.current) {
-      listRef.current.scrollTop = parseInt(savedPosition, 10)
-    }
-  }, [isSuccess]) // 데이터가 성공적으로 로드된 후 실행
+  // 스크롤 위치 상태 복원
+  const listRef = useRef<HTMLDivElement>(null)
+  useElementScrollRestoration(listRef, 'scroll-list', isSuccess)
 
   if (isError || error)
     return (
