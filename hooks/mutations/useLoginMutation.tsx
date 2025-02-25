@@ -6,20 +6,17 @@ import { AxiosError } from 'axios'
 import { instance } from '@/libs/apis/instance.ts'
 import { toastError } from '@/libs/utils/toast.ts'
 
-interface IWarning {
-  email: boolean
-  password: boolean
-}
-
 export const useLoginMutation = () => {
   const router = useRouter()
 
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-  const [warning, setWarning] = useState<IWarning>({
-    email: false,
-    password: false,
-  })
+  const [warning, setWarning] = useState<{ email: boolean; password: boolean }>(
+    {
+      email: false,
+      password: false,
+    }
+  )
 
   // 로그인
   const postLogin = useMutation({
