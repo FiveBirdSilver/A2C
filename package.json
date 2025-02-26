@@ -58,7 +58,6 @@
     "tailwind-merge": "^2.3.0",
     "tailwind-scrollbar-hide": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",
-    "xlsx": "^0.18.5",
     "yarn": "^1.22.22",
     "yup": "^1.4.0",
     "zustand": "^5.0.0-rc.2"

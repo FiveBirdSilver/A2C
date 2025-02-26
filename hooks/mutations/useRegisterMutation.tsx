@@ -4,6 +4,7 @@ import { AxiosError } from 'axios'
 
 import { instance } from '@/libs/apis/instance.ts'
 import toast from 'react-hot-toast'
+import { toastError } from '@/libs/utils/toast.ts'
 
 interface IRegister {
   email: string
@@ -16,7 +17,17 @@ export const useRegisterMutation = () => {
   const router = useRouter()
 
   const postRegister = useMutation({
-    mutationFn: async (data: IRegister) => {
+    mutationFn: async ({
+      isAuthCheck,
+      data,
+    }: {
+      isAuthCheck: boolean
+      data: IRegister
+    }) => {
+      if (!isAuthCheck) {
+        toastError('이메일 인증이 필요합니다. 인증을 완료해주세요.')
+        return
+      }
       return await instance.post('/node/api/user/signup', data)
     },
     onSuccess: (res) => {
@@ -24,7 +35,7 @@ export const useRegisterMutation = () => {
         toast.error('이미 존재하는 계정입니다.')
       else {
         toast.success('회원가입 되었습니다. 로그인 후 이용해주세요.')
-        router.push('/login ')
+        router.push('/login')
       }
     },
     onError: (err: AxiosError) => {

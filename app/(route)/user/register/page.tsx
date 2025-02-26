@@ -1,67 +1,38 @@
 'use client'
-import { MouseEvent } from 'react'
 import { CiCircleInfo } from 'react-icons/ci'
 
 import Button from '@/components/elements/Button.tsx'
 import Input from '@/components/elements/Input.tsx'
 import { formatTime } from '@/libs/utils/formatTime.ts'
-import useTimer from '@/hooks/common/useTimer.tsx'
 import useVerifyMutation from '@/hooks/mutations/useVerifyMutation.tsx'
 import { useRegisterMutation } from '@/hooks/mutations/useRegisterMutation.tsx'
 import useField from '@/hooks/common/useForm.tsx'
-import { toastError } from '@/libs/utils/toast.ts'
 
 export default function Page() {
   const { register, handleSubmit, watch, errors } = useField()
+
+  // 계정 생성 훅
   const { postRegister } = useRegisterMutation()
+
+  // 인증번호 발송 및 확인 훅
   const {
-    postSendCode,
-    postVerifyCheck,
     authCode,
     openAuthCodeBox,
     isAuthCheck,
-    setOpenAuthCodeBox,
     handleOnChange,
+    handleOnSendCode,
+    timeLeft,
+    confirmAuthNumber,
   } = useVerifyMutation()
-
-  // 인증번호 유효시간
-  const { timeLeft, startTimer, resetTimer } = useTimer(180) // 3분(180초) 타이머
-
-  // 인증번호 보내기
-  const handleOnSendCode = async (
-    event: MouseEvent<HTMLButtonElement>,
-    type: 'start' | 'reset'
-  ) => {
-    event.preventDefault()
-    setOpenAuthCodeBox(true)
-    postSendCode.mutate({ email: watch('email') })
-
-    type === 'start' ? startTimer() : resetTimer()
-  }
-
-  // 인증번호 확인
-  const confirmAuthNumber = async (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    postVerifyCheck.mutate({
-      email: watch('email'),
-      code: authCode,
-    })
-  }
-
-  const handleOnRegister = () => {
-    if (!isAuthCheck) {
-      toastError('이메일 인증이 필요합니다. 인증을 완료해주세요.')
-      return
-    }
-    postRegister.mutate({ ...watch() })
-  }
 
   return (
     <div className='flex justify-center w-full h-full px-[1rem]'>
       <div className='flex flex-col items-center justify-center gap-4  w-full max-w-96'>
         <form
           className={'w-full flex flex-col gap-6'}
-          onSubmit={handleSubmit(() => handleOnRegister())}
+          onSubmit={handleSubmit(() =>
+            postRegister.mutate({ isAuthCheck, data: watch() })
+          )}
         >
           <div className='flex flex-col gap-3'>
             <div className='flex flex-col gap-1'>
@@ -76,9 +47,15 @@ export default function Page() {
             </div>
             <div className={'grid text-sm h-8'}>
               <Button
-                onClick={(e) => handleOnSendCode(e, 'start')}
-                variant={watch('email') ? 'outline' : 'disabled'}
-                disabled={!watch('email')}
+                onClick={(e) => handleOnSendCode(e, watch('email'), 'start')}
+                variant={
+                  watch('email') && errors.email?.message === undefined
+                    ? 'outline'
+                    : 'disabled'
+                }
+                disabled={
+                  !(watch('email') && errors.email?.message === undefined)
+                }
                 text='이메일 인증하기'
               />
             </div>
@@ -108,7 +85,7 @@ export default function Page() {
                   </p>
                 </Input>
                 <button
-                  onClick={(e) => confirmAuthNumber(e)}
+                  onClick={(e) => confirmAuthNumber(e, watch('email'))}
                   className='text-sm text-green-400 w-12'
                 >
                   확인
@@ -123,7 +100,7 @@ export default function Page() {
                 <CiCircleInfo />
                 <span>이메일을 받지 못하셨나요?</span>
                 <button
-                  onClick={(e) => handleOnSendCode(e, 'reset')}
+                  onClick={(e) => handleOnSendCode(e, watch('email'), 'reset')}
                   className={'decoration-solid underline cursor-pointer'}
                 >
                   이메일 재전송하기
@@ -166,7 +143,9 @@ export default function Page() {
           <div className='grid h-10 text-sm'>
             <Button
               variant='primary'
-              onClick={handleSubmit(() => handleOnRegister())}
+              onClick={handleSubmit(() =>
+                postRegister.mutate({ isAuthCheck, data: watch() })
+              )}
               // disabled={!(email !== "" && password !== "")}
               text='회원가입'
             />

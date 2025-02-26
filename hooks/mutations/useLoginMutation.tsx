@@ -24,7 +24,7 @@ export const useLoginMutation = () => {
       return await instance.post('/node/api/user/login', { email, password })
     },
     onSuccess: async () => {
-      router.push('/')
+      router.back()
       router.refresh()
     },
     onError: (error: AxiosError) => {
@@ -68,7 +68,7 @@ export const useLoginMutation = () => {
     }
   }, [])
 
-  // 유효성 검사
+  // 로그인 submit 직후 유효성 검사
   const validateForm = (): boolean => {
     const newWarning = {
       email: email.trim() === '',
