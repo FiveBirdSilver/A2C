@@ -25,7 +25,7 @@ export default async function Page() {
   // 미 로그인 유저 로그인 화면으로 리다이렉트
   const isLoggedIn = await getCheckAuth(sessionId)
 
-  if (isLoggedIn.result === 'fail') {
+  if (!isLoggedIn || isLoggedIn?.result === 'fail') {
     redirect('/login')
   }
 
