@@ -3,24 +3,12 @@ import { cookies } from 'next/headers'
 import Loading from '@/app/loading.tsx'
 import { redirect } from 'next/navigation'
 import MyPageProfileClient from '@/components/clients/MyPageProfileClient.tsx'
-
-async function fetchMyPage(sessionId?: { name: string; value: string }) {
-  const url = `${process.env.NEXT_PUBLIC_API_URL}/node/api/account`
-  const res = await fetch(url, {
-    headers: {
-      'Content-Type': 'application/json',
-      Cookie: `${sessionId?.name}=${sessionId?.value}`,
-    },
-    credentials: 'include',
-  })
-
-  return res.json()
-}
+import { getCheckAuth } from '@/libs/apis/auth.ts'
 
 export default async function Page() {
   const cookieStore = await cookies()
   const sessionId = cookieStore.get('connect.sid')
-  const data = await fetchMyPage(sessionId)
+  const data = await getCheckAuth(sessionId)
   if (data.result === 'fail') {
     redirect('/login')
   }

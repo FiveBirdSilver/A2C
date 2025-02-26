@@ -15,9 +15,10 @@ import timeAgo from '@/libs/utils/timeAgo.ts'
 export interface IBoardDetail {
   cookie: string | null
   contentType: string
-  point: string
-  lng: number
-  lat: number
+  location: {
+    point: string
+    coordinates: number[]
+  }
   images: string[]
   title: string
   nickname: string
@@ -38,10 +39,8 @@ export interface IBoardDetail {
 
 const BoardDetailClient = ({
   cookie,
-  point,
+  location,
   images,
-  lng,
-  lat,
   title,
   nickname,
   createdAt,
@@ -90,17 +89,20 @@ const BoardDetailClient = ({
   useEffect(() => {
     const { naver } = window
     if (mapRef.current && naver) {
-      const center = new naver.maps.LatLng(lat, lng)
+      const center = new naver.maps.LatLng(
+        location.coordinates[0],
+        location.coordinates[1]
+      )
       const map = new naver.maps.Map(mapRef.current, {
         center: center,
-        zoom: 10,
+        zoom: 7,
       })
 
       // 마커 생성
       new naver.maps.Marker({
         position: center,
         map: map,
-        title: point,
+        title: location.point,
         icon: {
           content: `
             <div style="width: 30px; height: 30px; display: flex; justify-content: center; align-items: center;">
@@ -114,7 +116,7 @@ const BoardDetailClient = ({
       bounds.extend(center)
       map.fitBounds(bounds)
     }
-  }, [lat, lng])
+  }, [location])
 
   return (
     <div className='col-span-1 md:col-span-5'>
@@ -159,7 +161,7 @@ const BoardDetailClient = ({
         </div>
 
         {/*위치 (지도) */}
-        {point && (
+        {location.point && (
           <div className='flex flex-col gap-3'>
             <span className='text-xs'>위치</span>
             <div className='w-full h-48'>

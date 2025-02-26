@@ -13,7 +13,7 @@ type Props = {
   searchParams: Promise<{ type: string }>
 }
 
-interface IBoard {
+interface IBoardList {
   data: {
     images: string[]
     location: {
@@ -44,6 +44,7 @@ interface IFetchBoard {
   sessionId: { name: string; value: string } | undefined
   type: string
 }
+
 // 초기데이터만 SSR 이후부터 CSR => 초기 렌더링 속도 및 SEO를 위함
 async function fetchBoard({ sessionId, type }: IFetchBoard) {
   const url = `${process.env.NEXT_PUBLIC_API_URL}/node/api/board?page=1&contentType=${type}`
@@ -64,7 +65,7 @@ export default async function Page({ searchParams }: Props) {
 
   // 카테고리 파라미터
   const type = (await searchParams).type
-  const data: IBoard = await fetchBoard({ sessionId, type })
+  const data: IBoardList = await fetchBoard({ sessionId, type })
 
   return (
     <Suspense fallback={<Loading />}>

@@ -18,8 +18,7 @@ interface IBoardDetail {
     images: string[]
     location: {
       point: string
-      lat: number
-      lng: number
+      coordinates: number[]
     }
     _id: string
     title: string
@@ -103,9 +102,7 @@ export default async function Page({ params, searchParams }: Props) {
       <div className='grid grid-cols-1 gap-8 py-4 md:px-20 md:grid-cols-6'>
         <BoardDetailClient
           cookie={cookie}
-          point={data.data.location?.point || ''}
-          lat={data.data.location?.lat || 0}
-          lng={data.data.location?.lng || 0}
+          location={data.data.location}
           title={data.data.title}
           contentType={data.data.contentType}
           content={data.data.content}
