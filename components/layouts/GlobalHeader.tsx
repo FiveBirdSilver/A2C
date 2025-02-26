@@ -137,7 +137,7 @@ export default function GlobalHeader(data: { data: IAccount }) {
               내 주변 찾기
             </li>
             <li
-              className={'px-6 text-base'}
+              className={'px-6 text-base cursor-pointer'}
               onClick={() => MovOnMenu('/user/mypage')}
             >
               MY AC2
