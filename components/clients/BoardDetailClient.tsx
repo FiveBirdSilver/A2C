@@ -161,7 +161,7 @@ const BoardDetailClient = ({
         </div>
 
         {/*위치 (지도) */}
-        {location.point && (
+        {location?.point && (
           <div className='flex flex-col gap-3'>
             <span className='text-xs'>위치</span>
             <div className='w-full h-48'>
