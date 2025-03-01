@@ -18,15 +18,15 @@ interface IBoard {
   images: string[]
   location: {
     point: string
-    lat: number
-    lng: number
+    type: string
+    coordinates: number[]
   }
   _id: string
   title: string
   type: string
   content: string
   contentType: string
-  chatCount: number
+  commentCount: number
   viewCount: number
   heartCount: number
   priceType: string
@@ -147,16 +147,13 @@ const BoardListClient = ({
                     </div>
                     <div className='flex items-center space-x-1 text-xs text-gray-400'>
                       <IoChatbubbleOutline />
-                      <span>{board.chatCount}</span>
+                      <span>{board.commentCount}</span>
                     </div>
                   </div>
                 </div>
               </div>
-              {board.contentType === 'deal' && (
-                <div className='flex items-center justify-between rounded-none px-4 py-3 md:bg-gray-50 border-t border-gray-100 md:border-none md:rounded-lg'>
-                  <span className='text-gray-400 text-xs'>
-                    {board.priceType === 'find' ? '구해요' : '같이해요'}
-                  </span>
+              {board.location?.point !== '' && (
+                <div className='flex items-center justify-end  rounded-none px-4 py-3 md:bg-gray-50 border-t border-gray-100 md:border-none md:rounded-lg'>
                   <div className={'flex items-center gap-1'}>
                     <MdLocationPin className='text-green-400' />
                     <span className='text-green-400 text-xs'>

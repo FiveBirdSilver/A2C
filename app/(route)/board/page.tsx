@@ -5,7 +5,6 @@ import { cookies } from 'next/headers'
 import { HiOutlinePencilAlt } from 'react-icons/hi'
 
 import Loading from '@/app/loading.tsx'
-import Tabs from '@/components/elements/Tabs.tsx'
 import BoardListClient from '@/components/clients/BoardListClient.tsx'
 import BoardListAroundClient from '@/components/clients/BoardListAroundClient.tsx'
 
@@ -18,15 +17,15 @@ interface IBoardList {
     images: string[]
     location: {
       point: string
-      lat: number
-      lng: number
+      type: string
+      coordinates: number[]
     }
     _id: string
     title: string
     type: string
     content: string
     contentType: string
-    chatCount: number
+    commentCount: number
     viewCount: number
     heartCount: number
     priceType: string
@@ -42,12 +41,11 @@ interface IBoardList {
 
 interface IFetchBoard {
   sessionId: { name: string; value: string } | undefined
-  type: string
 }
 
 // 초기데이터만 SSR 이후부터 CSR => 초기 렌더링 속도 및 SEO를 위함
-async function fetchBoard({ sessionId, type }: IFetchBoard) {
-  const url = `${process.env.NEXT_PUBLIC_API_URL}/node/api/board?page=1&contentType=${type}`
+async function fetchBoard({ sessionId }: IFetchBoard) {
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/node/api/board?page=1&contentType=life`
   const res = await fetch(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -65,22 +63,11 @@ export default async function Page({ searchParams }: Props) {
 
   // 카테고리 파라미터
   const type = (await searchParams).type
-  const data: IBoardList = await fetchBoard({ sessionId, type })
+  const data: IBoardList = await fetchBoard({ sessionId })
 
   return (
     <Suspense fallback={<Loading />}>
-      <div className='flex flex-col items-start justify-center'>
-        <Tabs
-          items={[
-            { label: '전체', value: '' },
-            { label: '구해요', value: 'deal' },
-            { label: '같이해요', value: 'together' },
-            { label: '궁금해요', value: 'community' },
-          ]}
-          checkedItem={type}
-        />
-      </div>
-      <div className='grid gap-8 md:grid-cols-3 grid-cols-1'>
+      <div className='grid gap-8 md:grid-cols-3 grid-cols-1 pt-6'>
         <main className='col-span-1 md:col-span-2'>
           <div
             className={`flex flex-col w-full gap-5 md:bg-white ${data.data.length > 0 ? 'bg-[#f8f9fa]' : 'bg-white'}`}

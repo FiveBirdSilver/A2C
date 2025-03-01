@@ -56,7 +56,7 @@ export default function GlobalHeader(data: { data: IAccount }) {
           {pathname.split('/')[1] !== 'main' && (
             <nav className='hidden text-gray-700 text-sm gap-3 md:flex'>
               <Link
-                href='/board?type='
+                href='/board'
                 className={`flex flex-col items-center cursor-pointer px-3 py-2 rounded-xl 
               ${currentPage === 'board' ? 'bg-green-50 text-green-500 hover:bg-green-100' : 'bg-white hover:bg-gray-50'}
               `}
@@ -124,7 +124,7 @@ export default function GlobalHeader(data: { data: IAccount }) {
           >
             <li
               className={'px-6 text-base cursor-pointer'}
-              onClick={() => MovOnMenu('/board?type=')}
+              onClick={() => MovOnMenu('/board')}
             >
               운동생활
             </li>

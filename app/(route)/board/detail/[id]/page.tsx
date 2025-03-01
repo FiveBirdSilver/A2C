@@ -1,6 +1,5 @@
 import { Suspense } from 'react'
 import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
 
 import Loading from '@/app/loading.tsx'
 import BoardDetailClient from '@/components/clients/BoardDetailClient.tsx'
@@ -92,10 +91,6 @@ export default async function Page({ params, searchParams }: Props) {
   const viewBoardId = cookieStore.get('v_boards')
   const { data, cookie }: { data: IBoardDetail; cookie: string | null } =
     await fetchBoardDetail(id, contentType, sessionId, viewBoardId)
-
-  if (data.result === 'fail') {
-    redirect('/login')
-  }
 
   return (
     <Suspense fallback={<Loading />}>
