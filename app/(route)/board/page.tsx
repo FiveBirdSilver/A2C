@@ -8,10 +8,6 @@ import Loading from '@/app/loading.tsx'
 import BoardListClient from '@/components/clients/BoardListClient.tsx'
 import BoardListAroundClient from '@/components/clients/BoardListAroundClient.tsx'
 
-type Props = {
-  searchParams: Promise<{ type: string }>
-}
-
 interface IBoardList {
   data: {
     images: string[]
@@ -57,12 +53,11 @@ async function fetchBoard({ sessionId }: IFetchBoard) {
   return res.json()
 }
 
-export default async function Page({ searchParams }: Props) {
+export default async function Page() {
   const cookieStore = await cookies()
   const sessionId = cookieStore.get('connect.sid')
 
   // 카테고리 파라미터
-  const type = (await searchParams).type
   const data: IBoardList = await fetchBoard({ sessionId })
 
   return (
@@ -72,7 +67,7 @@ export default async function Page({ searchParams }: Props) {
           <div
             className={`flex flex-col w-full gap-5 md:bg-white ${data.data.length > 0 ? 'bg-[#f8f9fa]' : 'bg-white'}`}
           >
-            <BoardListClient initialData={data.data} type={type} />
+            <BoardListClient initialData={data.data} type={'life'} />
           </div>
         </main>
         <aside className='hidden md:flex flex-col md:col-span-1 h-screen sticky top-20 overflow-visible'>
