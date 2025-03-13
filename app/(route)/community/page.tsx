@@ -32,7 +32,7 @@ export default async function Page() {
 
   // 카테고리 파라미터
   const data = await fetchBoard({ sessionId })
-
+  console.log(data)
   return (
     <Suspense fallback={<Loading />}>
       <div className='grid gap-8 md:grid-cols-3 grid-cols-1 pt-6'>

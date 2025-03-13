@@ -34,7 +34,7 @@ export const useBoardWriteMutation = () => {
       return res.data
     },
     onSuccess: (res: AxiosResponse) => {
-      router.push(`/board/detail/${res.data}?contentType=${contentType}`)
+      router.push(`/${contentType}/${res.data}`)
     },
     onError: (error: AxiosError) => {
       console.error(error)

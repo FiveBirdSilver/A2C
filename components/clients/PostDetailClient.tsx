@@ -28,12 +28,14 @@ export interface IPostDetail {
   heartCount: number
   comments: {
     _id: string
+    author: {
+      nickname: string
+    }
     content: string
     board: string
     parentCommentId: string
     createdAt: string
     updatedAt: string
-    __v: string
   }[]
 }
 
@@ -70,8 +72,8 @@ const PostDetailClient = ({
   const handleKeyDown = async (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault()
-      const boardId = pathName.split('/detail/')[1]
-
+      const boardId = pathName.split('/')[2]
+      console.log('boardId', boardId)
       await handleOnCommentSubmit(comment, boardId)
     }
   }

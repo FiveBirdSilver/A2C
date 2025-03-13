@@ -80,7 +80,7 @@ const MainListClient = (data: { data: IBoard[] }) => {
                   className='border border-gray-50 bg-white rounded-xl shadow cursor-pointer h-full'
                 >
                   <Link
-                    href={`/board/detail/${board._id}?contentType=${board.contentType}`}
+                    href={`/life/${board._id}?detailType=${board.priceType}`}
                   >
                     <div className='text-gray-900 p-2 md:p-4 rounded-lg w-full space-y-1 md:space-y-4'>
                       <h4 className='text-sm md:text-base px-2 min-h-6 overflow-hidden whitespace-nowrap overflow-ellipsis break-all'>

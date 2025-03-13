@@ -41,10 +41,13 @@ interface IBoardDetail {
       parentCommentId: string
       createdAt: string
       updatedAt: string
-      __v: string
+      author: {
+        nickname: string
+      }
     }[]
   }
 }
+
 async function fetchBoardDetail(
   id: string,
   contentType: string,
@@ -92,6 +95,7 @@ export default async function Page({ params, searchParams }: Props) {
   const { data, cookie }: { data: IBoardDetail; cookie: string | null } =
     await fetchBoardDetail(id, type, detailType, sessionId, viewBoardId)
 
+  console.log(data)
   return (
     <Suspense fallback={<Loading />}>
       <div className='grid grid-cols-1 gap-8 py-4 md:px-20 md:grid-cols-6'>
