@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 import { redirect } from 'next/navigation'
-import BoardWriteClient from '@/components/clients/BoardWriteClient.tsx'
+import PostWriteClient from '@/components/clients/PostWriteClient.tsx'
 import { IMapList } from '@/hooks/common/useMap.tsx'
 import Loading from '@/app/loading.tsx'
 import { getCheckAuth } from '@/libs/apis/auth.ts'
@@ -33,7 +33,7 @@ export default async function Page() {
 
   return (
     <Suspense fallback={<Loading />}>
-      <BoardWriteClient data={lists} />
+      <PostWriteClient data={lists} />
     </Suspense>
   )
 }

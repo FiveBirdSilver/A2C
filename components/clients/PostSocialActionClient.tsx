@@ -11,7 +11,7 @@ import { toastError, toastSuccess } from '@/libs/utils/toast.ts'
 // 공유하기 버튼 이벤트 => 도메인 복사
 const CopyURL = () => {
   const location = window.location.href
-  const url = `a2climbing.com/board${location.split('/board')[1]}`
+  const url = `a2climbing.com/board${location.split('/life')[1]}`
 
   navigator.clipboard
     .writeText(url)

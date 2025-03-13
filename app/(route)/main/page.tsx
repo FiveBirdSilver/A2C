@@ -1,8 +1,8 @@
+import Link from 'next/link'
 import Image from 'next/image'
 import { IoIosArrowForward } from 'react-icons/io'
 import MainBannerClient from '@/components/clients/MainBannerClient.tsx'
 import MainListClient from '@/components/clients/MainListClient.tsx'
-import Link from 'next/link'
 
 // API로부터 게시판 데이터를 가져오는 비동기 함수
 async function fetchBoard() {
@@ -71,7 +71,7 @@ export default async function Page() {
             source={'map'}
             link={'/view/list'}
           />
-          <Card title={'A2C에 합류하기'} source={'hands'} link={'/board'} />
+          <Card title={'A2C에 합류하기'} source={'hands'} link={'/life'} />
         </div>
         {/* 게시판 리스트 컴포넌트 - API에서 받아온 데이터를 전달 */}
         <MainListClient data={data.data} />

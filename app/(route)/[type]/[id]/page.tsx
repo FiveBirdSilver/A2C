@@ -1,13 +1,14 @@
 import { Suspense } from 'react'
 import { cookies } from 'next/headers'
+import { notFound } from 'next/navigation'
 
 import Loading from '@/app/loading.tsx'
-import BoardDetailClient from '@/components/clients/BoardDetailClient.tsx'
-import BoardDetailSocialClient from '@/components/clients/BoardDetailSocialClient.tsx'
+import PostDetailClient from '@/components/clients/PostDetailClient.tsx'
+import BoardDetailSocialClient from '@/components/clients/PostSocialActionClient.tsx'
 
 type Props = {
-  params: Promise<{ id: string }>
-  searchParams: Promise<{ contentType: string }>
+  params: Promise<{ id: string; type: string }>
+  searchParams: Promise<{ detailType: string }>
 }
 
 interface IBoardDetail {
@@ -44,25 +45,21 @@ interface IBoardDetail {
     }[]
   }
 }
-
 async function fetchBoardDetail(
   id: string,
   contentType: string,
-  sessionId?: {
-    name: string
-    value: string
-  },
-  viewBoardId?: {
-    name: string
-    value: string
-  }
-) {
-  const url = `${process.env.NEXT_PUBLIC_API_URL}/node/api/board/${id}?contentType=${contentType}`
+  priceType: string,
+  sessionId?: { name: string; value: string },
+  viewBoardId?: { name: string; value: string }
+): Promise<{ data: IBoardDetail; cookie: string | null }> {
+  const query = new URLSearchParams({ contentType })
 
-  // 쿠키 값 조합
-  const cookies = [
-    `${sessionId?.name}=${sessionId?.value}`,
-    `${viewBoardId?.name}=${viewBoardId?.value}`,
+  if (contentType !== 'community') query.append('priceType', priceType)
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/node/api/board/${id}?${query.toString()}`
+
+  const cookieHeader = [
+    sessionId ? `${sessionId.name}=${sessionId.value}` : '',
+    viewBoardId ? `${viewBoardId.name}=${viewBoardId.value}` : '',
   ]
     .filter(Boolean)
     .join('; ')
@@ -70,32 +67,35 @@ async function fetchBoardDetail(
   const res = await fetch(url, {
     headers: {
       'Content-Type': 'application/json',
-      Cookie: cookies,
+      ...(cookieHeader && { Cookie: cookieHeader }), // 조건부 헤더 추가
     },
     credentials: 'include',
   })
 
-  const data = await res.json()
+  const data: IBoardDetail = await res.json()
   const cookie = res.headers.get('Set-Cookie')
 
   return { data, cookie }
 }
 
 export default async function Page({ params, searchParams }: Props) {
-  const id = (await params).id
+  const { id, type } = await params
 
-  const contentType = (await searchParams).contentType
+  // 운동생활 | 커뮤니티의 주소 아닐 경우 404 트리거
+  if (!['community', 'life'].includes(type)) throw notFound()
+
+  const detailType = (await searchParams).detailType
   const cookieStore = await cookies()
 
   const sessionId = cookieStore.get('connect.sid')
   const viewBoardId = cookieStore.get('v_boards')
   const { data, cookie }: { data: IBoardDetail; cookie: string | null } =
-    await fetchBoardDetail(id, contentType, sessionId, viewBoardId)
+    await fetchBoardDetail(id, type, detailType, sessionId, viewBoardId)
 
   return (
     <Suspense fallback={<Loading />}>
       <div className='grid grid-cols-1 gap-8 py-4 md:px-20 md:grid-cols-6'>
-        <BoardDetailClient
+        <PostDetailClient
           cookie={cookie}
           location={data.data.location}
           title={data.data.title}

@@ -3,7 +3,8 @@
 import dayjs from 'dayjs'
 import axios from 'axios'
 import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import Image from 'next/image'
+import Link from 'next/link'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useInView } from 'react-intersection-observer'
 import { MdLocationPin } from 'react-icons/md'
@@ -12,9 +13,8 @@ import { AiOutlineEye } from 'react-icons/ai'
 
 import timeAgo from '@/libs/utils/timeAgo.ts'
 import NoResult from '@/components/elements/NoResult.tsx'
-import Image from 'next/image'
 
-interface IBoard {
+interface IPostList {
   images: string[]
   location: {
     point: string
@@ -39,14 +39,13 @@ interface IBoard {
   __v: string
 }
 
-const BoardListClient = ({
+const PostListClient = ({
   initialData,
   type,
 }: {
-  initialData: IBoard[]
+  initialData: IPostList[]
   type: string
 }) => {
-  const router = useRouter()
   const { ref, inView } = useInView({ threshold: 0.5 }) // 좀 더 안정적인 threshold 값
 
   // 게시글 무한 스크롤 조회
@@ -80,20 +79,33 @@ const BoardListClient = ({
 
   const allBoards = data?.pages.flatMap((page) => page.data) ?? []
 
+  // 상세 게시글로 넘어가는 URL 반환
+  const detailLink = ({
+    id,
+    type,
+    detailType,
+  }: {
+    id: string
+    type: string
+    detailType: string
+  }) => {
+    if (type === 'community') return `/${type}/${id}`
+    else return `/${type}/${id}?detailType=${detailType}`
+  }
+
   return (
     <>
       {allBoards.length === 0 ? (
         <NoResult />
       ) : (
-        allBoards?.map((board: IBoard) => (
-          <div
+        allBoards?.map((board: IPostList) => (
+          <Link
             key={board._id}
-            onClick={() =>
-              router.push(
-                `/board/detail/${board._id}?contentType=${board.contentType}`,
-                { scroll: false }
-              )
-            }
+            href={detailLink({
+              id: board._id,
+              type: board.contentType,
+              detailType: board.priceType,
+            })}
             className='border border-gray-50 bg-white md:rounded-xl shadow-gray-50 md:shadow cursor-pointer h-full'
           >
             <div className='text-gray-900 rounded-lg w-full md:p-4 md:space-y-4'>
@@ -163,7 +175,7 @@ const BoardListClient = ({
                 </div>
               )}
             </div>
-          </div>
+          </Link>
         ))
       )}
       {/* 감지되는 div */}
@@ -171,4 +183,4 @@ const BoardListClient = ({
     </>
   )
 }
-export default BoardListClient
+export default PostListClient

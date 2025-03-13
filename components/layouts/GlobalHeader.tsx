@@ -17,15 +17,35 @@ interface IAccount {
     nickname: string
   }
 }
+
+interface NavBoxProps {
+  path: string
+  text: string
+  params?: string
+}
+
 export default function GlobalHeader(data: { data: IAccount }) {
   const router = useRouter()
   const pathname = usePathname()
-  const currentPage = pathname.split('/')[1]
   const [openMenu, setOpenMenu] = useState(false)
 
   const MovOnMenu = (url: string) => {
     router.push(url)
     setOpenMenu(false)
+  }
+
+  // 상단 네이베이션
+  const NavBox = ({ path, text }: NavBoxProps) => {
+    const isActive = pathname === `/${path}`
+    return (
+      <Link
+        href={`/${path}`}
+        className={`flex flex-col items-center cursor-pointer px-3 py-2 rounded-xl 
+          ${isActive ? 'bg-green-50 text-green-500 hover:bg-green-100' : 'bg-white hover:bg-gray-50'}`}
+      >
+        <span>{text}</span>
+      </Link>
+    )
   }
 
   return (
@@ -55,22 +75,9 @@ export default function GlobalHeader(data: { data: IAccount }) {
           {/*메인페이지에서는 네비게이션 필요 없음*/}
           {pathname.split('/')[1] !== 'main' && (
             <nav className='hidden text-gray-700 text-sm gap-3 md:flex'>
-              <Link
-                href='/board'
-                className={`flex flex-col items-center cursor-pointer px-3 py-2 rounded-xl 
-              ${currentPage === 'board' ? 'bg-green-50 text-green-500 hover:bg-green-100' : 'bg-white hover:bg-gray-50'}
-              `}
-              >
-                <span>운동생활</span>
-              </Link>
-              <Link
-                href='/view/list'
-                className={`flex flex-col items-center cursor-pointer px-3 py-2 rounded-xl 
-              ${currentPage === 'view' ? 'bg-green-50 text-green-500 hover:bg-green-100' : 'bg-white hover:bg-gray-50'}
-              `}
-              >
-                <span>내주변찾기</span>
-              </Link>
+              <NavBox path={'life'} text={'운동생활'} />
+              <NavBox path={'community'} text={'커뮤니티'} />
+              <NavBox path={'view/list'} text={'내주변찾기'} />
             </nav>
           )}
         </div>
@@ -124,9 +131,15 @@ export default function GlobalHeader(data: { data: IAccount }) {
           >
             <li
               className={'px-6 text-base cursor-pointer'}
-              onClick={() => MovOnMenu('/board')}
+              onClick={() => MovOnMenu('/life')}
             >
               운동생활
+            </li>
+            <li
+              className={'px-6 text-base cursor-pointer'}
+              onClick={() => MovOnMenu('/community')}
+            >
+              커뮤니티
             </li>
             <li
               className={

@@ -1,6 +1,6 @@
 export default function CopyURL() {
   const url = window.location.href
-  console.log(url.split('/board'))
+  console.log(url.split('/life'))
   navigator.clipboard
     .writeText(url)
     .then(() => {

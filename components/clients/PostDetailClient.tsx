@@ -12,10 +12,10 @@ import { useBoardCommentMutation } from '@/hooks/mutations/useBoardCommentMutati
 import { usePathname } from 'next/navigation'
 import timeAgo from '@/libs/utils/timeAgo.ts'
 
-export interface IBoardDetail {
+export interface IPostDetail {
   cookie: string | null
   contentType: string
-  location: {
+  location?: {
     point: string
     coordinates: number[]
   }
@@ -37,7 +37,7 @@ export interface IBoardDetail {
   }[]
 }
 
-const BoardDetailClient = ({
+const PostDetailClient = ({
   cookie,
   location,
   images,
@@ -49,7 +49,7 @@ const BoardDetailClient = ({
   heartCount,
   contentType,
   comments,
-}: IBoardDetail) => {
+}: IPostDetail) => {
   const mapRef = useRef<HTMLDivElement | null>(null)
   const pathName = usePathname()
 
@@ -67,12 +67,12 @@ const BoardDetailClient = ({
     }, 300)
   ).current
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = async (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault()
       const boardId = pathName.split('/detail/')[1]
 
-      handleOnCommentSubmit(comment, boardId)
+      await handleOnCommentSubmit(comment, boardId)
     }
   }
 
@@ -88,7 +88,7 @@ const BoardDetailClient = ({
   // 지도 렌더링
   useEffect(() => {
     const { naver } = window
-    if (mapRef.current && naver) {
+    if (mapRef.current && naver && location) {
       const center = new naver.maps.LatLng(
         location.coordinates[0],
         location.coordinates[1]
@@ -143,17 +143,15 @@ const BoardDetailClient = ({
           <span className='text-sm whitespace-pre-wrap'>{content}</span>
           {images.length > 0 &&
             images.map((image, index) => (
-              <div
-                className='w-full h-52 md:h-96 object-cover relative'
-                key={index}
-              >
+              <div className='w-full' key={index}>
                 <Image
                   src={image}
-                  alt={'image'}
-                  priority
-                  fill
-                  objectFit='contains'
-                  placeholder={'blur'}
+                  alt='image'
+                  width={0}
+                  height={0}
+                  sizes='100vw'
+                  className='w-full h-auto object-contain'
+                  placeholder='blur'
                   blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg=='
                 />
               </div>
@@ -229,4 +227,4 @@ const BoardDetailClient = ({
   )
 }
 
-export default BoardDetailClient
+export default PostDetailClient

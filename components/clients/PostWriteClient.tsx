@@ -13,7 +13,7 @@ import Select from '@/components/elements/Select.tsx'
 import { toastError } from '@/libs/utils/toast.ts'
 import typeItems from '@/constants/boardTypeItems.json'
 
-const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
+const PostWriteClient = ({ data }: { data: IMapList[] }) => {
   // 제목
   const [title, setTitle] = useState<string>('')
 
@@ -158,7 +158,7 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
             onDrop={(acceptedFiles) =>
               dragFile(
                 acceptedFiles,
-                'board/upload',
+                'life/upload',
                 category === 'community' ? 'community' : 'deal'
               )
             }
@@ -232,4 +232,4 @@ const BoardWriteClient = ({ data }: { data: IMapList[] }) => {
     </div>
   )
 }
-export default BoardWriteClient
+export default PostWriteClient

@@ -1,13 +1,13 @@
 'use client'
 
 import Image from 'next/image'
+import { AiOutlineEye } from 'react-icons/ai'
 import { SwiperSlide } from 'swiper/react'
 import { IoChatbubbleOutline, IoHeartOutline } from 'react-icons/io5'
 import Carousel from '@/components/elements/Carousel.tsx'
 import climbingPartners from '@/constants/climbingPartners.json'
-import { AiOutlineEye } from 'react-icons/ai'
 
-const BoardListAroundClient = () => {
+const NearbyPeopleClient = () => {
   return (
     <div className='hidden md:block bg-gray-50 text-white p-4 w-80 rounded-xl mb-8'>
       <Carousel slidesPerView={1} autoplay={5000}>
@@ -62,4 +62,4 @@ const BoardListAroundClient = () => {
   )
 }
 
-export default BoardListAroundClient
+export default NearbyPeopleClient
