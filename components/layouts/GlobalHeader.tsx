@@ -75,8 +75,8 @@ export default function GlobalHeader(data: { data: IAccount }) {
           {/*메인페이지에서는 네비게이션 필요 없음*/}
           {pathname.split('/')[1] !== 'main' && (
             <nav className='hidden text-gray-700 text-sm gap-3 md:flex'>
-              <NavBox path={'life'} text={'운동생활'} />
-              <NavBox path={'community'} text={'커뮤니티'} />
+              <NavBox path={'board/life'} text={'운동생활'} />
+              <NavBox path={'board/community'} text={'커뮤니티'} />
               <NavBox path={'view/list'} text={'내주변찾기'} />
             </nav>
           )}
@@ -131,13 +131,13 @@ export default function GlobalHeader(data: { data: IAccount }) {
           >
             <li
               className={'px-6 text-base cursor-pointer'}
-              onClick={() => MovOnMenu('/life')}
+              onClick={() => MovOnMenu('/board/life')}
             >
               운동생활
             </li>
             <li
               className={'px-6 text-base cursor-pointer'}
-              onClick={() => MovOnMenu('/community')}
+              onClick={() => MovOnMenu('/board/community')}
             >
               커뮤니티
             </li>

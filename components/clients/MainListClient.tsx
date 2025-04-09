@@ -20,8 +20,6 @@ interface IBoard {
   chatCount: number
   viewCount: number
   heartCount: number
-  priceType: string
-  price: string
   author: {
     nickname: string
   }
@@ -79,9 +77,7 @@ const MainListClient = (data: { data: IBoard[] }) => {
                   key={board._id}
                   className='border border-gray-50 bg-white rounded-xl shadow cursor-pointer h-full'
                 >
-                  <Link
-                    href={`/life/${board._id}?detailType=${board.priceType}`}
-                  >
+                  <Link href={`board/life/${board._id}`}>
                     <div className='text-gray-900 p-2 md:p-4 rounded-lg w-full space-y-1 md:space-y-4'>
                       <h4 className='text-sm md:text-base px-2 min-h-6 overflow-hidden whitespace-nowrap overflow-ellipsis break-all'>
                         {board.title}
