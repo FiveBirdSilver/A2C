@@ -7,6 +7,11 @@ interface IFindAccount {
   email: string
 }
 
+interface IResetPassword {
+  token: string
+  password: string
+}
+
 export const useResetPassword = () => {
   const router = useRouter()
 
@@ -23,5 +28,24 @@ export const useResetPassword = () => {
     },
   })
 
-  return { postSendEmail }
+  const resetPassword = useMutation({
+    mutationFn: async (data: IResetPassword) => {
+      return await instance.post(
+        `/node/api/user/reset/${data.token}`,
+        data.password
+      )
+    },
+    onSuccess: () => {
+      toastSuccess('비밀번호가 변경되었습니다. 로그인페이지로 이동합니다.')
+      router.push('/login')
+      return
+    },
+    onError: () => {
+      toastError('비밀번호 변경에 실패하였습니다. 다시 재설정해주세요.')
+      router.push('/user/password/find')
+      return
+    },
+  })
+
+  return { postSendEmail, resetPassword }
 }
