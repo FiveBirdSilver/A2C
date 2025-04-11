@@ -2,13 +2,10 @@
   "compilerOptions": {
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "typeRoots": [
-      "./node_modules/@types",
-      "./node_modules/@testing-library"
-    ],
+    "typeRoots": ["./node_modules/@types", "./node_modules/@testing-library"],
     "types": ["jest", "jest-dom"],
     "allowJs": true,
-    "downlevelIteration" : true,
+    "downlevelIteration": true,
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -21,7 +18,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "baseUrl": ".",  // 프로젝트 루트 경로로 설정
+    "baseUrl": ".", // 프로젝트 루트 경로로 설정
     "paths": {
       "@/*": ["./*"],
       "@/components/*": ["./components/*"],
@@ -29,6 +26,7 @@
       "@/hooks/*": ["./hooks/*"],
       "@/assets/*": ["./assets/*"],
       "@/public": ["./public"],
+      "@/types": ["./types"]
     },
     "plugins": [
       {
@@ -36,7 +34,13 @@
       }
     ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "types.d.ts", "setupTests.ts",".next/types/**/*.ts"],
-  "exclude": ["node_modules"],
-
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "global.d.ts",
+    "setupTests.ts",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": ["node_modules"]
 }

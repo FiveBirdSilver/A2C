@@ -6,25 +6,12 @@
  * @param lng - 경도
  */
 
+import axios from 'axios'
 import { useEffect, useRef, useCallback, useState } from 'react'
 import debounce from 'lodash/debounce'
 
 import useCurrentLocation from '@/hooks/common/useCurrentLocation.tsx'
-import axios from 'axios'
-
-export interface IMapList {
-  addr: string
-  id: string
-  info?: string
-  img: string
-  lat: number
-  lng: number
-  name: string
-  road_addr: string
-  tel: string
-  diff?: number
-  rank?: number
-}
+import { IMapList } from '@/types'
 
 interface IMapProps {
   lat?: number

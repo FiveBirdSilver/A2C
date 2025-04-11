@@ -1,18 +1,19 @@
-import { Suspense } from 'react'
 import Link from 'next/link'
 import { cookies } from 'next/headers'
 import { HiOutlinePencilAlt } from 'react-icons/hi'
+import { Suspense } from 'react'
 
+import { IPostList } from '@/types';
 import Loading from '@/app/loading.tsx'
 import PostListClient from '@/components/clients/PostListClient.tsx'
 import PostWriteActionClient from '@/components/clients/PostWriteActionClient.tsx'
 
-interface IFetchData {
-  sessionId: { name: string; value: string } | undefined
-}
-
 // 초기데이터만 SSR 이후부터 CSR => 초기 렌더링 속도 및 SEO를 위함
-async function fetchData({ sessionId }: IFetchData) {
+async function fetchData({
+  sessionId,
+}: {
+  sessionId: { name: string; value: string } | undefined
+}): Promise<{ result: string; data: IPostList[] }> {
   const url = `${process.env.NEXT_PUBLIC_API_URL}/node/api/board?page=1&contentType=community`
   const cookieHeader = sessionId ? `${sessionId.name}=${sessionId.value}` : ''
   const res = await fetch(url, {

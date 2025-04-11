@@ -1,10 +1,11 @@
 import { Suspense } from 'react'
 import { redirect } from 'next/navigation'
-import PostWriteClient from '@/components/clients/PostWriteClient.tsx'
-import { IMapList } from '@/hooks/common/useMap.tsx'
-import Loading from '@/app/loading.tsx'
-import { getCheckAuth } from '@/libs/apis/auth.ts'
 import { cookies } from 'next/headers'
+
+import Loading from '@/app/loading.tsx'
+import PostWriteClient from '@/components/clients/PostWriteClient.tsx'
+import { getCheckAuth } from '@/libs/apis/auth.ts'
+import { IMapList } from '@/types'
 
 // 클라이밍 장소 선택을 위한 리스트 데이터
 async function fetchList() {

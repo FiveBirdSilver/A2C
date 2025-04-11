@@ -5,47 +5,11 @@ import { notFound } from 'next/navigation'
 import Loading from '@/app/loading.tsx'
 import PostDetailClient from '@/components/clients/PostDetailClient.tsx'
 import BoardDetailSocialClient from '@/components/clients/PostSocialActionClient.tsx'
+import { IPostDetail } from '@/types'
 
 type Props = {
   params: Promise<{ id: string; type: string }>
   searchParams: Promise<{ detailType: string }>
-}
-
-interface IBoardDetail {
-  result: string
-  isLiked: boolean
-  data: {
-    images: string[]
-    location: {
-      point: string
-      coordinates: number[]
-    }
-    _id: string
-    title: string
-    type: string
-    content: string
-    contentType: string
-    chatCount: number
-    viewCount: number
-    heartCount: number
-    price: string
-    author: {
-      nickname: string
-    }
-    createdAt: string
-    updatedAt: string
-    comments: {
-      _id: string
-      content: string
-      board: string
-      parentCommentId: string
-      createdAt: string
-      updatedAt: string
-      author: {
-        nickname: string
-      }
-    }[]
-  }
 }
 
 async function fetchBoardDetail(
@@ -54,7 +18,7 @@ async function fetchBoardDetail(
   priceType: string,
   sessionId?: { name: string; value: string },
   viewBoardId?: { name: string; value: string }
-): Promise<{ data: IBoardDetail; cookie: string | null }> {
+): Promise<{ data: IPostDetail; cookie: string | null }> {
   const query = new URLSearchParams({ contentType })
 
   if (contentType !== 'community') query.append('priceType', priceType)
@@ -75,7 +39,7 @@ async function fetchBoardDetail(
     credentials: 'include',
   })
 
-  const data: IBoardDetail = await res.json()
+  const data = await res.json()
   const cookie = res.headers.get('Set-Cookie')
 
   return { data, cookie }
@@ -92,7 +56,7 @@ export default async function Page({ params, searchParams }: Props) {
 
   const sessionId = cookieStore.get('connect.sid')
   const viewBoardId = cookieStore.get('v_boards')
-  const { data, cookie }: { data: IBoardDetail; cookie: string | null } =
+  const { data, cookie }: { data: IPostDetail; cookie: string | null } =
     await fetchBoardDetail(id, type, detailType, sessionId, viewBoardId)
 
   return (
@@ -100,16 +64,18 @@ export default async function Page({ params, searchParams }: Props) {
       <div className='grid grid-cols-1 gap-8 py-4 md:px-20 md:grid-cols-6'>
         <PostDetailClient
           cookie={cookie}
-          location={data.data.location}
-          title={data.data.title}
-          contentType={data.data.contentType}
-          content={data.data.content}
-          nickname={data.data.author.nickname}
-          createdAt={data.data.createdAt}
-          heartCount={data.data.heartCount}
-          images={data.data.images}
-          viewCount={data.data.viewCount}
-          comments={data.data.comments}
+          data={data.data}
+          isLiked={data.isLiked}
+          // location={data.data.location}
+          // title={data.data.title}
+          // contentType={data.data.contentType}
+          // content={data.data.content}
+          // author={data.data.author}
+          // createdAt={data.data.createdAt}
+          // heartCount={data.data.heartCount}
+          // images={data.data.images}
+          // viewCount={data.data.viewCount}
+          // comments={data.data.comments}
         />
         <BoardDetailSocialClient
           isLiked={data.isLiked}

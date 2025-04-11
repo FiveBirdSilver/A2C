@@ -8,12 +8,12 @@ import Loading from '@/app/loading.tsx'
 import PostListClient from '@/components/clients/PostListClient.tsx'
 import NearbyPeopleClient from '@/components/clients/NearbyPeopleClient.tsx'
 
-interface IFetchBoard {
-  sessionId: { name: string; value: string } | undefined
-}
-
 // 초기데이터만 SSR 이후부터 CSR => 초기 렌더링 속도 및 SEO를 위함
-async function fetchBoard({ sessionId }: IFetchBoard) {
+async function fetchBoard({
+  sessionId,
+}: {
+  sessionId: { name: string; value: string } | undefined
+}) {
   const url = `${process.env.NEXT_PUBLIC_API_URL}/node/api/board?page=1&contentType=life`
   const cookieHeader = sessionId ? `${sessionId.name}=${sessionId.value}` : ''
   const res = await fetch(url, {

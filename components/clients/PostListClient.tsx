@@ -13,31 +13,8 @@ import { AiOutlineEye } from 'react-icons/ai'
 
 import timeAgo from '@/libs/utils/timeAgo.ts'
 import NoResult from '@/components/common/NoResult'
+import { IPostList } from '@/types'
 
-interface IPostList {
-  images: string[]
-  location: {
-    point: string
-    type: string
-    coordinates: number[]
-  }
-  _id: string
-  title: string
-  type: string
-  content: string
-  contentType: string
-  commentCount: number
-  viewCount: number
-  heartCount: number
-  priceType: string
-  price: string
-  author: {
-    nickname: string
-  }
-  createdAt: string
-  updatedAt: string
-  __v: string
-}
 
 const PostListClient = ({
   initialData,
@@ -79,20 +56,6 @@ const PostListClient = ({
 
   const allBoards = data?.pages.flatMap((page) => page.data) ?? []
 
-  // 상세 게시글로 넘어가는 URL 반환
-  const detailLink = ({
-    id,
-    type,
-    detailType,
-  }: {
-    id: string
-    type: string
-    detailType: string
-  }) => {
-    if (type === 'community') return `/${type}/${id}`
-    else return `/${type}/${id}?detailType=${detailType}`
-  }
-
   return (
     <>
       {allBoards.length === 0 ? (
@@ -101,11 +64,7 @@ const PostListClient = ({
         allBoards?.map((board: IPostList) => (
           <Link
             key={board._id}
-            href={detailLink({
-              id: board._id,
-              type: board.contentType,
-              detailType: board.priceType,
-            })}
+            href={`/board/${board.contentType}/${board._id}`}
             className='border border-gray-50 bg-white md:rounded-xl shadow-gray-50 md:shadow cursor-pointer h-full'
           >
             <div className='text-gray-900 rounded-lg w-full md:p-4 md:space-y-4'>
