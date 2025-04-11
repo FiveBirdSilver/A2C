@@ -24,11 +24,11 @@ export default async function Page() {
   const sessionId = cookieStore.get('connect.sid')
 
   // 미 로그인 유저 로그인 화면으로 리다이렉트
-  // const isLoggedIn = await getCheckAuth(sessionId)
+  const isLoggedIn = await getCheckAuth(sessionId)
 
-  // if (!isLoggedIn || isLoggedIn?.result === 'fail') {
-  //   redirect('/login')
-  // }
+  if (!isLoggedIn || isLoggedIn?.result === 'fail') {
+    redirect('/login')
+  }
 
   const lists: IMapList[] = await fetchList()
 
