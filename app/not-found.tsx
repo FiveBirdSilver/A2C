@@ -17,11 +17,9 @@ export default function NotFound() {
         일시적으로 사용할 수 없거나 더 이상 존재하지 않는 페이지예요
       </p>
       <div className={'grid h-10 w-4/12 mt-8 text-sm'}>
-        <Button
-          text={'홈으로 돌아가기'}
-          variant={'primary'}
-          onClick={() => router.push('/')}
-        />
+        <Button variant={'primary'} onClick={() => router.push('/')}>
+          홈으로 돌아가기
+        </Button>
       </div>
     </div>
   )

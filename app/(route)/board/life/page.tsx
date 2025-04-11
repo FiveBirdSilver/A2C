@@ -61,7 +61,7 @@ export default async function Page() {
           </div>
           <div className={'flex flex-col gap-2'}>
             <div className='flex items-center gap-2'>
-              <Image  
+              <Image
                 src={'/icons/highfive.webp'}
                 width={20}
                 height={20}

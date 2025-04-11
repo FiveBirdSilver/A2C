@@ -76,8 +76,12 @@ const MyPageProfileClient = (data: { data: IAccount }) => {
         </div>
       </section>
       <div className='mt-6 flex justify-end space-x-4 text-sm h-8'>
-        <Button text={'취소'} variant={'outline'} onClick={() => {}} />
-        <Button text={'저장'} variant={'primary'} onClick={() => {}} />
+        <Button variant={'outline'} onClick={() => {}}>
+          취소
+        </Button>
+        <Button variant={'primary'} onClick={() => {}}>
+          저장
+        </Button>
       </div>
     </main>
   )

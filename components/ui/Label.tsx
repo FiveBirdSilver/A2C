@@ -8,13 +8,12 @@ interface ILabel {
 }
 
 export interface LabelProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children: React.ReactNode;
-  value: string;
-  setValue: Dispatch<SetStateAction<string>>;
-  variant?: 'active' | 'inactive';
-  size?: 'sm' | 'md' | 'lg';
-  disabled?: boolean;
-  
+  children: React.ReactNode
+  value: string
+  setValue: Dispatch<SetStateAction<string>>
+  variant?: 'active' | 'inactive'
+  size?: 'sm' | 'md' | 'lg'
+  disabled?: boolean
 }
 
 const Label = (props: ILabel) => {
