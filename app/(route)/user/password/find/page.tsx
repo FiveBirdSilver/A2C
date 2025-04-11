@@ -2,8 +2,8 @@
 
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 
-import Input from '@/components/elements/Input.tsx'
-import Button from '@/components/elements/Button.tsx'
+import Input from '@/components/ui/Input'
+import Button from '@/components/ui/Button'
 import { useResetPassword } from '@/hooks/mutations/useResetPassword.tsx'
 import { toastError } from '@/libs/utils/toast.ts'
 
@@ -40,11 +40,9 @@ export default function Page() {
             placeholder='가입한 이메일 주소를 입력해주세요'
           />
           <div className={'grid text-sm h-10'}>
-            <Button
-              variant={'primary'}
-              onClick={() => {}}
-              text='이메일로 인증코드 받기'
-            />
+            <Button variant={'primary'} onClick={() => handleOnSendEmail}>
+              이메일로 인증코드 받기
+            </Button>
           </div>
         </form>
       </div>

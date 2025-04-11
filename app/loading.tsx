@@ -1,4 +1,4 @@
-import Spinner from '@/components/elements/Spinner.tsx'
+import Spinner from '@/components/ui/Spinner'
 
 export default function Loading() {
   return <Spinner />

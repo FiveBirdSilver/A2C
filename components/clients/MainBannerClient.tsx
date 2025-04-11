@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { SwiperSlide } from 'swiper/react'
-import Carousel from '@/components/elements/Carousel.tsx'
+import Carousel from '@/components/ui/Carousel'
 import bannerData from '@/constants/mainBanner.json'
 
 interface IBanner {

@@ -4,8 +4,8 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
-import Input from '@/components/elements/Input.tsx'
-import Button from '@/components/elements/Button.tsx'
+import Input from '@/components/ui/Input'
+import Button from '@/components/ui/Button'
 
 interface IAccount {
   result: string

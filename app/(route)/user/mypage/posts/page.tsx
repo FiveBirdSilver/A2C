@@ -1,4 +1,4 @@
-import NoResult from '@/components/elements/NoResult.tsx'
+import NoResult from '@/components/common/NoResult'
 
 export default function Page() {
   return <NoResult />

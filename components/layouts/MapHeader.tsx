@@ -1,7 +1,7 @@
 'use client'
 
 import { BsChevronLeft } from 'react-icons/bs'
-import Input from '@/components/elements/Input.tsx'
+import Input from '@/components/ui/Input'
 import { IoIosSearch } from 'react-icons/io'
 import { useRouter } from 'next/navigation'
 

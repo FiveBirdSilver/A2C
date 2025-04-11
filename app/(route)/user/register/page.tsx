@@ -1,12 +1,12 @@
 'use client'
 import { CiCircleInfo } from 'react-icons/ci'
 
-import Button from '@/components/elements/Button.tsx'
-import Input from '@/components/elements/Input.tsx'
+import useField from '@/hooks/common/useForm.tsx'
+import Input from '@/components/ui/Input'
+import Button from '@/components/ui/Button'
 import { formatTime } from '@/libs/utils/formatTime.ts'
 import useVerifyMutation from '@/hooks/mutations/useVerifyMutation.tsx'
 import { useRegisterMutation } from '@/hooks/mutations/useRegisterMutation.tsx'
-import useField from '@/hooks/common/useForm.tsx'
 
 export default function Page() {
   const { register, handleSubmit, watch, errors } = useField()
@@ -51,13 +51,14 @@ export default function Page() {
                 variant={
                   watch('email') && errors.email?.message === undefined
                     ? 'outline'
-                    : 'disabled'
+                    : 'ghost'
                 }
                 disabled={
                   !(watch('email') && errors.email?.message === undefined)
                 }
-                text='이메일 인증하기'
-              />
+              >
+                이메일 인증하기
+              </Button>
             </div>
           </div>
           {openAuthCodeBox && (
@@ -147,8 +148,9 @@ export default function Page() {
                 postRegister.mutate({ isAuthCheck, data: watch() })
               )}
               // disabled={!(email !== "" && password !== "")}
-              text='회원가입'
-            />
+            >
+              회원가입
+            </Button>
           </div>
         </form>
       </div>

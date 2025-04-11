@@ -7,8 +7,8 @@ import { Swiper as SwiperCore } from 'swiper'
 import { SwiperSlide } from 'swiper/react'
 import { IoChatbubbleOutline, IoHeartOutline } from 'react-icons/io5'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
-import Carousel from '@/components/elements/Carousel.tsx'
-import Skeleton from '@/components/elements/Skeleton.tsx'
+import Carousel from '@/components/ui/Carousel'
+import Skeleton from '@/components/ui/Skeleton'
 import Link from 'next/link'
 
 interface IBoard {

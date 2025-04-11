@@ -3,11 +3,11 @@
 import React, { FormEvent } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 
-import Input from '@/components/elements/Input.tsx'
+import Input from '@/components/ui/Input'
+import Button from '@/components/ui/Button'
+import useField from '@/hooks/common/useForm'
 import { useResetPassword } from '@/hooks/mutations/useResetPassword.tsx'
 import { toastError } from '@/libs/utils/toast.ts'
-import useField from '@/hooks/common/useForm'
-import Button from '@/components/elements/Button'
 
 export default function Page() {
   const { register, handleSubmit, watch, errors } = useField()
@@ -57,8 +57,9 @@ export default function Page() {
             <Button
               variant='primary'
               onClick={handleSubmit(() => handleOnResetPassword)}
-              text='비밀번호 재설정'
-            />
+            >
+              비밀번호 재설정
+            </Button>
           </div>
         </form>
       </div>

@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import Button from '@/components/elements/Button.tsx'
+import Button from '@/components/ui/Button'
 import { useRouter } from 'next/navigation'
 
 export default function Error({ message }: { message: string }) {
@@ -17,11 +17,9 @@ export default function Error({ message }: { message: string }) {
         잠시 후 다시 시도해 주세요
       </span>
       <div className={'grid h-10 min-w-60 w-4/12 text-sm'}>
-        <Button
-          text={'홈으로 돌아가기'}
-          variant={'primary'}
-          onClick={() => router.push('/')}
-        />
+        <Button variant={'primary'} onClick={() => router.push('/')}>
+          홈으로 돌아가기
+        </Button>
       </div>
     </div>
   )

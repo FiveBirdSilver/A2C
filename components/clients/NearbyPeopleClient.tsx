@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { AiOutlineEye } from 'react-icons/ai'
 import { SwiperSlide } from 'swiper/react'
 import { IoChatbubbleOutline, IoHeartOutline } from 'react-icons/io5'
-import Carousel from '@/components/elements/Carousel.tsx'
+import Carousel from '@/components/ui/Carousel'
 import climbingPartners from '@/constants/climbingPartners.json'
 
 const NearbyPeopleClient = () => {

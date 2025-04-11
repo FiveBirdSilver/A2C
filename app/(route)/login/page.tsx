@@ -5,8 +5,8 @@ import { FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
 import { RiKakaoTalkFill } from 'react-icons/ri'
 
-import Input from '@/components/elements/Input.tsx'
-import Button from '@/components/elements/Button.tsx'
+import Input from '@/components/ui/Input'
+import Button from '@/components/ui/Button'
 import { useLoginMutation } from '@/hooks/mutations/useLoginMutation.tsx'
 
 export default function Page() {
@@ -64,11 +64,9 @@ export default function Page() {
             />
           </>
           <div className={'grid h-10'}>
-            <Button
-              variant='primary'
-              onClick={() => handleOnSubmit}
-              text='로그인'
-            />
+            <Button variant='primary' onClick={() => handleOnSubmit}>
+              로그인
+            </Button>
           </div>
         </form>
         <div className='relative w-full mt-5 border-t border-gray-200 pt-9'>

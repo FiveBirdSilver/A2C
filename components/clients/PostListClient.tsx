@@ -12,7 +12,7 @@ import { IoChatbubbleOutline, IoHeartOutline } from 'react-icons/io5'
 import { AiOutlineEye } from 'react-icons/ai'
 
 import timeAgo from '@/libs/utils/timeAgo.ts'
-import NoResult from '@/components/elements/NoResult.tsx'
+import NoResult from '@/components/common/NoResult'
 
 interface IPostList {
   images: string[]

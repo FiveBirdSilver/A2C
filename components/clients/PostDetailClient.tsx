@@ -6,7 +6,7 @@ import debounce from 'lodash/debounce'
 import Image from 'next/image'
 
 import { setBoardCookieAction } from '@/app/actions/setBoardCookieAction.ts'
-import Input from '@/components/elements/Input.tsx'
+import Input from '@/components/ui/Input'
 import typeItems from '@/constants/boardTypeItems.json'
 import { useBoardCommentMutation } from '@/hooks/mutations/useBoardCommentMutation.tsx'
 import { usePathname } from 'next/navigation'

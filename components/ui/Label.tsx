@@ -1,10 +1,20 @@
-import { Dispatch, SetStateAction } from 'react'
+import { ButtonHTMLAttributes, Dispatch, SetStateAction } from 'react'
 
 interface ILabel {
   text: string
   type: 'active' | 'inactive'
   value: string
   setValue: Dispatch<SetStateAction<string>>
+}
+
+export interface LabelProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+  value: string;
+  setValue: Dispatch<SetStateAction<string>>;
+  variant?: 'active' | 'inactive';
+  size?: 'sm' | 'md' | 'lg';
+  disabled?: boolean;
+  
 }
 
 const Label = (props: ILabel) => {

@@ -7,7 +7,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { LuMenu } from 'react-icons/lu'
 import { IoCloseOutline } from 'react-icons/io5'
 
-import Button from '@/components/elements/Button.tsx'
+import Button from '@/components/ui/Button'
 
 interface IAccount {
   result: string
@@ -104,10 +104,12 @@ export default function GlobalHeader(data: { data: IAccount }) {
           <div className={'hidden md:flex text-xs font-semibold'}>
             {!data.data ? (
               <Button
-                text={'회원가입/로그인'}
                 variant={'outline'}
                 onClick={() => router.push('/login')}
-              />
+                size='sm'
+              >
+                회원가입/로그인
+              </Button>
             ) : (
               <Image
                 src={'/icons/user.webp'}

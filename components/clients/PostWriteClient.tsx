@@ -3,13 +3,13 @@ import Dropzone from 'react-dropzone'
 import { MouseEvent, ChangeEvent, useEffect, useState } from 'react'
 import { IoCamera } from 'react-icons/io5'
 
-import Input from '@/components/elements/Input'
-import Label from '@/components/elements/Label'
+import Input from '@/components/ui/Input'
+import Label from '@/components/ui/Label'
 import { IMapList } from '@/hooks/common/useMap'
 import { useBoardWriteMutation } from '@/hooks/mutations/useBoardWriteMutation.tsx'
-import Button from '@/components/elements/Button.tsx'
+import Button from '@/components/ui/Button'
 import useFileDragAndDrop from '@/hooks/common/useFileDragAndDrop.tsx'
-import Select from '@/components/elements/Select.tsx'
+import Select from '@/components/ui/Select'
 import { toastError } from '@/libs/utils/toast.ts'
 import typeItems from '@/constants/boardTypeItems.json'
 
@@ -180,9 +180,10 @@ const PostWriteClient = ({ data }: { data: IMapList[] }) => {
                     onClick={(e) => {
                       e.preventDefault()
                     }}
-                    text={'PC에서 불러오기'}
-                    key={'set_image'}
-                  />
+                    size='sm'
+                  >
+                    PC에서 불러오기
+                  </Button>
                 </div>
               </div>
             )}

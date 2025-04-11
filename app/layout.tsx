@@ -6,7 +6,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 
 import Providers from './provider'
 import '@/assets/styles/global.css'
-import Spinner from '@/components/elements/Spinner.tsx'
+import Spinner from '@/components/ui/Spinner'
 
 const Wrapper = dynamic(() => import('@/components/layouts/Wrapper'), {
   loading: () => <Spinner />,
