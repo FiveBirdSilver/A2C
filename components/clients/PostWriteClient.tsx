@@ -5,13 +5,13 @@ import { IoCamera } from 'react-icons/io5'
 
 import Input from '@/components/ui/Input'
 import Label from '@/components/ui/Label'
-import { IMapList } from '@/hooks/common/useMap'
 import { useBoardWriteMutation } from '@/hooks/mutations/useBoardWriteMutation.tsx'
 import Button from '@/components/ui/Button'
 import useFileDragAndDrop from '@/hooks/common/useFileDragAndDrop.tsx'
 import Select from '@/components/ui/Select'
 import { toastError } from '@/libs/utils/toast.ts'
 import typeItems from '@/constants/boardTypeItems.json'
+import { IMapList } from '@/types'
 
 const PostWriteClient = ({ data }: { data: IMapList[] }) => {
   // 제목

@@ -15,7 +15,6 @@ import timeAgo from '@/libs/utils/timeAgo.ts'
 import NoResult from '@/components/common/NoResult'
 import { IPostList } from '@/types'
 
-
 const PostListClient = ({
   initialData,
   type,

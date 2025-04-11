@@ -3,7 +3,7 @@ import { cookies } from 'next/headers'
 import { HiOutlinePencilAlt } from 'react-icons/hi'
 import { Suspense } from 'react'
 
-import { IPostList } from '@/types';
+import { IPostList } from '@/types'
 import Loading from '@/app/loading.tsx'
 import PostListClient from '@/components/clients/PostListClient.tsx'
 import PostWriteActionClient from '@/components/clients/PostWriteActionClient.tsx'

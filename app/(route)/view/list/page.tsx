@@ -11,8 +11,9 @@ import Loading from '@/app/loading.tsx'
 import useCurrentLocation from '@/hooks/common/useCurrentLocation'
 import { useQueries } from '@/hooks/queries/useQueries'
 import useMediaQuery from '@/hooks/common/useMediaQuery.tsx'
-import useMap, { IMapList } from '@/hooks/common/useMap.tsx'
+import useMap from '@/hooks/common/useMap.tsx'
 import { useElementScrollRestoration } from '@/hooks/common/useScrollRestoration.tsx'
+import { IMapList } from '@/types'
 
 const ListItem = ({
   list,
