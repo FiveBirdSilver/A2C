@@ -143,7 +143,7 @@ const Comments = ({
       <div className='flex items-center space-x-2 pl-2 text-base'>
         <span className='text-gray-700'>댓글</span>
         <span className='text-green-400 md:font-semibold'>
-          {comments.length}
+          {comments?.length}
         </span>
       </div>
       <div className='relative'>
@@ -163,7 +163,7 @@ const Comments = ({
       <div className='flex flex-col space-y-6 pl-2'>
         {comments.map((v) => (
           <div key={v._id} className='flex flex-col space-y-1'>
-            <span className='text-xs text-gray-500'>{v.author.nickname}</span>
+            <span className='text-xs text-gray-500'>{v.author?.nickname}</span>
             <span className='text-sm text-gray-800'>{v.content}</span>
             <div className='flex items-center gap-1 text-xs text-gray-500'>
               <span>
@@ -195,7 +195,7 @@ const PostDetailClient = ({ cookie, data }: IPostDetail) => {
     <div className='col-span-1 md:col-span-5'>
       <PostHeader {...data} />
       <PostContent {...data} />
-      <Comments comments={data.comments} boardId={boardId} />
+      <Comments comments={data.comments || []} boardId={boardId} />
     </div>
   )
 }
