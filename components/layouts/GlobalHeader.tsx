@@ -29,7 +29,8 @@ export default function GlobalHeader() {
 
   // 상단 네이베이션
   const NavBox = ({ path, text }: NavBoxProps) => {
-    const isActive = pathname === `/${path}`
+    const isActive = pathname.startsWith(`/${path}`)
+
     return (
       <Link
         href={`/${path}`}
@@ -95,25 +96,57 @@ export default function GlobalHeader() {
 
           {/*로그인 여부에 따른 다른 UI*/}
           <div className={'hidden md:flex text-xs font-semibold'}>
-            {!isLoggin.data?.data ? (
-              <Button
-                variant={'outline'}
-                onClick={() => router.push('/login')}
-                size='sm'
-              >
-                회원가입/로그인
-              </Button>
-            ) : (
-              <Image
-                src={'/icons/user.webp'}
-                alt={'profile'}
-                priority
-                width={30}
-                height={30}
-                onClick={() => router.push('/user/mypage/profile')}
-                className='cursor-pointer'
-              />
-            )}
+            {(() => {
+              // 1. 로딩 상태 처리
+              if (isLoggin.isLoading) {
+                // 로딩 중일 때 스켈레톤 UI 표시 (예: pulse 애니메이션 추가)
+                return (
+                  <div className='w-8 h-8 rounded-full bg-gray-200 animate-pulse'></div>
+                )
+              }
+
+              // 2. 에러 상태 처리
+              if (isLoggin.isError) {
+                // 데이터 로드 실패 시 (네트워크 오류, 서버 오류 등 401 외)
+                console.error('계정 정보 로드 오류:', isLoggin.error) // 개발/디버깅을 위해 에러 로깅
+                return (
+                  <Button
+                    variant={'outline'}
+                    onClick={() => router.push('/login')}
+                    size='sm'
+                  >
+                    회원가입/로그인
+                  </Button>
+                )
+              }
+              // getCheckAccount에서 401시 null을 반환하므로 !isLoggin.data 로 체크하는 것이 핵심
+              if (!isLoggin.data || !isLoggin.data.data) {
+                return (
+                  <Button
+                    variant={'outline'}
+                    onClick={() => router.push('/login')}
+                    size='sm'
+                  >
+                    회원가입/로그인
+                  </Button>
+                )
+              } else {
+                return (
+                  <div className='flex items-center gap-2'>
+                    <Image
+                      // src={isLoggin.data.data.profileImageUrl || '/icons/user.webp'} // 실제 유저 프로필 이미지가 있다면 사용
+                      src={'/icons/user.webp'}
+                      alt={isLoggin.data.data.nickname || 'profile'} // alt 텍스트에 닉네임 활용
+                      priority
+                      width={30}
+                      height={30}
+                      onClick={() => router.push('/user/mypage/profile')}
+                      className='cursor-pointer rounded-full' // 원형 프로필처럼 보이도록
+                    />
+                  </div>
+                )
+              }
+            })()}
           </div>
         </div>
 

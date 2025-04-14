@@ -4,31 +4,16 @@ import Image from 'next/image'
 import dayjs from 'dayjs'
 import { useEffect, useRef, useState } from 'react'
 import { Swiper as SwiperCore } from 'swiper'
+import { AiOutlineEye } from 'react-icons/ai'
 import { SwiperSlide } from 'swiper/react'
-import { IoChatbubbleOutline, IoHeartOutline } from 'react-icons/io5'
+import Link from 'next/link'
+import { IoHeartOutline } from 'react-icons/io5'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import Carousel from '@/components/ui/Carousel'
 import Skeleton from '@/components/ui/Skeleton'
-import Link from 'next/link'
+import { IPostList } from '@/types'
 
-interface IBoard {
-  _id: string
-  title: string
-  type: string
-  content: string
-  contentType: string
-  chatCount: number
-  viewCount: number
-  heartCount: number
-  author: {
-    nickname: string
-  }
-  createdAt: string
-  updatedAt: string
-  __v: string
-}
-
-const MainListClient = (data: { data: IBoard[] }) => {
+const MainListClient = (data: { data: IPostList[] }) => {
   const swiperRef = useRef<SwiperCore | null>(null)
   const [mount, setMount] = useState<boolean>(false)
   const emptyArray = Array(4).fill(undefined)
@@ -77,7 +62,7 @@ const MainListClient = (data: { data: IBoard[] }) => {
                   key={board._id}
                   className='border border-gray-50 bg-white rounded-xl shadow cursor-pointer h-full'
                 >
-                  <Link href={`board/life/${board._id}`}>
+                  <Link href={`board/${board.contentType}/${board._id}`}>
                     <div className='text-gray-900 p-2 md:p-4 rounded-lg w-full space-y-1 md:space-y-4'>
                       <h4 className='text-sm md:text-base px-2 min-h-6 overflow-hidden whitespace-nowrap overflow-ellipsis break-all'>
                         {board.title}
@@ -88,12 +73,12 @@ const MainListClient = (data: { data: IBoard[] }) => {
                       <div className='flex items-center text-xs justify-end md:justify-between px-2'>
                         <div className='flex items-center gap-3'>
                           <div className='flex items-center gap-1 text-xs text-gray-400'>
-                            <IoHeartOutline />
-                            <span>{board.heartCount}</span>
+                            <AiOutlineEye />
+                            <span>{board.viewCount}</span>
                           </div>
                           <div className='flex items-center gap-1 text-xs text-gray-400'>
-                            <IoChatbubbleOutline />
-                            <span>{board.chatCount}</span>
+                            <IoHeartOutline />
+                            <span>{board.heartCount}</span>
                           </div>
                         </div>
                         <span className='hidden md:flex text-gray-400 text-xs'>
