@@ -9,7 +9,7 @@ export async function getCheckAuth(sessionId?: {
 }) {
   if (!sessionId?.name) return null
 
-  const url = `${process.env.NEXT_PUBLIC_API_URL}/node/api/account`
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/node/api/user/account`
   const res = await fetch(url, {
     headers: {
       'Content-Type': 'application/json',

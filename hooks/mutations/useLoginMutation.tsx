@@ -1,5 +1,5 @@
 import { useCallback, useState, ChangeEvent } from 'react'
-import { useMutation } from '@tanstack/react-query'
+import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { AxiosError } from 'axios'
 
@@ -8,7 +8,7 @@ import { toastError } from '@/libs/utils/toast.ts'
 
 export const useLoginMutation = () => {
   const router = useRouter()
-
+  const queryClient = useQueryClient()
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [warning, setWarning] = useState<{ email: boolean; password: boolean }>(
@@ -25,7 +25,7 @@ export const useLoginMutation = () => {
     },
     onSuccess: async () => {
       router.back()
-      router.refresh()
+      queryClient.invalidateQueries({ queryKey: ['account'] })
     },
     onError: (error: AxiosError) => {
       const status = error.response?.status

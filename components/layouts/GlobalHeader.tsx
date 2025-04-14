@@ -8,15 +8,7 @@ import { LuMenu } from 'react-icons/lu'
 import { IoCloseOutline } from 'react-icons/io5'
 
 import Button from '@/components/ui/Button'
-
-interface IAccount {
-  result: string
-  data: {
-    _id: string
-    email: string
-    nickname: string
-  }
-}
+import { useAccountQuery } from '@/hooks/queries/useAccountQuery'
 
 interface NavBoxProps {
   path: string
@@ -24,10 +16,11 @@ interface NavBoxProps {
   params?: string
 }
 
-export default function GlobalHeader(data: { data: IAccount }) {
+export default function GlobalHeader() {
   const router = useRouter()
   const pathname = usePathname()
   const [openMenu, setOpenMenu] = useState(false)
+  const isLoggin = useAccountQuery()
 
   const MovOnMenu = (url: string) => {
     router.push(url)
@@ -102,7 +95,7 @@ export default function GlobalHeader(data: { data: IAccount }) {
 
           {/*로그인 여부에 따른 다른 UI*/}
           <div className={'hidden md:flex text-xs font-semibold'}>
-            {!data.data ? (
+            {!isLoggin.data?.data ? (
               <Button
                 variant={'outline'}
                 onClick={() => router.push('/login')}

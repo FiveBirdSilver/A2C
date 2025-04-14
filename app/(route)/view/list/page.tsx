@@ -9,11 +9,11 @@ import { BsFillPinMapFill } from 'react-icons/bs'
 import Error from '@/app/error.tsx'
 import Loading from '@/app/loading.tsx'
 import useCurrentLocation from '@/hooks/common/useCurrentLocation'
-import { useQueries } from '@/hooks/queries/useQueries'
 import useMediaQuery from '@/hooks/common/useMediaQuery.tsx'
 import useMap from '@/hooks/common/useMap.tsx'
 import { useElementScrollRestoration } from '@/hooks/common/useScrollRestoration.tsx'
 import { IMapList } from '@/types'
+import { useClimbListQuery } from '@/hooks/queries/useClimbListQuery'
 
 const ListItem = ({
   list,
@@ -79,13 +79,12 @@ export default function Page() {
     lng: currentPlace?.lng,
   })
 
-  const { isPending, isLoading, isSuccess, isError, data } = useQueries<
-    IMapList[]
-  >({
-    queryKey: `getClimbPlaceList`,
-    endpoint: `/python/api/map/GetClimbPlaceList?my_lat=${location?.lat}&my_lng=${location?.lng}`,
-    enabled: location !== null,
-  })
+  const { isPending, isLoading, isSuccess, isError, data } = useClimbListQuery(
+    `${location?.lat}&my_lng=${location?.lng}`,
+    {
+      enabled: location !== null,
+    }
+  )
 
   // 스크롤 위치 상태 복원
   const listRef = useRef<HTMLDivElement>(null)

@@ -66,16 +66,6 @@ export default async function Page({ params, searchParams }: Props) {
           cookie={cookie}
           data={data.data}
           isLiked={data.isLiked}
-          // location={data.data.location}
-          // title={data.data.title}
-          // contentType={data.data.contentType}
-          // content={data.data.content}
-          // author={data.data.author}
-          // createdAt={data.data.createdAt}
-          // heartCount={data.data.heartCount}
-          // images={data.data.images}
-          // viewCount={data.data.viewCount}
-          // comments={data.data.comments}
         />
         <BoardDetailSocialClient
           isLiked={data.isLiked}
