@@ -13,9 +13,7 @@ const getClimbList = async (param: string): Promise<IMapList[] | null> => {
     return response.data
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      throw new Error(
-        error.response?.data?.message || 'Failed to fetch photo data'
-      )
+      throw new Error(error.response?.data?.message || 'Failed to fetch data')
     }
     throw error
   }

@@ -10,10 +10,28 @@ import { IoCloseOutline } from 'react-icons/io5'
 import Button from '@/components/ui/Button'
 import { useAccountQuery } from '@/hooks/queries/useAccountQuery'
 
-interface NavBoxProps {
+// 상단 네이베이션
+const NavBox = ({
+  pathname,
+  path,
+  text,
+}: {
+  pathname: string
   path: string
   text: string
   params?: string
+}) => {
+  const isActive = pathname.startsWith(`/${path}`)
+
+  return (
+    <Link
+      href={`/${path}`}
+      className={`flex flex-col items-center cursor-pointer px-3 py-2 rounded-xl 
+          ${isActive ? 'bg-green-50 text-green-500 hover:bg-green-100' : 'bg-white hover:bg-gray-50'}`}
+    >
+      <span>{text}</span>
+    </Link>
+  )
 }
 
 export default function GlobalHeader() {
@@ -25,21 +43,6 @@ export default function GlobalHeader() {
   const MovOnMenu = (url: string) => {
     router.push(url)
     setOpenMenu(false)
-  }
-
-  // 상단 네이베이션
-  const NavBox = ({ path, text }: NavBoxProps) => {
-    const isActive = pathname.startsWith(`/${path}`)
-
-    return (
-      <Link
-        href={`/${path}`}
-        className={`flex flex-col items-center cursor-pointer px-3 py-2 rounded-xl 
-          ${isActive ? 'bg-green-50 text-green-500 hover:bg-green-100' : 'bg-white hover:bg-gray-50'}`}
-      >
-        <span>{text}</span>
-      </Link>
-    )
   }
 
   return (
@@ -69,9 +72,21 @@ export default function GlobalHeader() {
           {/*메인페이지에서는 네비게이션 필요 없음*/}
           {pathname.split('/')[1] !== 'main' && (
             <nav className='hidden text-gray-700 text-sm gap-3 md:flex'>
-              <NavBox path={'board/life'} text={'운동생활'} />
-              <NavBox path={'board/community'} text={'커뮤니티'} />
-              <NavBox path={'view/list'} text={'내주변찾기'} />
+              <NavBox
+                pathname={pathname}
+                path={'board/life'}
+                text={'운동생활'}
+              />
+              <NavBox
+                pathname={pathname}
+                path={'board/community'}
+                text={'커뮤니티'}
+              />
+              <NavBox
+                pathname={pathname}
+                path={'view/list'}
+                text={'내주변찾기'}
+              />
             </nav>
           )}
         </div>

@@ -13,7 +13,7 @@ async function fetchBoard() {
     },
     credentials: 'include',
   })
-
+  if (!res.ok) throw new Error(`API request failed with status ${res.status}`)
   return res.json()
 }
 
