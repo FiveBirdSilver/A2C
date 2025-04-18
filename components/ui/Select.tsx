@@ -5,22 +5,27 @@ import { IoIosArrowDown, IoIosClose } from 'react-icons/io'
 import { motion } from 'framer-motion'
 
 import useMediaQuery from '@/hooks/common/useMediaQuery.tsx'
+import { Skeleton } from './Skeleton'
 
 const ReactSelect = dynamic(() => import('react-select'), { ssr: false })
 
-interface IOptions {
+interface OptionProps {
   value: string
   label: string
 }
 
-interface ISelect {
-  options: IOptions[]
+interface SelectProps {
+  options: OptionProps[]
   placeholder: string
-  setState: Dispatch<SetStateAction<IOptions | undefined>>
+  title: string
+  isLoading: boolean
+  value: OptionProps | undefined
+  setValue: Dispatch<SetStateAction<OptionProps | undefined>>
 }
 
 // 셀렉트 박스 스타일 커스텀
 const customStyles: StylesConfig = {
+  // 타입 명시
   control: (provided) => ({
     ...provided,
     borderRadius: '0.375rem',
@@ -60,7 +65,14 @@ const customStyles: StylesConfig = {
   }),
 }
 
-const Select = ({ options, placeholder, setState }: ISelect) => {
+const Select = ({
+  options,
+  placeholder,
+  title,
+  value,
+  isLoading,
+  setValue,
+}: SelectProps) => {
   const isMobile = useMediaQuery('(max-width: 768px)')
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
@@ -72,9 +84,28 @@ const Select = ({ options, placeholder, setState }: ISelect) => {
     setIsModalOpen(true)
   }
 
+  // 모바일 환경에서의 모달 오픈
+  const handleCloseModal = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    setIsModalOpen(false)
+  }
+
+  // 모바일 환경에서의 리스트 선택
+  const handelOnSelectItem = (
+    e: MouseEvent<HTMLButtonElement>,
+    opt: OptionProps
+  ) => {
+    e.preventDefault()
+    setValue(opt)
+    setMobileSelectItem(opt.label)
+    setIsModalOpen(false)
+  }
+  console.log(isLoading)
+  if (isLoading) return <Skeleton className='h-6' />
+
   return (
     <div className='flex flex-col md:space-y-2 bg-white text-gray-800'>
-      {/* 모바일에서는 모달 방식 */}
+      {/* 모바일 환경 */}
       {isMobile ? (
         <>
           <button
@@ -95,9 +126,9 @@ const Select = ({ options, placeholder, setState }: ISelect) => {
             >
               <motion.div
                 className='bg-white w-full h-3/4 rounded-t-2xl flex flex-col'
-                initial={{ y: '100%' }} // 시작 위치 (화면 아래에서 시작)
-                animate={{ y: 0 }} // 최종 위치 (화면 아래에서 올라옴)
-                exit={{ y: '100%' }} // 닫힐 때 다시 아래로 내려감
+                initial={{ y: '100%' }}
+                animate={{ y: 0 }}
+                exit={{ y: '100%' }}
                 transition={{
                   type: 'spring',
                   damping: 25,
@@ -108,10 +139,10 @@ const Select = ({ options, placeholder, setState }: ISelect) => {
               >
                 {/* 제목 및 닫기 버튼 */}
                 <div className='w-full flex items-center p-4 bg-white rounded-t-2xl'>
-                  <p className='w-full text-base'>장소 추가</p>
+                  <p className='w-full text-base'>{title}</p>
                   <button
                     className='text-gray-500 text-3xl min-w-6'
-                    onClick={() => setIsModalOpen(false)}
+                    onClick={(e) => handleCloseModal(e)}
                   >
                     <IoIosClose />
                   </button>
@@ -123,12 +154,8 @@ const Select = ({ options, placeholder, setState }: ISelect) => {
                     <button
                       key={`${opt.value}-${index}`}
                       className='block w-full text-left p-2 text-sm'
-                      onClick={(e) => {
-                        e.preventDefault()
-                        setState(opt)
-                        setMobileSelectItem(opt.label)
-                        setIsModalOpen(false)
-                      }}
+                      value={value?.value}
+                      onClick={(e) => handelOnSelectItem(e, opt)}
                     >
                       {opt.label}
                     </button>
@@ -139,14 +166,15 @@ const Select = ({ options, placeholder, setState }: ISelect) => {
           )}
         </>
       ) : (
-        // 데스크톱일 때
+        // 데스크톱 환경
         <ReactSelect
           options={options}
           placeholder={placeholder}
           onChange={(newValue) => {
             if (!newValue) return
-            setState(newValue as IOptions)
+            setValue(newValue as OptionProps)
           }}
+          value={value}
           styles={customStyles}
         />
       )}

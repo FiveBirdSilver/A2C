@@ -1,5 +1,4 @@
 import { AxiosError } from 'axios'
-import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import { useMutation } from '@tanstack/react-query'
 import { instance } from '@/libs/apis/instance.ts'
@@ -7,6 +6,7 @@ import { toastError } from '@/libs/utils/toast.ts'
 
 export const useBoardSocialMutation = () => {
   const router = useRouter()
+
   // 게시글 좋아요 API
   const postBoardLike = useMutation({
     mutationFn: async (board: { id: string; isLiked: boolean }) => {

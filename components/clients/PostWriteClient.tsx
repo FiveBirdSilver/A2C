@@ -14,6 +14,7 @@ import typeItems from '@/constants/boardTypeItems.json'
 import { IMapList } from '@/types'
 
 const PostWriteClient = ({ data }: { data: IMapList[] }) => {
+  console.log(data)
   // 제목
   const [title, setTitle] = useState<string>('')
 
@@ -116,11 +117,12 @@ const PostWriteClient = ({ data }: { data: IMapList[] }) => {
             {typeItems.map((item) => (
               <Label
                 key={item.value}
-                text={item.text}
                 value={item.value}
-                type={category === item.value ? 'active' : 'inactive'}
+                variant={category === item.value ? 'active' : 'inactive'}
                 setValue={setCategory}
-              />
+              >
+                {item.text}
+              </Label>
             ))}
           </div>
         </div>
@@ -216,8 +218,11 @@ const PostWriteClient = ({ data }: { data: IMapList[] }) => {
             </div>
             <Select
               options={places}
-              setState={setPlace}
+              value={place}
+              setValue={setPlace}
               placeholder={'장소를 선택해주세요.'}
+              title='장소선택'
+              isLoading={!data}
             />
           </div>
         )}

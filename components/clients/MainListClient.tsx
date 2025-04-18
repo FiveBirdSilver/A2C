@@ -10,7 +10,7 @@ import Link from 'next/link'
 import { IoHeartOutline } from 'react-icons/io5'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import Carousel from '@/components/ui/Carousel'
-import Skeleton from '@/components/ui/Skeleton'
+import { SkeletonList } from '@/components/ui/Skeleton'
 import { IPostList } from '@/types'
 
 const MainListClient = (data: { data: IPostList[] }) => {
@@ -93,14 +93,15 @@ const MainListClient = (data: { data: IPostList[] }) => {
           </Carousel>
         </div>
       ) : (
+        // 로딩중
         <div className='w-full overflow-x-hidden'>
           <div className='flex md:grid md:grid-cols-4 gap-4 p-2 md:min-h-44'>
             {emptyArray.map((_, index) => (
               <div
                 key={index}
-                className='w-44 md:w-full flex-shrink-0 border border-gray-50 bg-white rounded-xl shadow cursor-pointer h-full'
+                className='w-44 md:w-full flex-shrink-0 border border-gray-50 bg-white rounded-xl shadow cursor-pointer h-full space-y-2'
               >
-                <Skeleton />
+                <SkeletonList />
               </div>
             ))}
           </div>

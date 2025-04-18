@@ -1,14 +1,24 @@
 'use client'
 import { Swiper } from 'swiper/react'
 import { Swiper as SwiperCore } from 'swiper'
-
 import { Autoplay, Pagination } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import { ReactNode } from 'react'
 import { CSSProperties } from 'react'
 
-interface ICarousel {
+/**
+ * Carousel 컴포넌트
+ *
+ * @param children - 슬라이드에 들어갈 요소들
+ * @param slidesPerView - 기본 보여줄 슬라이드 개수
+ * @param autoplay - 자동 재생 시간(ms), 0이면 자동 재생 비활성화
+ * @param breakpoints - 반응형 설정을 위한 슬라이드 개수 정의
+ * @param style - Swiper 전체에 적용할 인라인 스타일
+ * @param onSwiper - Swiper 인스턴스를 사용자가 접근할 수 있게 전달
+ */
+
+interface CarouselProps {
   children: ReactNode
   slidesPerView: number
   autoplay: number
@@ -18,7 +28,7 @@ interface ICarousel {
     }
   }
   style?: CSSProperties
-  onSwiper?: (swiper: SwiperCore) => void // swiper 객체를 받아 처리할 함수 타입
+  onSwiper?: (swiper: SwiperCore) => void
 }
 
 const Carousel = ({
@@ -28,7 +38,7 @@ const Carousel = ({
   style,
   autoplay,
   onSwiper,
-}: ICarousel) => {
+}: CarouselProps) => {
   return (
     <Swiper
       modules={[Autoplay, Pagination]}

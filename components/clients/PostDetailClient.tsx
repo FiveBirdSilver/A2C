@@ -4,7 +4,6 @@ import { KeyboardEvent, useEffect, useRef } from 'react'
 import dayjs from 'dayjs'
 import debounce from 'lodash/debounce'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
 
 import { IPostDetail } from '@/types'
 import { setBoardCookieAction } from '@/app/actions/setBoardCookieAction'
@@ -128,7 +127,7 @@ const Comments = ({
         boardId,
         parentCommentId: null,
       })
-    }, 300)
+    }, 400)
   ).current
 
   const handleKeyDown = async (event: KeyboardEvent<HTMLInputElement>) => {
@@ -181,9 +180,6 @@ const Comments = ({
 
 // 메인 컴포넌트
 const PostDetailClient = ({ cookie, data }: IPostDetail) => {
-  const pathName = usePathname()
-  const boardId = pathName.split('/')[2]
-
   useEffect(() => {
     const viewCookie = async () => {
       if (cookie) await setBoardCookieAction(cookie)
@@ -195,7 +191,7 @@ const PostDetailClient = ({ cookie, data }: IPostDetail) => {
     <div className='col-span-1 md:col-span-5'>
       <PostHeader {...data} />
       <PostContent {...data} />
-      <Comments comments={data.comments || []} boardId={boardId} />
+      <Comments comments={data.comments || []} boardId={data._id} />
     </div>
   )
 }

@@ -10,7 +10,7 @@ import React, { ButtonHTMLAttributes } from 'react'
  * @param fullWidth - 너비 100% 설정
  */
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost'
   size?: 'sm' | 'md' | 'lg'

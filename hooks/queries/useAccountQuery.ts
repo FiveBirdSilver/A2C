@@ -19,16 +19,19 @@ const getCheckAccount = async (): Promise<IAccount | null> => {
     return response.data
   } catch (error) {
     if (axios.isAxiosError(error) && error.response?.status === 401) {
-      return null;
+      return null
     } else {
-      console.error('Failed to check account status:', error); 
-      throw error;
+      console.error('Failed to check account status:', error)
+      throw error
     }
   }
 }
 
 export const useAccountQuery = (
-  options?: Omit<UseQueryOptions<IAccount | null, Error>, 'queryKey' | 'queryFn'>
+  options?: Omit<
+    UseQueryOptions<IAccount | null, Error>,
+    'queryKey' | 'queryFn'
+  >
 ) => {
   return useQuery<IAccount | null, Error>({
     queryKey: ['account'],

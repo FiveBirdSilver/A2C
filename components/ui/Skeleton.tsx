@@ -1,4 +1,20 @@
-const Skeleton = () => {
+/**
+ * 스켈레톤 컴포넌트
+ * @param className - 추가적인 Tailwind CSS 클래스
+ */
+
+import { twMerge } from 'tailwind-merge'
+
+export interface SkeletonProps {
+  className?: string
+}
+
+export const Skeleton = ({ className = '' }: SkeletonProps) => {
+  const baseStyles = 'flex h-4 bg-gray-100 rounded col-span-1'
+  return <span className={twMerge(baseStyles, className)} />
+}
+
+export const SkeletonList = () => {
   const renderSkeleton = () => {
     return (
       <div className='animate-pulse flex space-x-4'>
@@ -18,5 +34,3 @@ const Skeleton = () => {
 
   return <div className='px-4 py-4 w-full mx-auto'>{renderSkeleton()}</div>
 }
-
-export default Skeleton

@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 
 import Loading from '@/app/loading.tsx'
 import PostDetailClient from '@/components/clients/PostDetailClient.tsx'
-import BoardDetailSocialClient from '@/components/clients/PostSocialActionClient.tsx'
+import PostSocialActionClient from '@/components/clients/PostSocialActionClient.tsx'
 import { IPostDetail } from '@/types'
 
 type Props = {
@@ -67,7 +67,8 @@ export default async function Page({ params, searchParams }: Props) {
           data={data.data}
           isLiked={data.isLiked}
         />
-        <BoardDetailSocialClient
+        <PostSocialActionClient
+          id={data.data._id}
           isLiked={data.isLiked}
           heartCount={data.data.heartCount}
           chatCount={data.data.comments?.length ?? 0}

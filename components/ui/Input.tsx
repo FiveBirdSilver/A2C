@@ -1,7 +1,19 @@
 import React, { forwardRef } from 'react'
 import cn from 'classnames'
 
-interface InputType extends React.InputHTMLAttributes<HTMLInputElement> {
+/**
+ * 공통 Input 컴포넌트
+ *
+ * @param id - input 요소의 고유 ID (label과 연결)
+ * @param label - input 왼쪽에 표시할 라벨
+ * @param message - 유효성 검증 등 하단에 표시할 메시지
+ * @param direction - 라벨과 input의 배치 방향 (`row` | `column`)
+ * @param variant - input 테두리 스타일 (`default` | `primary` | `warning`)
+ * @param disabled - 비활성화 여부
+ * @param children - input 우측에 들어갈 요소 (예: 아이콘, 버튼 등)
+ */
+
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string
   label: string
   message?: string
@@ -11,7 +23,7 @@ interface InputType extends React.InputHTMLAttributes<HTMLInputElement> {
   children?: React.ReactNode
 }
 
-const Input = forwardRef<HTMLInputElement, InputType>(
+const Input = forwardRef<HTMLInputElement, InputProps>(
   (
     {
       label,
