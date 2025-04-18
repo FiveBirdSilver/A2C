@@ -14,7 +14,6 @@ import typeItems from '@/constants/boardTypeItems.json'
 import { IMapList } from '@/types'
 
 const PostWriteClient = ({ data }: { data: IMapList[] }) => {
-  console.log(data)
   // 제목
   const [title, setTitle] = useState<string>('')
 
@@ -222,7 +221,6 @@ const PostWriteClient = ({ data }: { data: IMapList[] }) => {
               setValue={setPlace}
               placeholder={'장소를 선택해주세요.'}
               title='장소선택'
-              isLoading={!data}
             />
           </div>
         )}

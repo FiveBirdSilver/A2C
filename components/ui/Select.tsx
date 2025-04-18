@@ -7,7 +7,10 @@ import { motion } from 'framer-motion'
 import useMediaQuery from '@/hooks/common/useMediaQuery.tsx'
 import { Skeleton } from './Skeleton'
 
-const ReactSelect = dynamic(() => import('react-select'), { ssr: false })
+const ReactSelect = dynamic(() => import('react-select'), {
+  ssr: false,
+  loading: () => <Skeleton className='h-8' />,
+})
 
 interface OptionProps {
   value: string
@@ -18,7 +21,6 @@ interface SelectProps {
   options: OptionProps[]
   placeholder: string
   title: string
-  isLoading: boolean
   value: OptionProps | undefined
   setValue: Dispatch<SetStateAction<OptionProps | undefined>>
 }
@@ -70,7 +72,6 @@ const Select = ({
   placeholder,
   title,
   value,
-  isLoading,
   setValue,
 }: SelectProps) => {
   const isMobile = useMediaQuery('(max-width: 768px)')
@@ -100,12 +101,9 @@ const Select = ({
     setMobileSelectItem(opt.label)
     setIsModalOpen(false)
   }
-  console.log(isLoading)
-  if (isLoading) return <Skeleton className='h-6' />
 
   return (
     <div className='flex flex-col md:space-y-2 bg-white text-gray-800'>
-      {/* 모바일 환경 */}
       {isMobile ? (
         <>
           <button
